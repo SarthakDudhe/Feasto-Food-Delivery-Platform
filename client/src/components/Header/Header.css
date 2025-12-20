@@ -1,0 +1,81 @@
+.header {
+    position: relative;
+    height: 34vw;
+    margin: 30px auto;
+    overflow: hidden;  /* Important to hide overflow */
+    border-radius: 10px;
+}
+
+/* Background video */
+.bg-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;    /* Fills the entire header */
+    transform: translate(-50%, -50%);
+    z-index: -1;          /* Push video behind text */
+}
+
+/* Content remains the same */
+.header-contents {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 1.5vw;
+    max-width: 50%;
+    bottom: 10%;
+    left: 6vw;
+    color: white;          /* Important for visibility */
+    z-index: 5;            /* Above the video */
+    animation:fadeIn 3s;
+}
+
+/* Optional: styling */
+.header-contents h2 {
+    color: white;
+    font-weight: 500;
+font-size: max(4.5vw,22px);
+}
+
+.header-contents p {
+    font-size: 1.1vw;
+}
+
+.header-contents button {
+    padding: 0.8vw 2vw;
+    background: whitesmoke;
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-size: 1.1vw;
+    cursor: pointer;
+    transition: 0.3s;
+    color: black;
+}
+
+.header-contents button:hover {
+    background: #ff3333;
+}
+@media (max-width:1050px){
+
+    .header-contents{
+        max-width: 45%;
+    }
+}
+
+
+@media (max-width:750px){
+ 
+    .header-contents{
+        max-width: 65%;
+    }
+    .header-contents p{
+        display: none;
+    }
+    .header-contents button{
+        padding: 2vw 4vw;
+    }
+}
