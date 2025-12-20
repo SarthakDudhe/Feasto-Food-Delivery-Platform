@@ -11,7 +11,7 @@ import Order from './pages/Orders/Order'
 
 function App() {
  
-  const url = "http://localhost:4000"
+  const url = "https://feasto-backend-e0ic.onrender.com"
 
   return (
     <>
