@@ -1,7 +1,7 @@
 
 # 🍽️ Feasto – Full Stack Food Ordering Platform (MERN)
 
-🚀 **Live Project:** https://feasto-food-delivery-platform.onrender.com/  
+🚀 **Live Project:** [https://feasto-food-delivery-platform.onrender.com/ ](https://feasto-delta.vercel.app/) 
 📂 **GitHub Repository:** https://github.com/SarthakDudhe/Feasto-Food-Delivery-Platform
 ---
 
