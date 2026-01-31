@@ -3,7 +3,7 @@
 
 🚀 **Live Project:** https://feasto-delta.vercel.app/ 
 
-📂 **GitHub Repository:** https://github.com/SarthakDudhe/Feasto-Food-Delivery-Platform
+📂[GitHub Repository](https://github.com/SarthakDudhe/Feasto-Food-Delivery-Platform)
 ---
 
 ## 🖼️ Project Preview
