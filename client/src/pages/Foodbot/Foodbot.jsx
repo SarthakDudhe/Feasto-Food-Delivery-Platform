@@ -4,6 +4,8 @@ import axios from "axios";
 export default function Foodbot() {
   const [open, setOpen] = useState(false);
   const url = "https://feasto-backend-e0ic.onrender.com";
+
+  
   const [messages, setMessages] = useState([
     { role: "bot", text: "Hi 👋 I’m Feasto AI. What are you craving today?" }
   ]);
