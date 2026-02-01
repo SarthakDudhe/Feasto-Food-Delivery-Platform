@@ -4,12 +4,13 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-  "server": "nodemon server.js"
+    "server": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@google/genai": "^1.39.0",
     "bcrypt": "^6.0.0",
     "body-parser": "^2.2.1",
     "cors": "^2.8.5",
