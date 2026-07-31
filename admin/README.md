@@ -1,16 +1,31 @@
-# React + Vite
+# 📊 Feasto Admin (Operations Workspace & Analytics Dashboard)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The restaurant management and operations dashboard built with **React 19**, **Vite 7**, **Custom SVG Analytics**, and **CSS Thermal Print directives**.
 
-Currently, two official plugins are available:
+## 🚀 Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* **Dual-Pane Split Workspace**: Real-time incoming order queue paired with a detailed inspector panel for driver dispatch and order processing.
+* **Packer Item Checklists**: Interactive item checkboxes for kitchen packing verification before dispatch.
+* **Thermal KOT (Kitchen Order Ticket) Printing**: Formatted 80mm thermal receipt slip generation using custom `@media print` directives.
+* **Rider Management System**: Review applicant riders, verify credentials, and approve driver active status.
+* **Native SVG Financial Analytics**: Zero-dependency vector line and area trend charts mapping weekly revenue, transaction counts, and average order values.
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* **UI Framework**: React 19, React Router DOM 7
+* **Build Tool**: Vite 7
+* **HTTP Client**: Axios 1.13.2
+* **Notifications**: React Toastify 11.0.5
+* **Data Visualization**: Handcrafted SVG vector primitives (`<circle>`, `<path>`, `<linearGradient>`)
 
-## Expanding the ESLint configuration
+## 🏃 Local Setup
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+# Install dependencies
+npm install
+
+# Run dev server
+npm run dev
+```
+
+The application will run on `http://localhost:5174`.

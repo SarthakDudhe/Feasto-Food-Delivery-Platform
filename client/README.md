@@ -1,16 +1,32 @@
-# React + Vite
+# 🛒 Feasto Client (Customer Storefront & Rider Web App)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The customer-facing e-commerce storefront and delivery driver portal built with **React 19**, **Vite 7**, **MapLibre GL**, **Socket.IO**, and **Stripe Payments**.
 
-Currently, two official plugins are available:
+## 🚀 Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* **Interactive Menu & Category Navigation**: Filter dishes by culinary categories with dynamic state management via `StoreContext`.
+* **Real-Time GPS Tracking Map**: Powered by `MapLibre GL` and `Socket.IO`, rendering live rider coordinates, store pickup locations, delivery destinations, and dynamic polylines.
+* **Gemini AI Recipe Assistant (Foodbot)**: Natural language conversational search mapping meal recommendations into structured dish cards with instant cart actions.
+* **HTML5 Canvas Gamification**: Scratchcard discount unlock using real-time pixel opacity erasure math (`Uint8ClampedArray`).
+* **Delivery Rider Portal**: Onboarding form, live online/offline toggle, order acceptance queue, earnings overview, and Google Maps navigation launcher.
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* **UI Framework**: React 19, React Router DOM 7
+* **Build Tool**: Vite 7
+* **Real-Time WebSockets**: `socket.io-client` 4.8.3
+* **Maps & Geolocation**: MapLibre GL 5.24.0, `@vis.gl/react-maplibre` 8.1.1
+* **HTTP Client**: Axios 1.13.2
+* **Styling**: Vanilla CSS3 (Custom properties, HSL color tokens, Glassmorphism gradients)
 
-## Expanding the ESLint configuration
+## 🏃 Local Setup
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+# Install dependencies
+npm install
+
+# Run dev server
+npm run dev
+```
+
+The application will run on `http://localhost:5173`.
