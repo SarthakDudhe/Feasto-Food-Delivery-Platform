@@ -1,0 +1,24 @@
+{
+  "name": "feasto-food-delivery-platform",
+  "version": "1.2.0",
+  "private": true,
+  "description": "Enterprise Full-Stack Food Delivery Ecosystem, Real-Time Rider Logistics Stream, Gemini AI Recipe Assistant & Operations Workspace.",
+  "scripts": {
+    "server": "npm --prefix server run server",
+    "client": "npm --prefix client run dev",
+    "admin": "npm --prefix admin run dev",
+    "install:all": "npm install --prefix server && npm install --prefix client && npm install --prefix admin"
+  },
+  "keywords": [
+    "food-delivery",
+    "react19",
+    "express5",
+    "socket.io",
+    "maplibre",
+    "stripe",
+    "gemini-ai",
+    "monorepo"
+  ],
+  "author": "Sarthak Dudhe",
+  "license": "MIT"
+}

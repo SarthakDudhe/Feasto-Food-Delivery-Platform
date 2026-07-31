@@ -382,29 +382,28 @@ git clone https://github.com/SarthakDudhe/Feasto-Food-Delivery-Platform.git
 cd Feasto-Food-Delivery-Platform
 ```
 
-### Step 2: Set Up and Run Server
+### Step 2: Install All Workspaces
 ```bash
-cd server
-npm install
+npm run install:all
+```
+
+### Step 3: Run Micro-Services & Frontends
+
+#### Run API & Socket.IO Backend Server (Port `4000`):
+```bash
 npm run server
 ```
-The backend API and Socket.IO server will start on `http://localhost:4000`.
 
-### Step 3: Set Up and Run Customer & Rider App
+#### Run Customer Storefront & Rider App (Port `5173`):
 ```bash
-cd ../client
-npm install
-npm run dev
+npm run client
 ```
-The client app will start on Vite's default dev port: `http://localhost:5173`.
 
-### Step 4: Set Up and Run Admin Workspace
+#### Run Admin Operations Workspace (Port `5174`):
 ```bash
-cd ../admin
-npm install
-npm run dev
+npm run admin
 ```
-The admin portal will launch on: `http://localhost:5174`.
+
 
 ---
 
