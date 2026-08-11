@@ -1,8 +1,7 @@
 /**
- * Utility functions for calculating and filtering Macro & Dietary profiles of food items
+ * Utility functions for calculating TDEE, Health Grades, Healthy Swaps, and Macro profiles
  */
 
-// Mapping defaults by category for realistic macro calculation if items don't explicitly specify macros
 const categoryMacroDefaults = {
   Salad: { baseCalories: 280, baseProtein: 18, baseCarbs: 22, baseFat: 12, fiber: 8, tags: ["Gluten-Free", "High Protein", "Low Calorie"] },
   Rolls: { baseCalories: 420, baseProtein: 22, baseCarbs: 48, baseFat: 16, fiber: 4, tags: ["Balanced"] },
@@ -15,13 +14,47 @@ const categoryMacroDefaults = {
 };
 
 /**
- * Enriches a raw food item object with calculated macro parameters based on its ID, name, price, and category.
+ * Calculates BMR & TDEE based on Mifflin-St Jeor Formula
+ */
+export const calculateUserTDEE = (weightKg = 70, heightCm = 175, age = 25, gender = 'male', activity = 1.375, goal = 'loss') => {
+  let bmr = (10 * weightKg) + (6.25 * heightCm) - (5 * age);
+  bmr = gender === 'male' ? bmr + 5 : bmr - 161;
+
+  let tdee = Math.round(bmr * activity);
+
+  let targetCalories = tdee;
+  if (goal === 'loss') targetCalories = Math.round(tdee - 450);
+  if (goal === 'gain') targetCalories = Math.round(tdee + 350);
+
+  // Protein target: ~1.8g per kg for loss/gain
+  let targetProtein = Math.round(weightKg * 1.8);
+
+  return {
+    tdee,
+    targetCalories: Math.max(1200, targetCalories),
+    targetProtein: Math.max(40, targetProtein),
+    mealCalorieTarget: Math.round(targetCalories / 3)
+  };
+};
+
+/**
+ * Calculates Health Grade (A+, A, B, C) based on protein density and calorie ratio
+ */
+export const calculateHealthGrade = (protein, calories, fiber = 4) => {
+  const proteinDensity = (protein * 4) / (calories || 1);
+  if (proteinDensity >= 0.35 && calories <= 450) return 'A+';
+  if (proteinDensity >= 0.25 || (fiber >= 6 && calories <= 500)) return 'A';
+  if (proteinDensity >= 0.15) return 'B';
+  return 'C';
+};
+
+/**
+ * Enriches a food item object with calculated macro parameters, health grade, and swaps
  */
 export const getEnrichedMacroItem = (item) => {
   const cat = item.category || "Salad";
   const defaults = categoryMacroDefaults[cat] || categoryMacroDefaults["Salad"];
 
-  // Seed deterministic variations based on item ID / price
   const idNum = parseInt(item._id || "1", 10) || 1;
   const price = item.price || 15;
   const isChicken = (item.name || "").toLowerCase().includes("chicken");
@@ -44,6 +77,8 @@ export const getEnrichedMacroItem = (item) => {
   const carbRatio = Math.round(((carbs * 4) / totalMacroGrams) * 100);
   const fatRatio = 100 - proteinRatio - carbRatio;
 
+  const healthGrade = calculateHealthGrade(protein, calories, fiber);
+
   return {
     ...item,
     calories,
@@ -54,8 +89,50 @@ export const getEnrichedMacroItem = (item) => {
     proteinRatio,
     carbRatio,
     fatRatio,
+    healthGrade,
     tags
   };
+};
+
+/**
+ * Returns available 1-Click Healthy Swaps for a specific food item
+ */
+export const getHealthySwapsForItem = (item) => {
+  const name = (item.name || "").toLowerCase();
+  const swaps = [];
+
+  if (name.includes("roll") || name.includes("sandwich") || name.includes("burger")) {
+    swaps.push({
+      id: "greek_yogurt_spread",
+      title: "Swap Mayo for Greek Yogurt Spread",
+      savedCalories: 110,
+      addedProtein: 6,
+      savedFat: 12,
+      priceExtra: 0
+    });
+  }
+
+  if (name.includes("salad") || name.includes("roll")) {
+    swaps.push({
+      id: "extra_grilled_chicken",
+      title: "Add Extra Grilled Lean Protein (+15g P)",
+      savedCalories: -60,
+      addedProtein: 15,
+      savedFat: 2,
+      priceExtra: 2.5
+    });
+  }
+
+  swaps.push({
+    id: "dressing_on_side",
+    title: "Light Dressing / Served on Side",
+    savedCalories: 90,
+    addedProtein: 0,
+    savedFat: 9,
+    priceExtra: 0
+  });
+
+  return swaps;
 };
 
 /**
@@ -67,19 +144,13 @@ export const filterFoodByMacros = (foodList, filters) => {
   return foodList
     .map(getEnrichedMacroItem)
     .filter((item) => {
-      // Filter by preset
       if (filters.preset === "high-protein" && item.protein < 22) return false;
       if (filters.preset === "low-calorie" && item.calories > 400) return false;
       if (filters.preset === "keto" && item.carbs > 30) return false;
       if (filters.preset === "vegan" && !item.tags.includes("Vegan") && !item.name.toLowerCase().includes("veg")) return false;
 
-      // Range filters
       if (filters.maxCalories && item.calories > filters.maxCalories) return false;
       if (filters.minProtein && item.protein < filters.minProtein) return false;
-      if (filters.maxCarbs && item.carbs > filters.maxCarbs) return false;
-      if (filters.maxFat && item.fat > filters.maxFat) return false;
-
-      // Dietary flags
       if (filters.glutenFree && !item.tags.includes("Gluten-Free")) return false;
 
       return true;
@@ -87,13 +158,12 @@ export const filterFoodByMacros = (foodList, filters) => {
 };
 
 /**
- * Generates an AI Combo Meal (2-3 complementary items) matching a calorie/protein target
+ * Generates an AI Combo Meal matching a calorie/protein target
  */
 export const generateAIMealCombo = (foodList, targetCalories = 600, targetProtein = 35) => {
   const enriched = (foodList || []).map(getEnrichedMacroItem);
   if (enriched.length === 0) return null;
 
-  // Pick a main dish (Roll/Salad/Pasta) + side/desert
   let bestCombo = null;
   let bestScore = Infinity;
 

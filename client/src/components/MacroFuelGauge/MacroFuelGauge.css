@@ -1,0 +1,139 @@
+.macro-fuel-gauge-card {
+  background: linear-gradient(135deg, #1f1410 0%, #2e1c15 100%);
+  border-radius: 20px;
+  padding: 20px 24px;
+  color: #ffffff;
+  box-shadow: 0 16px 36px rgba(32, 19, 15, 0.2);
+  border: 1px solid rgba(255, 90, 61, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.gauge-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gauge-title-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gauge-pulse-dot {
+  width: 10px;
+  height: 10px;
+  background-color: #2ec4b6;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #2ec4b6;
+  animation: pulseGauge 1.5s infinite;
+}
+
+@keyframes pulseGauge {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.7; }
+}
+
+.gauge-title-box h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.btn-edit-target {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-edit-target:hover {
+  background: rgba(255, 90, 61, 0.3);
+  border-color: var(--accent);
+}
+
+.gauge-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.gauge-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.metric-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.metric-name {
+  color: #e5d5ce;
+}
+
+.metric-value {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.metric-value.over-limit {
+  color: #ff4d4d;
+}
+
+.metric-bar-bg {
+  height: 10px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.metric-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.cal-fill {
+  background: linear-gradient(90deg, #ff9f43, #ff5a3d);
+}
+
+.cal-fill.over-fill {
+  background: linear-gradient(90deg, #ff5a3d, #ff3333);
+}
+
+.prot-fill {
+  background: linear-gradient(90deg, #2ec4b6, #00b4d8);
+}
+
+.gauge-footer-note {
+  font-size: 13px;
+  color: #bfaea6;
+}
+
+.note-alert {
+  color: #ff9999;
+  font-weight: 600;
+}
+
+.note-good {
+  color: #81e6d9;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .gauge-body {
+    grid-template-columns: 1fr;
+  }
+}
