@@ -200,10 +200,16 @@
 @media (max-width:750px){
     .cart-items{
         padding: 18px 16px 6px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .cart-items-title, .cart-items-item {
+        min-width: 540px;
     }
 
     .cart-items-title{
-        grid-template-columns: 1.1fr 1.2fr 0.8fr 0.8fr 0.8fr 0.4fr;
+        grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 0.5fr;
         gap: 10px;
     }
 
