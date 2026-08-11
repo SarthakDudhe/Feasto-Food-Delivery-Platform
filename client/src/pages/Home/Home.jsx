@@ -47,6 +47,52 @@ const Home = () => {
         <Header/>
         <ExploreMenu category={category} setCategory={setCategory}/>
         <FoodDisplay category={category}/>
+        
+        {/* Health & Macro Assistant Feature Teaser Banner */}
+        <section className="health-teaser-banner" style={{
+          margin: '40px 0',
+          padding: '28px 32px',
+          borderRadius: '24px',
+          background: 'linear-gradient(135deg, #2a1810 0%, #1a100d 100%)',
+          color: '#ffffff',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '20px',
+          boxShadow: '0 18px 40px rgba(32, 19, 15, 0.15)',
+          border: '1px solid rgba(255, 90, 61, 0.3)'
+        }}>
+          <div style={{ maxWidth: '580px' }}>
+            <span style={{
+              display: 'inline-block',
+              background: 'rgba(255, 90, 61, 0.2)',
+              color: '#ff7453',
+              fontSize: '12px',
+              fontWeight: '700',
+              padding: '4px 12px',
+              borderRadius: '999px',
+              marginBottom: '10px'
+            }}>🥗 New Feature: Smart Health & Macro Assistant</span>
+            <h3 style={{ fontSize: '26px', margin: '0 0 8px 0', fontWeight: '800' }}>Eat Smart, Stay Fit with Precision Macros</h3>
+            <p style={{ fontSize: '14px', color: '#e5d5ce', margin: 0, lineHeight: '1.5' }}>
+              Track calories, filter high-protein meals, keto options, and build AI-suggested meal combos tailored to your exact daily targets.
+            </p>
+          </div>
+          <Link to="/health-planner" style={{
+            background: 'linear-gradient(135deg, #ff5a3d 0%, #ff7453 100%)',
+            color: '#ffffff',
+            padding: '12px 24px',
+            borderRadius: '999px',
+            fontWeight: '700',
+            fontSize: '15px',
+            textDecoration: 'none',
+            boxShadow: '0 10px 22px rgba(255, 90, 61, 0.3)'
+          }}>
+            Explore Health Planner 🥗 →
+          </Link>
+        </section>
+
         <Suspense fallback={<SectionSkeleton />}>
           <AppDownload/>
         </Suspense>

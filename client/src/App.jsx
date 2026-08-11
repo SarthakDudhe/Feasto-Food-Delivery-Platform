@@ -13,6 +13,8 @@ const TrackOrder = lazy(() => import('./pages/TrackOrder/TrackOrder'))
 const RiderSignup = lazy(() => import('./pages/RiderSignup/RiderSignup'))
 const RiderDashboard = lazy(() => import('./pages/RiderDashboard/RiderDashboard'))
 
+const HealthPlanner = lazy(() => import('./pages/HealthPlanner/HealthPlanner'))
+
 function App() {
   const [showLogin, setShowLogin] = useState(false)
 
@@ -49,6 +51,7 @@ function App() {
         }>
           <Routes>
             <Route path='/' element={<Home />} />
+            <Route path='/health-planner' element={<HealthPlanner />} />
             <Route path='/cart' element={<Cart />} />
             <Route path='/order' element={<PlaceOrder />} />
             <Route path='/verify' element={<Verify />} />
