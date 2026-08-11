@@ -1,0 +1,240 @@
+.health-planner-page {
+  padding: 24px 0 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Hero Section */
+.health-hero {
+  text-align: center;
+  padding: 36px 20px 24px;
+  background: radial-gradient(circle at top, rgba(46, 196, 182, 0.08) 0%, rgba(255, 90, 61, 0.05) 50%, transparent 80%);
+  border-radius: 24px;
+  border: 1px solid rgba(239, 220, 211, 0.8);
+}
+
+.health-hero-eyebrow {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent-dark);
+  background: var(--accent-soft);
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+.health-hero-title {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 10px 0;
+  line-height: 1.2;
+}
+
+.health-hero-sub {
+  font-size: 16px;
+  color: var(--muted);
+  max-width: 620px;
+  margin: 0 auto 24px auto;
+  line-height: 1.5;
+}
+
+/* Presets Container */
+.preset-chips-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.preset-chip {
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(239, 220, 211, 0.9);
+  background: #ffffff;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.preset-chip:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  color: var(--accent-dark);
+}
+
+.preset-chip.active {
+  background: linear-gradient(135deg, var(--accent) 0%, #ff7453 100%);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 8px 18px rgba(255, 90, 61, 0.22);
+}
+
+/* Control Panel */
+.health-controls-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 20px 24px;
+  box-shadow: var(--shadow);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  align-items: center;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.control-group label {
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.control-group input[type="range"] {
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.checkbox-group {
+  justify-content: center;
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.custom-checkbox input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.btn-ai-combo {
+  padding: 12px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(46, 196, 182, 0.3);
+  background: linear-gradient(135deg, #2ec4b6 0%, #109888 100%);
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 8px 18px rgba(46, 196, 182, 0.22);
+}
+
+.btn-ai-combo:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(46, 196, 182, 0.32);
+}
+
+/* AI Combo Box */
+.ai-combo-box {
+  background: linear-gradient(135deg, #f0fdf4 0%, #e6f4f1 100%);
+  border: 1px solid rgba(46, 196, 182, 0.3);
+  border-radius: 20px;
+  padding: 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ai-combo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ai-combo-header h3 {
+  margin: 0;
+  color: #0f766e;
+  font-size: 18px;
+}
+
+.ai-combo-header button {
+  border: none;
+  background: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #0f766e;
+}
+
+.ai-combo-summary {
+  display: flex;
+  gap: 20px;
+  font-size: 14px;
+  color: #134e4a;
+}
+
+.ai-combo-items {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ai-combo-pill {
+  background: #ffffff;
+  border: 1px solid rgba(46, 196, 182, 0.3);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+/* Grid Header & Grid */
+.health-grid-header h2 {
+  font-size: 24px;
+  color: var(--text);
+  margin: 0;
+}
+
+.health-dishes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.no-macro-dishes {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px dashed var(--border);
+  color: var(--muted);
+}
+
+@media (max-width: 768px) {
+  .health-hero-title {
+    font-size: 28px;
+  }
+  .health-controls-card {
+    grid-template-columns: 1fr;
+  }
+}
