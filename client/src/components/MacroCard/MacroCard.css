@@ -50,6 +50,49 @@
   gap: 4px;
 }
 
+.health-grade-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  text-transform: uppercase;
+}
+
+.health-grade-badge.grade-a-plus {
+  background: rgba(46, 196, 182, 0.9);
+  color: #ffffff;
+}
+
+.health-grade-badge.grade-a {
+  background: rgba(14, 165, 233, 0.9);
+  color: #ffffff;
+}
+
+.health-grade-badge.grade-b {
+  background: rgba(245, 158, 11, 0.9);
+  color: #ffffff;
+}
+
+.btn-healthy-swap-trigger {
+  background: #f0fdf4;
+  color: #0f766e;
+  border: 1px dashed #2ec4b6;
+  border-radius: 10px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-healthy-swap-trigger:hover {
+  background: #dcfce7;
+}
+
 .macro-card-body {
   padding: 16px;
   display: flex;

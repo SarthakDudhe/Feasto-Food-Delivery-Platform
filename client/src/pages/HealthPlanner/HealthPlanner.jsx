@@ -1,8 +1,10 @@
 import React, { useContext, useState, useMemo } from 'react';
 import './HealthPlanner.css';
 import { StoreContext } from '../../context/StoreContext';
-import { filterFoodByMacros, generateAIMealCombo, getEnrichedMacroItem } from '../../utils/macroCalculator';
+import { filterFoodByMacros, generateAIMealCombo } from '../../utils/macroCalculator';
 import MacroCard from '../../components/MacroCard/MacroCard';
+import MacroFuelGauge from '../../components/MacroFuelGauge/MacroFuelGauge';
+import HealthGoalModal from '../../components/HealthGoalModal/HealthGoalModal';
 
 const HealthPlanner = () => {
   const { food_list } = useContext(StoreContext);
@@ -12,6 +14,19 @@ const HealthPlanner = () => {
   const [minProtein, setMinProtein] = useState(0);
   const [glutenFreeOnly, setGlutenFreeOnly] = useState(false);
   const [aiCombo, setAiCombo] = useState(null);
+
+  // Personalized Targets
+  const [showGoalModal, setShowGoalModal] = useState(false);
+  const [userTargets, setUserTargets] = useState({
+    mealCalorieTarget: 650,
+    targetProtein: 45
+  });
+
+  const handleSaveTargets = (newTargets) => {
+    setUserTargets(newTargets);
+    if (newTargets.mealCalorieTarget) setMaxCalories(newTargets.mealCalorieTarget);
+    if (newTargets.targetProtein) setMinProtein(Math.min(50, newTargets.targetProtein));
+  };
 
   // Compute filtered items
   const filteredDishes = useMemo(() => {
@@ -72,6 +87,13 @@ const HealthPlanner = () => {
           </button>
         </div>
       </section>
+
+      {/* Live Macro Fuel Gauge Tracker */}
+      <MacroFuelGauge
+        userTargetCals={userTargets.mealCalorieTarget}
+        userTargetProtein={userTargets.targetProtein}
+        onOpenGoalWizard={() => setShowGoalModal(true)}
+      />
 
       {/* Control Panel */}
       <section className="health-controls-card">
@@ -159,6 +181,13 @@ const HealthPlanner = () => {
           ))
         )}
       </div>
+
+      {/* Personal Goal Calculator Wizard Modal */}
+      <HealthGoalModal
+        isOpen={showGoalModal}
+        onClose={() => setShowGoalModal(false)}
+        onSaveTargets={handleSaveTargets}
+      />
     </div>
   );
 };
