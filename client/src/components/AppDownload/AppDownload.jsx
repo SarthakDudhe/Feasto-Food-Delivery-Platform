@@ -6,8 +6,8 @@ const AppDownload = () => {
     <div className='app-download' id='app-download'>
         <p>For a smoother experience, download <br /> the Feasto app</p>
         <div className="app-download-plaforms">
-            <img src={assets.play_store} alt="" />
-            <img src={assets.app_store} alt="" />
+            <img src={assets.play_store} alt="Google Play Store" loading="lazy" decoding="async" />
+            <img src={assets.app_store} alt="Apple App Store" loading="lazy" decoding="async" />
         </div>
     </div>
   )
