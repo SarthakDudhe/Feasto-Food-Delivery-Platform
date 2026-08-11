@@ -1,16 +1,17 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, lazy, Suspense } from 'react'
 import Navbar from './components/Navbar/Navbar'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home/Home'
-import Cart from './pages/Cart/Cart'
-import PlaceOrder from './pages/PlaceOrder/PlaceOrder'
 import Footer from './components/Footer/Footer'
 import LoginPopup from './components/LoginPopup/LoginPopup'
-import Verify from './pages/Verify/Verify'
-import MyOrder from './pages/MyOrder/MyOrder'
-import TrackOrder from './pages/TrackOrder/TrackOrder'
-import RiderSignup from './pages/RiderSignup/RiderSignup'
-import RiderDashboard from './pages/RiderDashboard/RiderDashboard'
+
+const Cart = lazy(() => import('./pages/Cart/Cart'))
+const PlaceOrder = lazy(() => import('./pages/PlaceOrder/PlaceOrder'))
+const Verify = lazy(() => import('./pages/Verify/Verify'))
+const MyOrder = lazy(() => import('./pages/MyOrder/MyOrder'))
+const TrackOrder = lazy(() => import('./pages/TrackOrder/TrackOrder'))
+const RiderSignup = lazy(() => import('./pages/RiderSignup/RiderSignup'))
+const RiderDashboard = lazy(() => import('./pages/RiderDashboard/RiderDashboard'))
 
 function App() {
   const [showLogin, setShowLogin] = useState(false)
@@ -28,16 +29,35 @@ function App() {
       {showLogin ? <LoginPopup setShowLogin={setShowLogin} /> : <></>}
       <div className='app'>
         <Navbar setShowLogin={setShowLogin} />
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/cart' element={<Cart />} />
-          <Route path='/order' element={<PlaceOrder />} />
-          <Route path='/verify' element={<Verify />} />
-          <Route path='/myorders' element={<MyOrder />} />
-          <Route path='/track-order/:orderId' element={<TrackOrder />} />
-          <Route path='/rider-signup' element={<RiderSignup />} />
-          <Route path='/rider' element={<RiderDashboard />} />
-        </Routes>
+        <Suspense fallback={
+          <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div className="spinner" style={{
+              width: '40px',
+              height: '40px',
+              border: '4px solid #f3f3f3',
+              borderTop: '4px solid #ff5a3d',
+              borderRadius: '50%',
+              animation: 'spin 1s linear infinite'
+            }}></div>
+            <style>{`
+              @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+              }
+            `}</style>
+          </div>
+        }>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/cart' element={<Cart />} />
+            <Route path='/order' element={<PlaceOrder />} />
+            <Route path='/verify' element={<Verify />} />
+            <Route path='/myorders' element={<MyOrder />} />
+            <Route path='/track-order/:orderId' element={<TrackOrder />} />
+            <Route path='/rider-signup' element={<RiderSignup />} />
+            <Route path='/rider' element={<RiderDashboard />} />
+          </Routes>
+        </Suspense>
       </div>
       <Footer />
     </>

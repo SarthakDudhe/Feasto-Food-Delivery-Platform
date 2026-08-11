@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, lazy, Suspense } from 'react'
 import "./Home.css"
 import Header from '../../components/Header/Header'
 import ExploreMenu from '../../components/ExploreMenu/ExploreMenu'
 import FoodDisplay from '../../components/FoodDisplay/FoodDisplay'
-import AppDownload from '../../components/AppDownload/AppDownload'
-import Foodbot from '../Foodbot/Foodbot'
+import { SectionSkeleton } from '../../components/Skeleton/Skeleton'
 import { Link } from 'react-router-dom'
+
+const AppDownload = lazy(() => import('../../components/AppDownload/AppDownload'))
+const Foodbot = lazy(() => import('../Foodbot/Foodbot'))
+
 const Home = () => {
       const [category,setCategory] = useState("All")
       const promoCodes = [
@@ -44,9 +47,13 @@ const Home = () => {
         <Header/>
         <ExploreMenu category={category} setCategory={setCategory}/>
         <FoodDisplay category={category}/>
-        <AppDownload/>
+        <Suspense fallback={<SectionSkeleton />}>
+          <AppDownload/>
+        </Suspense>
 
-        <Foodbot/>
+        <Suspense fallback={null}>
+          <Foodbot/>
+        </Suspense>
     </div>
   )
 }
