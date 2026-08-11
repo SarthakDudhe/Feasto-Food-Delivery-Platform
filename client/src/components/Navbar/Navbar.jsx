@@ -21,6 +21,9 @@ navigate("/")
 <ul className="navbar-menu">
   <Link to="/" onClick={()=>setMenu("home")} className={menu == "home" ? "active" :""}>Home</Link>
   <a href='#explore-menu' onClick={()=>setMenu("menu")} className={menu =="menu"?"active":""}>Menu</a>
+  <Link to="/health-planner" onClick={()=>setMenu("health")} className={`health-nav-pill ${menu == "health" ? "active" : ""}`}>
+    <span>Health & Macros</span> <span className="health-badge-icon">🥗</span>
+  </Link>
   <a href='#app-download' onClick={()=>setMenu("mobile-app")} className={menu =="mobile-app"?"active":""}>Mobile-App</a>
   <a href='#footer' onClick={()=>setMenu("contact-us")} className={menu =="contact-us"?"active":""}>Contact Us</a>
  
