@@ -8,6 +8,7 @@ const LoginPopup = ({setShowLogin}) => {
 const{url,token,setToken} = useContext(StoreContext)
 
 const[currentState,setCurrentState] = useState("Sign Up")
+const[showPassword,setShowPassword] = useState(false)
 const [data,setData] = useState({
   name:"",
   email:"",
@@ -44,24 +45,38 @@ if (response.data.success) {
 
 }
 
-
-
- 
-
   return (
     <div className='login-popup'>
       <form onSubmit={onLogin} className='login-popup-container'>
         <div className="login-popup-title">
             <h2>{currentState}</h2>
-            <img src={assets.cross_icon} onClick={()=>setShowLogin(false)} alt="" />
+            <img src={assets.cross_icon} onClick={()=>setShowLogin(false)} alt="Close" />
         </div>
         <div className="login-popup-inputs">
             {
-                currentState === "Login"? <></>:<input onChange={onChangeHandler} value={data.name} type="text" name="name" placeholder='Your name' required/>
+                currentState === "Login"? <></>:<input onChange={onChangeHandler} value={data.name} type="text" name="name" placeholder='Your full name' required/>
             }
             
-            <input onChange={onChangeHandler} value={data.email} type="email" name="email" placeholder='Your email' required />
-            <input onChange={onChangeHandler} value={data.password} type="password" name="password" placeholder='Password'  required />
+            <input onChange={onChangeHandler} value={data.email} type="email" name="email" placeholder='Your email address' required />
+            
+            <div className="password-input-wrapper">
+              <input 
+                onChange={onChangeHandler} 
+                value={data.password} 
+                type={showPassword ? "text" : "password"} 
+                name="password" 
+                placeholder='Password'  
+                required 
+              />
+              <button 
+                type="button" 
+                className="password-toggle-btn"
+                onClick={() => setShowPassword(!showPassword)}
+                title={showPassword ? "Hide Password" : "Show Password"}
+              >
+                {showPassword ? "🙈" : "👁️"}
+              </button>
+            </div>
         </div>
         <button type='submit' >{currentState ==="Sign Up" ? "Create account" : "Login"}</button>
         <div className="login-popup-condition">

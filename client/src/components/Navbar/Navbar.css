@@ -98,6 +98,30 @@
 .health-badge-icon {
     font-size: 14px;
 }
+.rider-nav-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: linear-gradient(135deg, rgba(255, 90, 61, 0.1) 0%, rgba(255, 184, 0, 0.12) 100%);
+    padding: 4px 12px !important;
+    border-radius: 999px;
+    color: #d9480f !important;
+    border: 1px solid rgba(255, 90, 61, 0.25);
+    transition: all 0.2s ease;
+}
+.rider-nav-pill::after {
+    display: none !important;
+}
+.rider-nav-pill:hover, .rider-nav-pill.active {
+    background: linear-gradient(135deg, #111827 0%, #374151 100%);
+    color: white !important;
+    border-color: transparent;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(17, 24, 39, 0.25);
+}
+.rider-badge-icon {
+    font-size: 14px;
+}
 .navbar-search-icon{
     position: relative;
     padding: 8px;

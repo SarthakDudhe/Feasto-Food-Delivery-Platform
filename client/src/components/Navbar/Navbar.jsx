@@ -27,6 +27,9 @@ navigate("/")
           <Link to="/health-planner" onClick={()=>setMenu("health")} className={`health-nav-pill ${menu == "health" ? "active" : ""}`}>
             <span>Health & Macros</span> <span className="health-badge-icon">🥗</span>
           </Link>
+          <Link to="/rider-dashboard" onClick={()=>setMenu("rider")} className={`rider-nav-pill ${menu == "rider" ? "active" : ""}`}>
+            <span>Rider Portal</span> <span className="rider-badge-icon">🛵</span>
+          </Link>
           <a href='#app-download' onClick={()=>setMenu("mobile-app")} className={menu =="mobile-app"?"active":""}>Mobile-App</a>
           <a href='#footer' onClick={()=>setMenu("contact-us")} className={menu =="contact-us"?"active":""}>Contact Us</a>
         </ul>
@@ -70,6 +73,9 @@ navigate("/")
               <a href='#explore-menu' onClick={() => { setMenu("menu"); setIsMobileOpen(false); }}>Menu 🍕</a>
               <Link to="/health-planner" onClick={() => { setMenu("health"); setIsMobileOpen(false); }} className="drawer-health-link">
                 Health &amp; Macros 🥗 <span className="drawer-new-pill">NEW</span>
+              </Link>
+              <Link to="/rider-dashboard" onClick={() => { setMenu("rider"); setIsMobileOpen(false); }} className="drawer-rider-link">
+                Rider Portal 🛵
               </Link>
               <a href='#app-download' onClick={() => { setMenu("mobile-app"); setIsMobileOpen(false); }}>Mobile App 📱</a>
               <a href='#footer' onClick={() => { setMenu("contact-us"); setIsMobileOpen(false); }}>Contact Us 📞</a>
