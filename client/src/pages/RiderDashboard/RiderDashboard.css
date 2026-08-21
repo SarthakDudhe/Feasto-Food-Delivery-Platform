@@ -484,29 +484,32 @@
 .btn-cancel { background: #f3f4f6; color: #374151; }
 .btn-verify { background: #10b981; color: white; }
 
-/* Rider Auth Page Wrapper & Glassmorphism Card */
+/* Rider Auth Page Wrapper & Glassmorphism Card (Light Theme) */
 .rider-auth-page-wrapper {
   min-height: 85vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 40px 20px;
-  background: radial-gradient(circle at 50% 20%, #1e293b 0%, #0f172a 100%);
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(255, 90, 61, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(255, 184, 0, 0.08) 0%, transparent 45%),
+    linear-gradient(135deg, #fffbf9 0%, #fff3ee 50%, #fef3ef 100%);
   position: relative;
 }
 
 .rider-auth-card {
   width: 100%;
   max-width: 480px;
-  background: rgba(30, 41, 59, 0.75);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(239, 220, 211, 0.9);
   border-radius: 28px;
   padding: 40px 36px;
   box-shadow: 
-    0 25px 60px rgba(0, 0, 0, 0.4),
-    0 0 40px rgba(255, 90, 61, 0.08);
-  color: white;
+    0 22px 60px rgba(32, 19, 15, 0.1),
+    0 4px 20px rgba(255, 90, 61, 0.06);
+  color: #111827;
   animation: authFadeIn 0.4s ease-out;
 }
 
@@ -525,11 +528,11 @@
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.12em;
-  color: #ff7453;
-  background: rgba(255, 90, 61, 0.15);
+  color: #ff5a3d;
+  background: #fff0eb;
   padding: 4px 12px;
   border-radius: 99px;
-  border: 1px solid rgba(255, 90, 61, 0.3);
+  border: 1px solid rgba(255, 90, 61, 0.25);
   margin-bottom: 12px;
 }
 
@@ -537,12 +540,12 @@
   font-size: 26px;
   font-weight: 800;
   margin: 0 0 6px;
-  color: #ffffff;
+  color: #111827;
 }
 
 .rider-auth-subtext {
   font-size: 13.5px;
-  color: #94a3b8;
+  color: #6b7280;
   margin: 0;
   line-height: 1.4;
 }
@@ -557,7 +560,7 @@
 .rider-auth-form label {
   font-size: 13px;
   font-weight: 700;
-  color: #cbd5e1;
+  color: #374151;
   margin-bottom: 6px;
   display: block;
 }
@@ -579,9 +582,9 @@
   width: 100%;
   padding: 14px 44px 14px 42px;
   border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(15, 23, 42, 0.6);
-  color: #ffffff;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  color: #111827;
   font-size: 14.5px;
   outline: none;
   transition: all 0.2s ease;
@@ -590,8 +593,7 @@
 
 .input-with-icon input:focus {
   border-color: #ff5a3d;
-  box-shadow: 0 0 0 4px rgba(255, 90, 61, 0.2);
-  background: rgba(15, 23, 42, 0.85);
+  box-shadow: 0 0 0 4px rgba(255, 90, 61, 0.14);
 }
 
 .btn-rider-submit {
@@ -604,24 +606,24 @@
   font-size: 15px;
   font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 10px 25px rgba(255, 90, 61, 0.35);
+  box-shadow: 0 10px 24px rgba(255, 90, 61, 0.3);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   margin-top: 6px;
 }
 
 .btn-rider-submit:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 30px rgba(255, 90, 61, 0.45);
+  box-shadow: 0 14px 28px rgba(255, 90, 61, 0.4);
 }
 
 .rider-auth-footer {
   text-align: center;
   font-size: 13.5px;
-  color: #94a3b8;
+  color: #6b7280;
 }
 
 .rider-auth-footer a {
-  color: #ff7453;
+  color: #ff5a3d;
   font-weight: 800;
   text-decoration: none;
   margin-left: 4px;
@@ -631,7 +633,7 @@
   text-decoration: underline;
 }
 
-/* Admin KYC Verification Roadmap Screen */
+/* Admin KYC Verification Roadmap Screen (Light Theme) */
 .kyc-verification-container {
   display: flex;
   flex-direction: column;
@@ -659,27 +661,27 @@
 }
 
 .kyc-badge-pill.pending {
-  background: rgba(245, 158, 11, 0.15);
-  color: #fbbf24;
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  background: #fef3c7;
+  color: #d97706;
+  border: 1px solid #fde68a;
 }
 
 .kyc-badge-pill.blocked {
-  background: rgba(239, 68, 68, 0.15);
-  color: #f87171;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
 }
 
 .kyc-status-header h3 {
   font-size: 20px;
   font-weight: 800;
   margin: 0 0 6px;
-  color: #ffffff;
+  color: #111827;
 }
 
 .kyc-status-header p {
   font-size: 13px;
-  color: #94a3b8;
+  color: #6b7280;
   margin: 0;
   line-height: 1.4;
 }
@@ -688,10 +690,10 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  background: rgba(15, 23, 42, 0.5);
+  background: #f9fafb;
   padding: 16px;
   border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid #e5e7eb;
 }
 
 .kyc-step {
@@ -700,33 +702,39 @@
   gap: 14px;
   padding: 10px 12px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.03);
+  background: #ffffff;
+  border: 1px solid #f3f4f6;
 }
 
 .kyc-step.completed {
-  border-left: 3px solid #10b981;
+  border-left: 4px solid #10b981;
 }
 
 .kyc-step.active {
-  border-left: 3px solid #f59e0b;
-  background: rgba(245, 158, 11, 0.08);
+  border-left: 4px solid #ff5a3d;
+  background: #fff0eb;
 }
 
 .kyc-step.upcoming {
-  border-left: 3px solid #64748b;
-  opacity: 0.6;
+  border-left: 4px solid #d1d5db;
+  opacity: 0.7;
 }
 
 .step-number {
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+  background: #f3f4f6;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 12px;
   font-weight: 800;
+  color: #374151;
+}
+
+.kyc-step.active .step-number {
+  background: #ff5a3d;
   color: white;
 }
 
@@ -738,12 +746,12 @@
 
 .step-info strong {
   font-size: 13px;
-  color: #f8fafc;
+  color: #111827;
 }
 
 .step-info span {
   font-size: 11.5px;
-  color: #94a3b8;
+  color: #6b7280;
 }
 
 .step-icon {
@@ -751,23 +759,23 @@
 }
 
 .kyc-notice-box {
-  background: rgba(255, 90, 61, 0.1);
+  background: #fff8f5;
   border: 1px solid rgba(255, 90, 61, 0.25);
   border-radius: 14px;
   padding: 12px 16px;
   font-size: 12.5px;
-  color: #f8fafc;
+  color: #374151;
 }
 
 .kyc-notice-box span {
   display: block;
-  color: #ff7453;
+  color: #ff5a3d;
   margin-bottom: 4px;
 }
 
 .kyc-notice-box p {
   margin: 0;
-  color: #cbd5e1;
+  color: #6b7280;
   line-height: 1.35;
 }
 
@@ -786,15 +794,16 @@
   font-weight: 800;
   font-size: 13px;
   cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 90, 61, 0.25);
 }
 
 .btn-kyc-support {
   flex: 1;
   padding: 12px;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.08);
-  color: white;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  color: #374151;
   font-weight: 700;
   font-size: 13px;
   text-decoration: none;

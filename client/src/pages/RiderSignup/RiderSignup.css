@@ -1,4 +1,4 @@
-/* World-Class Split-Hero Rider Signup - Ultra Luxury Dark Theme */
+/* World-Class Split-Hero Rider Signup - Ultra Premium Light Theme */
 
 .split-signup-page-wrapper {
   min-height: 90vh;
@@ -7,12 +7,12 @@
   justify-content: center;
   padding: 50px 20px;
   background: 
-    radial-gradient(circle at 10% 20%, rgba(255, 90, 61, 0.12) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(79, 70, 229, 0.15) 0%, transparent 45%),
-    #080c14;
+    radial-gradient(circle at 10% 20%, rgba(255, 90, 61, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(255, 184, 0, 0.08) 0%, transparent 45%),
+    linear-gradient(135deg, #fffbf9 0%, #fff3ee 50%, #fef3ef 100%);
   position: relative;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  color: white;
+  color: #111827;
 }
 
 .split-signup-container {
@@ -26,7 +26,7 @@
 }
 
 /* =========================================================
-   LEFT COLUMN: HERO SHOWCASE & FLEET PERKS
+   LEFT COLUMN: HERO SHOWCASE & FLEET PERKS (LIGHT THEME)
    ========================================================= */
 
 .signup-hero-column {
@@ -46,11 +46,11 @@
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.12em;
-  color: #ff7453;
-  background: rgba(255, 90, 61, 0.15);
+  color: #ff5a3d;
+  background: #fff0eb;
   padding: 6px 14px;
   border-radius: 99px;
-  border: 1px solid rgba(255, 90, 61, 0.3);
+  border: 1px solid rgba(255, 90, 61, 0.25);
   margin-bottom: 14px;
 }
 
@@ -60,14 +60,12 @@
   line-height: 1.15;
   margin: 0 0 14px;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #111827;
 }
 
 .hero-description {
-  font-size: 15px;
-  color: #94a3b8;
+  font-size: 15.5px;
+  color: #4b5563;
   line-height: 1.6;
   margin: 0;
 }
@@ -82,26 +80,28 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  background: rgba(30, 41, 59, 0.5);
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(239, 220, 211, 0.9);
   padding: 14px 18px;
-  border-radius: 18px;
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(32, 19, 15, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .perk-chip:hover {
   transform: translateX(4px);
-  border-color: rgba(255, 90, 61, 0.3);
-  background: rgba(30, 41, 59, 0.75);
+  border-color: rgba(255, 90, 61, 0.4);
+  box-shadow: 0 10px 26px rgba(255, 90, 61, 0.12);
+  background: #ffffff;
 }
 
 .perk-icon {
   font-size: 24px;
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.06);
+  background: #fff0eb;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -115,28 +115,29 @@
 
 .perk-chip strong {
   font-size: 14.5px;
-  color: #ffffff;
+  color: #111827;
   font-weight: 800;
 }
 
 .perk-chip span {
   font-size: 12.5px;
-  color: #94a3b8;
+  color: #6b7280;
 }
 
 /* Admin Verification Timeline */
 .admin-timeline-box {
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(239, 220, 211, 0.9);
   padding: 18px 20px;
   border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(32, 19, 15, 0.05);
 }
 
 .timeline-title {
   display: block;
   font-size: 12.5px;
   font-weight: 800;
-  color: #fbbf24;
+  color: #d97706;
   letter-spacing: 0.04em;
   margin-bottom: 12px;
 }
@@ -167,21 +168,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 10px rgba(255, 90, 61, 0.25);
 }
 
 .timeline-step span {
   font-size: 11.5px;
-  color: #cbd5e1;
-  font-weight: 600;
+  color: #374151;
+  font-weight: 700;
 }
 
 .timeline-steps .arrow {
-  color: #64748b;
+  color: #9ca3af;
   font-size: 14px;
 }
 
 /* =========================================================
-   RIGHT COLUMN: LUXURY ONBOARDING FORM
+   RIGHT COLUMN: LUXURY ONBOARDING FORM (LIGHT THEME)
    ========================================================= */
 
 .signup-form-column {
@@ -194,26 +196,26 @@
 }
 
 .luxury-form-card {
-  background: rgba(15, 23, 42, 0.82);
+  background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(239, 220, 211, 0.9);
   border-radius: 30px;
   padding: 38px 34px;
   box-shadow: 
-    0 30px 70px rgba(0, 0, 0, 0.5),
-    0 0 50px rgba(255, 90, 61, 0.08);
+    0 22px 60px rgba(32, 19, 15, 0.1),
+    0 4px 20px rgba(255, 90, 61, 0.06);
 }
 
 .form-card-header h2 {
   font-size: 24px;
   font-weight: 800;
   margin: 0 0 6px;
-  color: #ffffff;
+  color: #111827;
 }
 
 .form-card-header p {
   font-size: 13.5px;
-  color: #94a3b8;
+  color: #6b7280;
   margin: 0 0 24px;
   line-height: 1.4;
 }
@@ -239,7 +241,7 @@
 .signup-field label {
   font-size: 12.5px;
   font-weight: 700;
-  color: #cbd5e1;
+  color: #374151;
 }
 
 .field-icon-wrapper {
@@ -259,9 +261,9 @@
   width: 100%;
   padding: 13px 38px 13px 40px;
   border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(30, 41, 59, 0.6);
-  color: #ffffff;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  color: #111827;
   font-size: 14px;
   outline: none;
   transition: all 0.2s ease;
@@ -270,8 +272,7 @@
 
 .field-icon-wrapper input:focus {
   border-color: #ff5a3d;
-  box-shadow: 0 0 0 4px rgba(255, 90, 61, 0.18);
-  background: rgba(30, 41, 59, 0.9);
+  box-shadow: 0 0 0 4px rgba(255, 90, 61, 0.14);
 }
 
 .eye-toggle-btn {
@@ -302,7 +303,7 @@
 .section-label {
   font-size: 13px;
   font-weight: 800;
-  color: #f8fafc;
+  color: #111827;
 }
 
 .vehicle-cards-grid {
@@ -318,22 +319,23 @@
   gap: 10px;
   padding: 11px 12px;
   border-radius: 16px;
-  background: rgba(30, 41, 59, 0.5);
-  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  background: #f9fafb;
+  border: 1.5px solid #e5e7eb;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .vehicle-card:hover {
-  background: rgba(30, 41, 59, 0.85);
+  background: #ffffff;
   border-color: rgba(255, 90, 61, 0.4);
   transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.04);
 }
 
 .vehicle-card.selected {
-  background: linear-gradient(135deg, rgba(255, 90, 61, 0.18) 0%, rgba(255, 116, 83, 0.12) 100%);
+  background: #fff0eb;
   border-color: #ff5a3d;
-  box-shadow: 0 4px 16px rgba(255, 90, 61, 0.2);
+  box-shadow: 0 4px 16px rgba(255, 90, 61, 0.16);
 }
 
 .v-icon {
@@ -350,13 +352,13 @@
 
 .v-info strong {
   font-size: 12.5px;
-  color: #ffffff;
+  color: #111827;
   white-space: nowrap;
 }
 
 .v-info span {
   font-size: 10.5px;
-  color: #94a3b8;
+  color: #6b7280;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -365,8 +367,8 @@
 .v-check {
   font-size: 12px;
   font-weight: 800;
-  color: #ff5a3d;
-  background: white;
+  color: white;
+  background: #ff5a3d;
   width: 18px;
   height: 18px;
   border-radius: 50%;
@@ -377,8 +379,8 @@
 
 /* KYC Preview Drawer */
 .kyc-preview-drawer {
-  background: rgba(30, 41, 59, 0.4);
-  border: 1px dashed rgba(255, 255, 255, 0.15);
+  background: #fff8f5;
+  border: 1px dashed rgba(255, 90, 61, 0.3);
   border-radius: 16px;
   padding: 12px 14px;
 }
@@ -386,7 +388,7 @@
 .kyc-preview-header {
   font-size: 12px;
   font-weight: 800;
-  color: #fbbf24;
+  color: #d97706;
   margin-bottom: 6px;
 }
 
@@ -398,7 +400,7 @@
 
 .kyc-preview-items .item {
   font-size: 11.5px;
-  color: #cbd5e1;
+  color: #4b5563;
 }
 
 /* Luxury Submit Button */
@@ -412,14 +414,14 @@
   font-size: 15px;
   font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 10px 26px rgba(255, 90, 61, 0.35);
+  box-shadow: 0 10px 24px rgba(255, 90, 61, 0.3);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   margin-top: 6px;
 }
 
 .btn-luxury-submit:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 32px rgba(255, 90, 61, 0.45);
+  box-shadow: 0 14px 28px rgba(255, 90, 61, 0.4);
 }
 
 .btn-luxury-submit:disabled {
@@ -437,21 +439,21 @@
 }
 
 .signup-status-banner.success {
-  background: rgba(16, 185, 129, 0.15);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
 }
 
 .signup-status-banner.error {
-  background: rgba(239, 68, 68, 0.15);
-  color: #f87171;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
 }
 
 .signup-status-banner.loading {
-  background: rgba(59, 130, 246, 0.15);
-  color: #60a5fa;
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
 }
 
 .btn-go-rider-login {
@@ -470,11 +472,11 @@
   text-align: center;
   margin-top: 20px;
   font-size: 13.5px;
-  color: #94a3b8;
+  color: #6b7280;
 }
 
 .luxury-form-footer a {
-  color: #ff7453;
+  color: #ff5a3d;
   font-weight: 800;
   text-decoration: none;
 }
