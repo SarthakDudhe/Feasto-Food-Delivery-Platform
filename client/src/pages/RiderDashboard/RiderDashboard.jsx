@@ -456,7 +456,7 @@ export default function RiderDashboard() {
                   )}
 
                   {/* CHAT BOX */}
-                  <div className="chat-container">
+                  <div className={`chat-container ${isDelivered ? "disabled" : ""}`}>
                     <div className="chat-history">
                       {(chats[order._id] || []).map((msg, i) => (
                         <div key={i} className={`chat-msg ${msg.sender === "Rider" ? "msg-rider" : "msg-customer"}`}>
@@ -464,16 +464,22 @@ export default function RiderDashboard() {
                         </div>
                       ))}
                     </div>
-                    <div className="chat-input-row">
-                      <input 
-                        type="text" 
-                        placeholder="Message customer..." 
-                        value={chatInputs[order._id] || ""}
-                        onChange={(e) => setChatInputs(prev => ({ ...prev, [order._id]: e.target.value }))}
-                        onKeyDown={(e) => e.key === 'Enter' && handleSendMessage(order._id)}
-                      />
-                      <button onClick={() => handleSendMessage(order._id)}>Send</button>
-                    </div>
+                    {isDelivered ? (
+                      <div className="chat-closed-banner" style={{ padding: '10px', background: '#f3f4f6', color: '#6b7280', fontSize: '12px', fontWeight: 'bold', textCenter: 'center', textAlign: 'center', borderTop: '1px solid #e5e7eb' }}>
+                        🔒 Chat closed — Order delivered successfully
+                      </div>
+                    ) : (
+                      <div className="chat-input-row">
+                        <input 
+                          type="text" 
+                          placeholder="Message customer..." 
+                          value={chatInputs[order._id] || ""}
+                          onChange={(e) => setChatInputs(prev => ({ ...prev, [order._id]: e.target.value }))}
+                          onKeyDown={(e) => e.key === 'Enter' && handleSendMessage(order._id)}
+                        />
+                        <button onClick={() => handleSendMessage(order._id)}>Send</button>
+                      </div>
+                    )}
                   </div>
 
                 </div>

@@ -48,6 +48,24 @@ function createMarkerElement(emoji, label, typeClass) {
   return el;
 }
 
+// Generate deterministic offsets for missing coordinates based on address string
+function getDerivedCoords(order) {
+  if (order?.address?.lng && order?.address?.lat) {
+    return [Number(order.address.lng), Number(order.address.lat)];
+  }
+
+  // Derive offset from order ID / address text hash
+  const str = order?._id || order?.address?.street || "default";
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const lngOffset = ((hash % 100) / 1000) * 0.5 + 0.01;
+  const latOffset = (((hash >> 2) % 100) / 1000) * 0.5 + 0.01;
+
+  return [KITCHEN_HUB.coords[0] + lngOffset, KITCHEN_HUB.coords[1] + latOffset];
+}
+
 export default function RiderMap({ order, riderLocation }) {
   const mapContainer = useRef(null);
   const mapRef = useRef(null);
@@ -56,15 +74,17 @@ export default function RiderMap({ order, riderLocation }) {
   const [mapReady, setMapReady] = useState(false);
   const [routeData, setRouteData] = useState(null);
 
-  // Derive coordinates
-  const customerCoords = (order?.address?.lng && order?.address?.lat)
-    ? [order.address.lng, order.address.lat]
-    : DEFAULT_CUSTOMER.coords;
+  const customerCoords = getDerivedCoords(order);
 
   const currentRiderCoords = riderLocation || [
     order?.riderLng || KITCHEN_HUB.coords[0],
     order?.riderLat || KITCHEN_HUB.coords[1]
   ];
+
+  // Full address string for Google Maps turn-by-turn navigation
+  const fullAddressString = order?.address
+    ? `${order.address.street || ''}, ${order.address.city || ''}, ${order.address.state || ''} ${order.address.pincode || ''}`.trim()
+    : "Bandra West, Mumbai";
 
   // Initialize MapLibre
   useEffect(() => {
@@ -149,8 +169,12 @@ export default function RiderMap({ order, riderLocation }) {
     updateRoute();
   }, [mapReady, order, currentRiderCoords[0], currentRiderCoords[1]]);
 
-  // Google Maps Turn-by-Turn Navigation URL
-  const googleNavUrl = `https://www.google.com/maps/dir/?api=1&origin=${currentRiderCoords[1]},${currentRiderCoords[0]}&destination=${customerCoords[1]},${customerCoords[0]}&travelmode=driving`;
+  // Google Maps Turn-by-Turn Navigation URL (Using coordinates or fallback full address text)
+  const destinationQuery = (order?.address?.lng && order?.address?.lat)
+    ? `${order.address.lat},${order.address.lng}`
+    : encodeURIComponent(fullAddressString);
+
+  const googleNavUrl = `https://www.google.com/maps/dir/?api=1&origin=${currentRiderCoords[1]},${currentRiderCoords[0]}&destination=${destinationQuery}&travelmode=driving`;
 
   return (
     <div className="rm-container">
