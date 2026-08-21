@@ -60,10 +60,10 @@ const RiderSignup = () => {
         {/* LEFT COLUMN: HERO SHOWCASE & FLEET PERKS */}
         <div className="signup-hero-column">
           <div className="hero-brand-header">
-            <span className="hero-fleet-badge">⚡ FEASTO FLEET PARTNER</span>
-            <h1>Drive &amp; Earn on Your Terms 🛵</h1>
+            <span className="hero-fleet-badge">⚡ FEASTO RIDER FLEET</span>
+            <h1>Drive &amp; Earn as a Feasto Rider 🛵</h1>
             <p className="hero-description">
-              Join 12,500+ active courier partners delivering gourmet meals across 45+ cities with high-rate payouts and instant daily settlements.
+              Join 12,500+ active riders delivering gourmet meals across 45+ cities with high-rate payouts and instant daily settlements.
             </p>
           </div>
 
@@ -95,7 +95,7 @@ const RiderSignup = () => {
 
           {/* Admin Verification Timeline */}
           <div className="admin-timeline-box">
-            <span className="timeline-title">🎯 3-Step Courier Activation Workflow</span>
+            <span className="timeline-title">🎯 3-Step Rider Activation Workflow</span>
             <div className="timeline-steps">
               <div className="timeline-step">
                 <span className="num">1</span>
@@ -119,7 +119,7 @@ const RiderSignup = () => {
         <div className="signup-form-column">
           <div className="luxury-form-card">
             <div className="form-card-header">
-              <h2>Become a Courier Partner</h2>
+              <h2>Become a Feasto Rider</h2>
               <p>Complete your registration to submit credentials for Admin verification.</p>
             </div>
 
@@ -253,13 +253,13 @@ const RiderSignup = () => {
                 </div>
 
                 <button type="submit" className="btn-luxury-submit" disabled={status.type === 'loading'}>
-                  {status.type === 'loading' ? 'Submitting Application...' : '🚀 Submit Application & Launch KYC Audit'}
+                  {status.type === 'loading' ? 'Submitting Application...' : '🚀 Submit Rider Application'}
                 </button>
               </form>
             )}
 
             <div className="luxury-form-footer">
-              <p>Already a registered courier? <Link to="/rider-dashboard">Login to Rider Portal →</Link></p>
+              <p>Already a registered rider? <Link to="/rider-dashboard">Login to Rider Portal →</Link></p>
             </div>
           </div>
         </div>

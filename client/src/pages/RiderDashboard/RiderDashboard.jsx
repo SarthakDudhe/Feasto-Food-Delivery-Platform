@@ -292,8 +292,8 @@ export default function RiderDashboard() {
           {/* LEFT COLUMN: HERO FLEET SHOWCASE */}
           <div className="signup-hero-column">
             <div className="hero-brand-header">
-              <span className="hero-fleet-badge">⚡ FEASTO FLEET OPERATIONS</span>
-              <h1>Welcome Back, Courier Partner 🛵</h1>
+              <span className="hero-fleet-badge">⚡ FEASTO RIDER FLEET</span>
+              <h1>Welcome Back, Feasto Rider 🛵</h1>
               <p className="hero-description">
                 Log in to your active delivery portal to manage live orders, view customer dropoff navigation maps, and track daily shift earnings.
               </p>
@@ -304,7 +304,7 @@ export default function RiderDashboard() {
                 <span className="perk-icon">🗺️</span>
                 <div>
                   <strong>Live Map &amp; Route Radar</strong>
-                  <span>Turn-by-turn turn directions &amp; customer pins</span>
+                  <span>Turn-by-turn directions &amp; customer pins</span>
                 </div>
               </div>
 
@@ -329,7 +329,7 @@ export default function RiderDashboard() {
             <div className="admin-timeline-box">
               <span className="timeline-title">🛡️ Fleet Security &amp; Admin Audit Guard</span>
               <p style={{ margin: 0, fontSize: '12.5px', color: '#6b7280', lineHeight: 1.4 }}>
-                All courier accounts are audited by Feasto Admin Operations for valid driving credentials and safety compliance.
+                All rider accounts are audited by Feasto Admin Operations for valid driving credentials and safety compliance.
               </p>
             </div>
           </div>
@@ -339,7 +339,7 @@ export default function RiderDashboard() {
             <div className="luxury-form-card">
               <div className="form-card-header">
                 <h2>Rider Login Portal</h2>
-                <p>Enter your courier email and password to start your delivery shift.</p>
+                <p>Enter your rider email and password to start your delivery shift.</p>
               </div>
 
               {/* Admin KYC Verification Status Screen */}
