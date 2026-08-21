@@ -236,6 +236,9 @@ const Order = ({url}) => {
                   </div>
                   <div className="card-bottom-row">
                     <span className="card-amount">${order.amount}</span>
+                    <span className="card-rider-status" style={{ fontSize: '11px', color: order.riderName ? '#047857' : '#b45309', fontWeight: 'bold' }}>
+                      {order.riderName ? `🛵 ${order.riderName.split(' ')[0]}` : '⚠️ No Rider'}
+                    </span>
                     <span className="card-date">
                       {order.date ? new Date(order.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : ''}
                     </span>
@@ -332,17 +335,33 @@ const Order = ({url}) => {
                     </div>
 
                     <div className="selector-group">
-                      <label>Courier Rider</label>
+                      <div className="selector-label-group" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <label>Courier Rider</label>
+                        <a href="/manage-riders" className="fleet-link-small" style={{ fontSize: '11px', color: '#ff5a3d', fontWeight: 'bold', textDecoration: 'none' }}>
+                          🛵 Fleet Hub →
+                        </a>
+                      </div>
                       <select
                         onChange={(event) => assignRiderHandler(selectedOrder._id, event.target.value)}
                         value={selectedOrder.riderId || selectedOrder.riderName || ""}
                         className="rider-select"
                       >
-                        <option value="">Assign Rider</option>
+                        <option value="">-- Select Available Rider --</option>
                         {riders.map((r) => (
-                          <option key={r._id} value={r._id}>{r.name} ({r.vehicleType})</option>
+                          <option key={r._id} value={r._id}>
+                            {r.name} ({r.vehicleType || 'Scooter'}) - ⭐{r.averageRating ? r.averageRating.toFixed(1) : '5.0'}
+                          </option>
                         ))}
                       </select>
+                      {selectedOrder.riderName ? (
+                        <div className="assigned-rider-badge" style={{ marginTop: '6px', fontSize: '12px', color: '#047857', background: '#ecfdf5', padding: '4px 8px', borderRadius: '6px', fontWeight: 'bold' }}>
+                          🛵 Assigned: {selectedOrder.riderName} {selectedOrder.riderPhone ? `(${selectedOrder.riderPhone})` : ''}
+                        </div>
+                      ) : (
+                        <div className="unassigned-rider-badge" style={{ marginTop: '6px', fontSize: '12px', color: '#b45309', background: '#fffbeb', padding: '4px 8px', borderRadius: '6px', fontWeight: 'bold' }}>
+                          ⚠️ Rider Unassigned (Pending Dispatch)
+                        </div>
+                      )}
                     </div>
                   </div>
 
