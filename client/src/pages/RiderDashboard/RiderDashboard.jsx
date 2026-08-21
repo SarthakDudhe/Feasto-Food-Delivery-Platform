@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import io from "socket.io-client";
 import { Link } from "react-router-dom";
+import RiderMap from "../../components/RiderMap/RiderMap";
 import "./RiderDashboard.css";
 
 const KITCHEN_COORDS = [72.8296, 19.0544];
@@ -16,6 +17,7 @@ export default function RiderDashboard() {
   const [authData, setAuthData] = useState({ email: "", password: "" });
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isOnDuty, setIsOnDuty] = useState(true);
   
   const [activeSimulations, setActiveSimulations] = useState({});
   const simulationStepsRef = useRef({});
@@ -41,6 +43,7 @@ export default function RiderDashboard() {
         localStorage.setItem("riderToken", res.data.token);
         setRiderData(res.data.rider);
         localStorage.setItem("riderData", JSON.stringify(res.data.rider));
+        if (res.data.rider.isOnDuty !== undefined) setIsOnDuty(res.data.rider.isOnDuty);
       } else {
         alert(res.data.message);
       }
@@ -55,6 +58,25 @@ export default function RiderDashboard() {
     setRiderData(null);
     localStorage.removeItem("riderToken");
     localStorage.removeItem("riderData");
+  };
+
+  const toggleDuty = async () => {
+    if (!riderData || !riderData._id) return;
+    try {
+      const newStatus = !isOnDuty;
+      const res = await axios.post(`${url}/api/rider/toggle-duty`, {
+        riderId: riderData._id,
+        isOnDuty: newStatus
+      });
+      if (res.data.success) {
+        setIsOnDuty(res.data.isOnDuty);
+        const updated = { ...riderData, isOnDuty: res.data.isOnDuty };
+        setRiderData(updated);
+        localStorage.setItem("riderData", JSON.stringify(updated));
+      }
+    } catch (err) {
+      console.error("Failed to toggle duty", err);
+    }
   };
 
   const fetchAssignedOrders = async () => {
@@ -72,7 +94,6 @@ export default function RiderDashboard() {
              newChats[o._id] = o.chat || [];
              socket.emit("join_order_room", o._id);
           } else {
-             // Overwrite if newer from server
              if (o.chat && o.chat.length > newChats[o._id].length) {
                newChats[o._id] = o.chat;
              }
@@ -90,10 +111,10 @@ export default function RiderDashboard() {
   useEffect(() => {
     if (token && riderData) {
       setLoading(true);
+      if (riderData.isOnDuty !== undefined) setIsOnDuty(riderData.isOnDuty);
       fetchAssignedOrders();
-      const pollInterval = setInterval(fetchAssignedOrders, 10000); // Polling every 10s for new orders
+      const pollInterval = setInterval(fetchAssignedOrders, 10000);
 
-      // Socket listen for messages
       socket.on("receive_message", (data) => {
         setChats((prevChats) => {
           const orderChats = prevChats[data.orderId] || [];
@@ -133,16 +154,13 @@ export default function RiderDashboard() {
       timestamp: new Date()
     };
 
-    // Emit to room
     socket.emit("send_message", messageData);
 
-    // Save locally
     setChats(prev => ({
       ...prev,
       [orderId]: [...(prev[orderId] || []), messageData]
     }));
 
-    // Save to DB
     await axios.post(`${url}/api/order/chat`, messageData);
 
     setChatInputs(prev => ({ ...prev, [orderId]: "" }));
@@ -245,6 +263,11 @@ export default function RiderDashboard() {
     };
   }, [activeSimulations]);
 
+  // Derived shift stats
+  const deliveredToday = orders.filter(o => o.status === "Delivered").length;
+  const activeOrdersCount = orders.filter(o => o.status !== "Delivered").length;
+  const estimatedShiftEarnings = (deliveredToday * 4.5).toFixed(2); // $4.50 base payout per order
+
   if (!token || !riderData) {
     return (
       <div className="rider-auth-container">
@@ -288,35 +311,61 @@ export default function RiderDashboard() {
       {/* Header Banner */}
       <div className="rider-portal-header">
         <div className="rider-header-left">
-          <span className="rider-badge">🛵 FEASTO FLEET</span>
+          <span className="rider-badge">🛵 FEASTO FLEET PARTNER</span>
           <h1>Welcome back, {riderData.name}</h1>
-          <p>Real-time order management and live GPS tracking.</p>
+          <p>Real-time turn-by-turn navigation & live order dispatch.</p>
         </div>
+
         <div className="rider-header-right">
+          {/* Duty Switch Button */}
+          <button 
+            onClick={toggleDuty} 
+            className={`duty-toggle-btn ${isOnDuty ? 'on-duty' : 'off-duty'}`}
+          >
+            <span className="duty-dot"></span>
+            {isOnDuty ? 'ONLINE - ON DUTY' : 'OFFLINE - OFF DUTY'}
+          </button>
           <button onClick={logout} className="rider-logout-btn">Logout</button>
         </div>
       </div>
 
+      {/* Shift Performance Stats Bar */}
       <div className="driver-stats-bar">
         <div className="driver-stat-card">
-          <span className="stat-icon">📦</span>
+          <span className="stat-icon">🛵</span>
           <div>
-            <h3>{orders.length}</h3>
-            <p>Assigned</p>
+            <h3>{activeOrdersCount}</h3>
+            <p>Active Assigned</p>
+          </div>
+        </div>
+        <div className="driver-stat-card">
+          <span className="stat-icon">✅</span>
+          <div>
+            <h3>{deliveredToday}</h3>
+            <p>Delivered Today</p>
+          </div>
+        </div>
+        <div className="driver-stat-card">
+          <span className="stat-icon">💰</span>
+          <div>
+            <h3>${estimatedShiftEarnings}</h3>
+            <p>Est. Shift Earnings</p>
           </div>
         </div>
       </div>
 
+      {/* Deliveries List */}
       <div className="rider-deliveries-section">
-        <h2>Your Deliveries</h2>
+        <h2>Active Delivery Tasks</h2>
 
         {loading ? (
-          <div style={{ padding: "60px 0", textAlign: "center" }}><p>Loading...</p></div>
+          <div style={{ padding: "60px 0", textAlign: "center" }}><p>Loading active deliveries...</p></div>
         ) : orders.length > 0 ? (
           <div className="rider-orders-grid">
             {orders.map((order) => {
               const isSimulating = !!activeSimulations[order._id];
               const isDelivered = order.status === "Delivered";
+              const isDelayed = !isDelivered && (new Date() - new Date(order.date || Date.now())) > 25 * 60 * 1000;
 
               return (
                 <div
@@ -329,9 +378,16 @@ export default function RiderDashboard() {
                     <span className="order-id-tag">
                       #{order._id.substring(order._id.length - 6).toUpperCase()}
                     </span>
-                    <span className={`order-status-badge ${order.status.toLowerCase().replace(/\s+/g, "-")}`}>
-                      {order.status}
-                    </span>
+                    <div className="card-badges">
+                      {isDelayed && (
+                        <span className="sla-delay-badge" title="Order pending > 25 mins">
+                          ⏱️ Priority SLA
+                        </span>
+                      )}
+                      <span className={`order-status-badge ${order.status.toLowerCase().replace(/\s+/g, "-")}`}>
+                        {order.status}
+                      </span>
+                    </div>
                   </div>
 
                   <div className="card-customer-info">
@@ -342,10 +398,27 @@ export default function RiderDashboard() {
                     </p>
                   </div>
 
+                  {/* INTERACTIVE RIDER NAVIGATION MAP */}
+                  {!isDelivered && (
+                    <div className="rider-map-section">
+                      <div className="map-section-header">
+                        <span>🗺️ Turn-by-Turn Route Navigation</span>
+                      </div>
+                      <RiderMap 
+                        order={order} 
+                        riderLocation={
+                          (order.riderLat && order.riderLng) 
+                            ? [order.riderLng, order.riderLat] 
+                            : null
+                        } 
+                      />
+                    </div>
+                  )}
+
                   {order.notes && (
                     <div className="rider-notes-box">
                       <div>
-                        <strong>Kitchen & Delivery Note:</strong>
+                        <strong>Customer & Kitchen Note:</strong>
                         <p>"{order.notes}"</p>
                       </div>
                     </div>
@@ -378,7 +451,7 @@ export default function RiderDashboard() {
                   {isSimulating && (
                     <div className="live-sim-status-bar">
                       <span className="pulse-dot-red"></span>
-                      <span>Broadcasting live GPS...</span>
+                      <span>Broadcasting live GPS location to customer map...</span>
                     </div>
                   )}
 
