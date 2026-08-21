@@ -17,8 +17,19 @@ const RiderSignup = () => {
   const navigate = useNavigate();
   const url = "http://localhost:4000";
 
+  const vehicles = [
+    { id: 'Scooter', name: 'Motor Scooter', icon: '🛵', perk: 'Best for long routes' },
+    { id: 'E-Bike', name: 'Electric E-Bike', icon: '⚡', perk: 'Zero fuel cost' },
+    { id: 'Bicycle', name: 'Bicycle', icon: '🚲', perk: 'Short city sprints' },
+    { id: 'Van', name: 'Delivery Van', icon: '🚐', perk: 'Catering & large orders' }
+  ];
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleVehicleSelect = (vehicleId) => {
+    setFormData({ ...formData, vehicleType: vehicleId });
   };
 
   const handleSubmit = async (e) => {
@@ -30,7 +41,7 @@ const RiderSignup = () => {
       if (res.data.success) {
         setStatus({ 
           type: 'success', 
-          message: 'Application submitted successfully! Admin operations team will review your KYC credentials.' 
+          message: 'Application submitted successfully! Your credentials and document profile are under Admin KYC review.' 
         });
         setFormData({ name: '', email: '', password: '', phone: '', vehicleType: 'Scooter' });
       } else {
@@ -43,137 +54,216 @@ const RiderSignup = () => {
   };
 
   return (
-    <div className="rider-signup-page-wrapper">
-      <div className="rider-signup-card">
-        {/* Brand Header */}
-        <div className="rider-signup-brand">
-          <span className="rider-fleet-badge">⚡ COURIER PARTNER ONBOARDING</span>
-          <h2>Join Feasto Delivery Fleet 🛵</h2>
-          <p className="rider-signup-subtext">Deliver gourmet orders, earn competitive payouts, and control your schedule.</p>
-        </div>
+    <div className="split-signup-page-wrapper">
+      <div className="split-signup-container">
         
-        {/* Status Banner */}
-        {status.message && (
-          <div className={`signup-status-banner ${status.type}`}>
-            {status.type === 'success' ? '🎉 ' : status.type === 'error' ? '⚠️ ' : '⏳ '}
-            <span>{status.message}</span>
-            {status.type === 'success' && (
-              <div style={{ marginTop: '10px' }}>
-                <button 
-                  type="button" 
-                  onClick={() => navigate('/rider-dashboard')}
-                  className="btn-go-rider-login"
-                >
-                  Go to Rider Login &amp; Check Admin KYC Status →
-                </button>
+        {/* LEFT COLUMN: HERO SHOWCASE & FLEET PERKS */}
+        <div className="signup-hero-column">
+          <div className="hero-brand-header">
+            <span className="hero-fleet-badge">⚡ FEASTO FLEET PARTNER</span>
+            <h1>Drive &amp; Earn on Your Terms 🛵</h1>
+            <p className="hero-description">
+              Join 12,500+ active courier partners delivering gourmet meals across 45+ cities with high-rate payouts and instant daily settlements.
+            </p>
+          </div>
+
+          <div className="hero-perk-chips">
+            <div className="perk-chip">
+              <span className="perk-icon">💰</span>
+              <div>
+                <strong>Earn Up to $35 / hr</strong>
+                <span>Competitive base pay + 100% customer tips</span>
+              </div>
+            </div>
+
+            <div className="perk-chip">
+              <span className="perk-icon">⚡</span>
+              <div>
+                <strong>Instant Shift Payouts</strong>
+                <span>Cash out earnings directly to your bank</span>
+              </div>
+            </div>
+
+            <div className="perk-chip">
+              <span className="perk-icon">🛡️</span>
+              <div>
+                <strong>100% Insurance Cover</strong>
+                <span>Free accident &amp; emergency coverage on duty</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Admin Verification Timeline */}
+          <div className="admin-timeline-box">
+            <span className="timeline-title">🎯 3-Step Courier Activation Workflow</span>
+            <div className="timeline-steps">
+              <div className="timeline-step">
+                <span className="num">1</span>
+                <span>Submit Profile</span>
+              </div>
+              <span className="arrow">→</span>
+              <div className="timeline-step">
+                <span className="num">2</span>
+                <span>Admin KYC Audit</span>
+              </div>
+              <span className="arrow">→</span>
+              <div className="timeline-step">
+                <span className="num">3</span>
+                <span>Start Delivering</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT COLUMN: LUXURY ONBOARDING FORM */}
+        <div className="signup-form-column">
+          <div className="luxury-form-card">
+            <div className="form-card-header">
+              <h2>Become a Courier Partner</h2>
+              <p>Complete your registration to submit credentials for Admin verification.</p>
+            </div>
+
+            {/* Status Banner */}
+            {status.message && (
+              <div className={`signup-status-banner ${status.type}`}>
+                {status.type === 'success' ? '🎉 ' : status.type === 'error' ? '⚠️ ' : '⏳ '}
+                <span>{status.message}</span>
+                {status.type === 'success' && (
+                  <div style={{ marginTop: '12px' }}>
+                    <button 
+                      type="button" 
+                      onClick={() => navigate('/rider-dashboard')}
+                      className="btn-go-rider-login"
+                    >
+                      Login &amp; Check Admin KYC Status →
+                    </button>
+                  </div>
+                )}
               </div>
             )}
-          </div>
-        )}
 
-        {status.type !== 'success' && (
-          <form onSubmit={handleSubmit} className="rider-signup-form">
-            <div className="signup-form-group">
-              <label>Full Name</label>
-              <div className="signup-input-icon-wrapper">
-                <span className="signup-prefix-icon">👤</span>
-                <input 
-                  type="text" 
-                  name="name" 
-                  value={formData.name} 
-                  onChange={handleChange} 
-                  required 
-                  placeholder="e.g. Alex Rivera" 
-                />
-              </div>
-            </div>
-            
-            <div className="signup-form-group">
-              <label>Email Address</label>
-              <div className="signup-input-icon-wrapper">
-                <span className="signup-prefix-icon">✉️</span>
-                <input 
-                  type="email" 
-                  name="email" 
-                  value={formData.email} 
-                  onChange={handleChange} 
-                  required 
-                  placeholder="alex@example.com" 
-                />
-              </div>
-            </div>
-            
-            <div className="signup-form-group">
-              <label>Phone Number</label>
-              <div className="signup-input-icon-wrapper">
-                <span className="signup-prefix-icon">📞</span>
-                <input 
-                  type="text" 
-                  name="phone" 
-                  value={formData.phone} 
-                  onChange={handleChange} 
-                  required 
-                  placeholder="+91 9876543210" 
-                />
-              </div>
-            </div>
-            
-            <div className="signup-form-group">
-              <label>Account Password</label>
-              <div className="signup-input-icon-wrapper">
-                <span className="signup-prefix-icon">🔒</span>
-                <input 
-                  type={showPassword ? "text" : "password"} 
-                  name="password" 
-                  value={formData.password} 
-                  onChange={handleChange} 
-                  required 
-                  placeholder="Minimum 8 characters" 
-                  minLength="8" 
-                />
-                <button 
-                  type="button" 
-                  className="signup-eye-toggle"
-                  onClick={() => setShowPassword(!showPassword)}
-                  title={showPassword ? "Hide Password" : "Show Password"}
-                >
-                  {showPassword ? "🙈" : "👁️"}
+            {status.type !== 'success' && (
+              <form onSubmit={handleSubmit} className="luxury-signup-form">
+                
+                {/* 2-Column Responsive Inputs Grid */}
+                <div className="form-grid-2col">
+                  <div className="signup-field">
+                    <label>Full Name</label>
+                    <div className="field-icon-wrapper">
+                      <span className="field-icon">👤</span>
+                      <input 
+                        type="text" 
+                        name="name" 
+                        value={formData.name} 
+                        onChange={handleChange} 
+                        required 
+                        placeholder="Alex Rivera" 
+                      />
+                    </div>
+                  </div>
+
+                  <div className="signup-field">
+                    <label>Email Address</label>
+                    <div className="field-icon-wrapper">
+                      <span className="field-icon">✉️</span>
+                      <input 
+                        type="email" 
+                        name="email" 
+                        value={formData.email} 
+                        onChange={handleChange} 
+                        required 
+                        placeholder="alex@example.com" 
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="form-grid-2col">
+                  <div className="signup-field">
+                    <label>Phone Number</label>
+                    <div className="field-icon-wrapper">
+                      <span className="field-icon">📞</span>
+                      <input 
+                        type="text" 
+                        name="phone" 
+                        value={formData.phone} 
+                        onChange={handleChange} 
+                        required 
+                        placeholder="+91 9876543210" 
+                      />
+                    </div>
+                  </div>
+
+                  <div className="signup-field">
+                    <label>Account Password</label>
+                    <div className="field-icon-wrapper">
+                      <span className="field-icon">🔒</span>
+                      <input 
+                        type={showPassword ? "text" : "password"} 
+                        name="password" 
+                        value={formData.password} 
+                        onChange={handleChange} 
+                        required 
+                        placeholder="Min 8 characters" 
+                        minLength="8" 
+                      />
+                      <button 
+                        type="button" 
+                        className="eye-toggle-btn"
+                        onClick={() => setShowPassword(!showPassword)}
+                        title={showPassword ? "Hide Password" : "Show Password"}
+                      >
+                        {showPassword ? "🙈" : "👁️"}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Interactive Vehicle Selection Cards */}
+                <div className="vehicle-selection-section">
+                  <label className="section-label">Select Your Delivery Vehicle</label>
+                  <div className="vehicle-cards-grid">
+                    {vehicles.map((v) => (
+                      <div 
+                        key={v.id}
+                        className={`vehicle-card ${formData.vehicleType === v.id ? 'selected' : ''}`}
+                        onClick={() => handleVehicleSelect(v.id)}
+                      >
+                        <span className="v-icon">{v.icon}</span>
+                        <div className="v-info">
+                          <strong>{v.name}</strong>
+                          <span>{v.perk}</span>
+                        </div>
+                        {formData.vehicleType === v.id && <span className="v-check">✓</span>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Admin Audit Requirement Preview */}
+                <div className="kyc-preview-drawer">
+                  <div className="kyc-preview-header">
+                    <span>🛡️ Admin Document Audit Requirements</span>
+                  </div>
+                  <div className="kyc-preview-items">
+                    <span className="item">✓ Government Photo ID (Passport/Aadhaar)</span>
+                    <span className="item">✓ Active Driving License &amp; Vehicle Registration</span>
+                    <span className="item">✓ Valid Bank Account for Payout Settlement</span>
+                  </div>
+                </div>
+
+                <button type="submit" className="btn-luxury-submit" disabled={status.type === 'loading'}>
+                  {status.type === 'loading' ? 'Submitting Application...' : '🚀 Submit Application & Launch KYC Audit'}
                 </button>
-              </div>
-            </div>
-            
-            <div className="signup-form-group">
-              <label>Vehicle Type</label>
-              <div className="signup-input-icon-wrapper">
-                <span className="signup-prefix-icon">🛵</span>
-                <select name="vehicleType" value={formData.vehicleType} onChange={handleChange}>
-                  <option value="Scooter">Motor Scooter</option>
-                  <option value="E-Bike">Electric E-Bike</option>
-                  <option value="Bicycle">Bicycle</option>
-                  <option value="Van">Delivery Van</option>
-                </select>
-              </div>
-            </div>
+              </form>
+            )}
 
-            {/* Admin Audit Requirement Preview Checklist */}
-            <div className="admin-audit-preview-card">
-              <span className="preview-title">🛡️ Admin Verification Requirements</span>
-              <ul>
-                <li><span className="check-dot">✓</span> Valid Driving License &amp; Government Photo ID</li>
-                <li><span className="check-dot">✓</span> Active Vehicle Registration (RC)</li>
-                <li><span className="check-dot">✓</span> Direct Bank Payout Verification</li>
-              </ul>
+            <div className="luxury-form-footer">
+              <p>Already a registered courier? <Link to="/rider-dashboard">Login to Rider Portal →</Link></p>
             </div>
-            
-            <button type="submit" className="btn-signup-submit" disabled={status.type === 'loading'}>
-              {status.type === 'loading' ? 'Submitting Application...' : '🚀 Submit Courier Application'}
-            </button>
-          </form>
-        )}
-
-        <div className="rider-signup-footer">
-          <p>Already registered? <Link to="/rider-dashboard">Login to Rider Portal →</Link></p>
+          </div>
         </div>
+
       </div>
     </div>
   );
