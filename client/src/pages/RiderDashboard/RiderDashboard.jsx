@@ -263,53 +263,173 @@ export default function RiderDashboard() {
       Object.values(activeSimulations).forEach((timer) => clearInterval(timer));
     };
   }, [activeSimulations]);
+  const [authErrorStatus, setAuthErrorStatus] = useState(null); // 'Pending', 'Suspended', 'Blocked', or null
+
+  const handleAuthChange = (e) => {
+    setAuthData({ ...authData, [e.target.name]: e.target.value });
+  };
+
+  const submitAuth = async (e) => {
+    e.preventDefault();
+    setAuthErrorStatus(null);
+    try {
+      const res = await axios.post(url + "/api/rider/login", authData);
+      if (res.data.success) {
+        setToken(res.data.token);
+        localStorage.setItem("riderToken", res.data.token);
+        setRiderData(res.data.rider);
+        localStorage.setItem("riderData", JSON.stringify(res.data.rider));
+        if (res.data.rider.isOnDuty !== undefined) setIsOnDuty(res.data.rider.isOnDuty);
+      } else {
+        const msg = res.data.message || "";
+        if (msg.toLowerCase().includes("pending")) {
+          setAuthErrorStatus("Pending");
+        } else if (msg.toLowerCase().includes("suspended")) {
+          setAuthErrorStatus("Suspended");
+        } else if (msg.toLowerCase().includes("blocked")) {
+          setAuthErrorStatus("Blocked");
+        } else {
+          alert(msg);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Authentication failed. Please check backend server connection.");
+    }
+  };
+
+  const logout = () => {
+    setToken("");
+    setRiderData(null);
+    setAuthErrorStatus(null);
+    localStorage.removeItem("riderToken");
+    localStorage.removeItem("riderData");
+  };
 
   // Derived shift stats
   const deliveredToday = orders.filter(o => o.status === "Delivered").length;
   const activeOrdersCount = orders.filter(o => o.status !== "Delivered").length;
-  const estimatedShiftEarnings = (deliveredToday * 4.5).toFixed(2); // $4.50 base payout per order
+  const estimatedShiftEarnings = (deliveredToday * 4.5).toFixed(2);
 
   if (!token || !riderData) {
     return (
-      <div className="rider-auth-container">
-        <form onSubmit={submitAuth} className="rider-auth-form">
-          <h2>Rider Login 🛵</h2>
-          <p className="rider-login-sub">Access your live delivery portal and active assignments.</p>
-          
-          <div className="form-group">
-            <label style={{ fontSize: '13px', fontWeight: 'bold', color: '#374151' }}>Email Address</label>
-            <input type="email" name="email" placeholder="john@example.com" onChange={handleAuthChange} required />
+      <div className="rider-auth-page-wrapper">
+        <div className="rider-auth-card">
+          <div className="rider-auth-brand">
+            <span className="rider-fleet-tag">⚡ FEASTO FLEET OPERATIONS</span>
+            <h2>Rider Courier Portal 🛵</h2>
+            <p className="rider-auth-subtext">Log in to manage live deliveries, navigate orders, and collect shift payouts.</p>
           </div>
 
-          <div className="form-group">
-            <label style={{ fontSize: '13px', fontWeight: 'bold', color: '#374151' }}>Password</label>
-            <div className="password-input-wrapper">
-              <input 
-                type={showRiderPassword ? "text" : "password"} 
-                name="password" 
-                placeholder="Enter your password" 
-                onChange={handleAuthChange} 
-                required 
-              />
-              <button 
-                type="button" 
-                className="password-toggle-btn"
-                onClick={() => setShowRiderPassword(!showRiderPassword)}
-                title={showRiderPassword ? "Hide Password" : "Show Password"}
-              >
-                {showRiderPassword ? "🙈" : "👁️"}
+          {/* Admin KYC Verification Status Screen */}
+          {authErrorStatus === "Pending" ? (
+            <div className="kyc-verification-container">
+              <div className="kyc-status-header">
+                <span className="kyc-badge-pill pending">⏳ UNDER ADMIN REVIEW</span>
+                <h3>KYC Verification in Progress</h3>
+                <p>Your application and submitted documents are currently being audited by the Admin Operations Team.</p>
+              </div>
+
+              <div className="kyc-roadmap-steps">
+                <div className="kyc-step completed">
+                  <div className="step-number">1</div>
+                  <div className="step-info">
+                    <strong>Account Registered</strong>
+                    <span>Credentials & Vehicle details saved</span>
+                  </div>
+                  <span className="step-icon">✅</span>
+                </div>
+
+                <div className="kyc-step active">
+                  <div className="step-number">2</div>
+                  <div className="step-info">
+                    <strong>Admin Document Audit</strong>
+                    <span>Driving License, RC & Govt ID review</span>
+                  </div>
+                  <span className="step-icon">⏳</span>
+                </div>
+
+                <div className="kyc-step upcoming">
+                  <div className="step-number">3</div>
+                  <div className="step-info">
+                    <strong>Fleet Activation</strong>
+                    <span>Order dispatch radar enabled</span>
+                  </div>
+                  <span className="step-icon">🔒</span>
+                </div>
+              </div>
+
+              <div className="kyc-notice-box">
+                <span>⏱️ Average Review Time: <strong>12 - 24 Hours</strong></span>
+                <p>Once verified by Admin in Fleet Operations, your account will immediately unlock live order assignments.</p>
+              </div>
+
+              <div className="kyc-action-row">
+                <button type="button" className="btn-kyc-refresh" onClick={() => setAuthErrorStatus(null)}>
+                  🔄 Try Logging In Again
+                </button>
+                <Link to="/rider-signup" className="btn-kyc-support">Re-submit Details</Link>
+              </div>
+            </div>
+          ) : authErrorStatus === "Suspended" || authErrorStatus === "Blocked" ? (
+            <div className="kyc-verification-container error">
+              <div className="kyc-status-header">
+                <span className="kyc-badge-pill blocked">⚠️ ACCOUNT {authErrorStatus.toUpperCase()}</span>
+                <h3>Action Required</h3>
+                <p>Your rider account has been {authErrorStatus.toLowerCase()} by Admin Operations due to account policy or document updates.</p>
+              </div>
+              <button type="button" className="btn-kyc-refresh" onClick={() => setAuthErrorStatus(null)}>
+                ← Back to Login
               </button>
             </div>
-          </div>
+          ) : (
+            <form onSubmit={submitAuth} className="rider-auth-form">
+              <div className="form-group">
+                <label>Email Address</label>
+                <div className="input-with-icon">
+                  <span className="input-prefix">✉️</span>
+                  <input 
+                    type="email" 
+                    name="email" 
+                    placeholder="rider@feasto.com" 
+                    onChange={handleAuthChange} 
+                    required 
+                  />
+                </div>
+              </div>
 
-          <button type="submit" className="rider-auth-btn">Login to Rider Portal</button>
-          
-          <div style={{ textAlign: "center", marginTop: "10px" }}>
-            <Link to="/rider-signup" style={{ color: "#ff5a3d", fontSize: "13.5px", fontWeight: "bold", textDecoration: "none" }}>
-              Not a rider yet? Apply here →
-            </Link>
-          </div>
-        </form>
+              <div className="form-group">
+                <label>Password</label>
+                <div className="input-with-icon">
+                  <span className="input-prefix">🔒</span>
+                  <input 
+                    type={showRiderPassword ? "text" : "password"} 
+                    name="password" 
+                    placeholder="Enter account password" 
+                    onChange={handleAuthChange} 
+                    required 
+                  />
+                  <button 
+                    type="button" 
+                    className="password-toggle-btn"
+                    onClick={() => setShowRiderPassword(!showRiderPassword)}
+                    title={showRiderPassword ? "Hide Password" : "Show Password"}
+                  >
+                    {showRiderPassword ? "🙈" : "👁️"}
+                  </button>
+                </div>
+              </div>
+
+              <button type="submit" className="btn-rider-submit">
+                🚀 Login to Delivery Portal
+              </button>
+              
+              <div className="rider-auth-footer">
+                <p>Want to deliver with Feasto? <Link to="/rider-signup">Apply as Courier Partner →</Link></p>
+              </div>
+            </form>
+          )}
+        </div>
       </div>
     );
   }
