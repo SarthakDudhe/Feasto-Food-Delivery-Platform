@@ -1,96 +1,170 @@
-import React, { useContext, useEffect, useState } from 'react'
-import "./LoginPopup.css"
-import { assets } from '../../assets/assets'
-import { StoreContext } from '../../context/StoreContext'
-import axios from "axios"
-const LoginPopup = ({setShowLogin}) => {
+import React, { useContext, useState } from 'react';
+import "./LoginPopup.css";
+import { assets } from '../../assets/assets';
+import { StoreContext } from '../../context/StoreContext';
+import axios from "axios";
 
-const{url,token,setToken} = useContext(StoreContext)
+const LoginPopup = ({ setShowLogin }) => {
+  const { url, setToken } = useContext(StoreContext);
 
-const[currentState,setCurrentState] = useState("Sign Up")
-const[showPassword,setShowPassword] = useState(false)
-const [data,setData] = useState({
-  name:"",
-  email:"",
-  password:""
-})
+  const [currentState, setCurrentState] = useState("Sign Up");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    password: ""
+  });
 
-const onChangeHandler=(event)=>{
-  const name = event.target.name
-  const value = event.target.value
-  setData(data =>({...data,[name]:value}))
-}
+  const onChangeHandler = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setData(prev => ({ ...prev, [name]: value }));
+  };
 
-const onLogin = async(event) =>{
-event.preventDefault()
+  const onLogin = async (event) => {
+    event.preventDefault();
+    setLoading(true);
 
-let newURL = url
-if (currentState == "Login") {
-  newURL += "/api/user/login"
-}
-else{
-  newURL +="/api/user/register"
-}
-const response = await axios.post(newURL,data);
+    let newURL = url;
+    if (currentState === "Login") {
+      newURL += "/api/user/login";
+    } else {
+      newURL += "/api/user/register";
+    }
 
-
-if (response.data.success) {
-  setToken(response.data.token);
-  console.log(response.data.token)
-  localStorage.setItem("token",response.data.token)
-  setShowLogin(false)
-}else{
-  alert(response.data.message)
-}
-
-}
+    try {
+      const response = await axios.post(newURL, data);
+      if (response.data.success) {
+        setToken(response.data.token);
+        localStorage.setItem("token", response.data.token);
+        setShowLogin(false);
+      } else {
+        alert(response.data.message);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Authentication failed. Please check your credentials.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className='login-popup'>
       <form onSubmit={onLogin} className='login-popup-container'>
-        <div className="login-popup-title">
-            <h2>{currentState}</h2>
-            <img src={assets.cross_icon} onClick={()=>setShowLogin(false)} alt="Close" />
+        {/* Close Button */}
+        <button 
+          type="button" 
+          className="login-close-btn" 
+          onClick={() => setShowLogin(false)}
+          title="Close Modal"
+        >
+          ✕
+        </button>
+
+        {/* Hero Header */}
+        <div className="login-popup-header">
+          <span className="feasto-brand-badge">✨ FEASTO AUTHENTICATION</span>
+          <h2>{currentState === "Sign Up" ? "Create Your Account" : "Welcome Back"}</h2>
+          <p className="login-header-sub">
+            {currentState === "Sign Up" 
+              ? "Join Feasto to explore gourmet meals, track macros, and earn rewards." 
+              : "Access your saved orders, macro plans, and fast checkout."}
+          </p>
         </div>
+
+        {/* Tab Switcher */}
+        <div className="login-tab-switcher">
+          <button 
+            type="button" 
+            className={`tab-switch-btn ${currentState === "Login" ? "active" : ""}`}
+            onClick={() => setCurrentState("Login")}
+          >
+            Sign In
+          </button>
+          <button 
+            type="button" 
+            className={`tab-switch-btn ${currentState === "Sign Up" ? "active" : ""}`}
+            onClick={() => setCurrentState("Sign Up")}
+          >
+            Create Account
+          </button>
+        </div>
+
+        {/* Input Fields */}
         <div className="login-popup-inputs">
-            {
-                currentState === "Login"? <></>:<input onChange={onChangeHandler} value={data.name} type="text" name="name" placeholder='Your full name' required/>
-            }
-            
-            <input onChange={onChangeHandler} value={data.email} type="email" name="email" placeholder='Your email address' required />
-            
-            <div className="password-input-wrapper">
+          {currentState === "Sign Up" && (
+            <div className="input-field-group">
+              <span className="field-prefix-icon">👤</span>
               <input 
                 onChange={onChangeHandler} 
-                value={data.password} 
-                type={showPassword ? "text" : "password"} 
-                name="password" 
-                placeholder='Password'  
-                required 
+                value={data.name} 
+                type="text" 
+                name="name" 
+                placeholder='Full Name' 
+                required
               />
-              <button 
-                type="button" 
-                className="password-toggle-btn"
-                onClick={() => setShowPassword(!showPassword)}
-                title={showPassword ? "Hide Password" : "Show Password"}
-              >
-                {showPassword ? "🙈" : "👁️"}
-              </button>
             </div>
+          )}
+          
+          <div className="input-field-group">
+            <span className="field-prefix-icon">✉️</span>
+            <input 
+              onChange={onChangeHandler} 
+              value={data.email} 
+              type="email" 
+              name="email" 
+              placeholder='Email Address' 
+              required 
+            />
+          </div>
+
+          <div className="input-field-group">
+            <span className="field-prefix-icon">🔒</span>
+            <input 
+              onChange={onChangeHandler} 
+              value={data.password} 
+              type={showPassword ? "text" : "password"} 
+              name="password" 
+              placeholder='Password (min 8 chars)'  
+              required 
+            />
+            <button 
+              type="button" 
+              className="password-toggle-eye"
+              onClick={() => setShowPassword(!showPassword)}
+              title={showPassword ? "Hide Password" : "Show Password"}
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </button>
+          </div>
         </div>
-        <button type='submit' >{currentState ==="Sign Up" ? "Create account" : "Login"}</button>
+
+        {/* Terms Checkbox */}
         <div className="login-popup-condition">
-            <input type="checkbox" required />
-            <p>By continuing, i agree to the terms of use & privacy policy. </p>
+          <input type="checkbox" id="terms-check" required />
+          <label htmlFor="terms-check">
+            I agree to Feasto's <a href="#footer" onClick={() => setShowLogin(false)}>Terms of Service</a> &amp; <a href="#footer" onClick={() => setShowLogin(false)}>Privacy Policy</a>.
+          </label>
         </div>
-        {
-            currentState ==="Sign Up" ?   <p>Already have an account? <span onClick={()=>setCurrentState("Login")}>Login here</span></p> : <p>Create a new account? <span onClick={()=>setCurrentState("Sign Up")}>Click here</span></p>
-        }
-       
-        
+
+        {/* Shimmer CTA Button */}
+        <button type='submit' className="btn-login-shimmer" disabled={loading}>
+          {loading ? "Processing..." : currentState === "Sign Up" ? "🚀 Create Account" : "🔓 Sign In to Feasto"}
+        </button>
+
+        {/* Bottom Toggle Link */}
+        <div className="login-footer-toggle">
+          {currentState === "Sign Up" ? (
+            <p>Already have an account? <span onClick={() => setCurrentState("Login")}>Sign In Here</span></p>
+          ) : (
+            <p>New to Feasto? <span onClick={() => setCurrentState("Sign Up")}>Create Account</span></p>
+          )}
+        </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default LoginPopup
+export default LoginPopup;

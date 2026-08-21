@@ -7,12 +7,14 @@ const Navbar = ({setShowLogin}) => {
 
 const [menu,setMenu] = useState("home");
 const [isMobileOpen, setIsMobileOpen] = useState(false);
-const{getTotalCartAmount,token,setToken} = useContext(StoreContext)
+const {getTotalCartAmount,token,setToken} = useContext(StoreContext)
+const riderToken = localStorage.getItem("riderToken");
 const navigate = useNavigate();
+
 const logout = () =>{
-localStorage.removeItem("token")
-setToken("")
-navigate("/")
+  localStorage.removeItem("token")
+  setToken("")
+  navigate("/")
 }
 
   return (
@@ -27,11 +29,6 @@ navigate("/")
           <Link to="/health-planner" onClick={()=>setMenu("health")} className={`health-nav-pill ${menu == "health" ? "active" : ""}`}>
             <span>Health & Macros</span> <span className="health-badge-icon">🥗</span>
           </Link>
-          {!token && (
-            <Link to="/rider-dashboard" onClick={()=>setMenu("rider")} className={`rider-nav-pill ${menu == "rider" ? "active" : ""}`}>
-              <span>Rider Portal</span> <span className="rider-badge-icon">🛵</span>
-            </Link>
-          )}
           <a href='#app-download' onClick={()=>setMenu("mobile-app")} className={menu =="mobile-app"?"active":""}>Mobile-App</a>
           <a href='#footer' onClick={()=>setMenu("contact-us")} className={menu =="contact-us"?"active":""}>Contact Us</a>
         </ul>
@@ -42,14 +39,23 @@ navigate("/")
             <Link to={"/cart"}><img src={assets.basket_icon} alt="" /></Link> 
             <div className={getTotalCartAmount() ===0 ? "" :"dot"}></div>
           </div>
-          {!token ? <button onClick={()=>setShowLogin(true)}>sign in</button> : <div className='navbar-profile'>
-            <img src={assets.profile_icon} alt="" />
-            <ul className="nav-profile-dropdown">
-              <li onClick={()=>navigate("/myorders")}><img src={assets.bag_icon} alt="" /><p>Orders</p></li>
-              <hr />
-              <li onClick={logout}><img src={assets.logout_icon} alt="" /><p>Logout</p></li>
-            </ul>
-            </div>}
+
+          {token ? (
+            <div className='navbar-profile'>
+              <img src={assets.profile_icon} alt="" />
+              <ul className="nav-profile-dropdown">
+                <li onClick={()=>navigate("/myorders")}><img src={assets.bag_icon} alt="" /><p>Orders</p></li>
+                <hr />
+                <li onClick={logout}><img src={assets.logout_icon} alt="" /><p>Logout</p></li>
+              </ul>
+            </div>
+          ) : riderToken ? (
+            <button onClick={()=>navigate("/rider-dashboard")} className="rider-portal-nav-btn">
+              🛵 Rider Dashboard
+            </button>
+          ) : (
+            <button onClick={()=>setShowLogin(true)}>sign in</button>
+          )}
 
           {/* Mobile Hamburger Toggle Button */}
           <button
@@ -76,11 +82,6 @@ navigate("/")
               <Link to="/health-planner" onClick={() => { setMenu("health"); setIsMobileOpen(false); }} className="drawer-health-link">
                 Health &amp; Macros 🥗 <span className="drawer-new-pill">NEW</span>
               </Link>
-              {!token && (
-                <Link to="/rider-dashboard" onClick={() => { setMenu("rider"); setIsMobileOpen(false); }} className="drawer-rider-link">
-                  Rider Portal 🛵
-                </Link>
-              )}
               <a href='#app-download' onClick={() => { setMenu("mobile-app"); setIsMobileOpen(false); }}>Mobile App 📱</a>
               <a href='#footer' onClick={() => { setMenu("contact-us"); setIsMobileOpen(false); }}>Contact Us 📞</a>
             </nav>
