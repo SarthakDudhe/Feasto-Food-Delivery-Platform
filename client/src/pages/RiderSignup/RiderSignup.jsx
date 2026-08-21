@@ -3,6 +3,7 @@ import axios from 'axios';
 import './RiderSignup.css';
 
 const RiderSignup = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -13,7 +14,7 @@ const RiderSignup = () => {
   
   const [status, setStatus] = useState({ type: '', message: '' });
   
-  const url = "http://localhost:4000"; // Can use context if needed, but hardcoding for simplicity given client setup
+  const url = "http://localhost:4000";
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -67,7 +68,25 @@ const RiderSignup = () => {
           
           <div className="form-group">
             <label>Password</label>
-            <input type="password" name="password" value={formData.password} onChange={handleChange} required placeholder="Minimum 8 characters" minLength="8" />
+            <div className="password-input-wrapper">
+              <input 
+                type={showPassword ? "text" : "password"} 
+                name="password" 
+                value={formData.password} 
+                onChange={handleChange} 
+                required 
+                placeholder="Minimum 8 characters" 
+                minLength="8" 
+              />
+              <button 
+                type="button" 
+                className="password-toggle-btn"
+                onClick={() => setShowPassword(!showPassword)}
+                title={showPassword ? "Hide Password" : "Show Password"}
+              >
+                {showPassword ? "🙈" : "👁️"}
+              </button>
+            </div>
           </div>
           
           <div className="form-group">

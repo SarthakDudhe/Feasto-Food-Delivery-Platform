@@ -13,6 +13,7 @@ const socket = io(url, { transports: ["websocket"] });
 export default function RiderDashboard() {
   const [token, setToken] = useState(localStorage.getItem("riderToken") || "");
   const [riderData, setRiderData] = useState(JSON.parse(localStorage.getItem("riderData")) || null);
+  const [showRiderPassword, setShowRiderPassword] = useState(false);
   
   const [authData, setAuthData] = useState({ email: "", password: "" });
   const [orders, setOrders] = useState([]);
@@ -272,12 +273,41 @@ export default function RiderDashboard() {
     return (
       <div className="rider-auth-container">
         <form onSubmit={submitAuth} className="rider-auth-form">
-          <h2>Rider Login</h2>
-          <input type="email" name="email" placeholder="Email Address" onChange={handleAuthChange} required />
-          <input type="password" name="password" placeholder="Password" onChange={handleAuthChange} required />
-          <button type="submit" className="rider-auth-btn">Login</button>
+          <h2>Rider Login 🛵</h2>
+          <p className="rider-login-sub">Access your live delivery portal and active assignments.</p>
+          
+          <div className="form-group">
+            <label style={{ fontSize: '13px', fontWeight: 'bold', color: '#374151' }}>Email Address</label>
+            <input type="email" name="email" placeholder="john@example.com" onChange={handleAuthChange} required />
+          </div>
+
+          <div className="form-group">
+            <label style={{ fontSize: '13px', fontWeight: 'bold', color: '#374151' }}>Password</label>
+            <div className="password-input-wrapper">
+              <input 
+                type={showRiderPassword ? "text" : "password"} 
+                name="password" 
+                placeholder="Enter your password" 
+                onChange={handleAuthChange} 
+                required 
+              />
+              <button 
+                type="button" 
+                className="password-toggle-btn"
+                onClick={() => setShowRiderPassword(!showRiderPassword)}
+                title={showRiderPassword ? "Hide Password" : "Show Password"}
+              >
+                {showRiderPassword ? "🙈" : "👁️"}
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" className="rider-auth-btn">Login to Rider Portal</button>
+          
           <div style={{ textAlign: "center", marginTop: "10px" }}>
-            <Link to="/rider-signup" style={{ color: "#ff5a3d", fontSize: "13px" }}>Not a rider yet? Apply here</Link>
+            <Link to="/rider-signup" style={{ color: "#ff5a3d", fontSize: "13.5px", fontWeight: "bold", textDecoration: "none" }}>
+              Not a rider yet? Apply here →
+            </Link>
           </div>
         </form>
       </div>
