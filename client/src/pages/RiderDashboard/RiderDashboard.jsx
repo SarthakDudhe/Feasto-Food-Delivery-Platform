@@ -4,6 +4,7 @@ import io from "socket.io-client";
 import { Link } from "react-router-dom";
 import RiderMap from "../../components/RiderMap/RiderMap";
 import "./RiderDashboard.css";
+import "../RiderSignup/RiderSignup.css";
 
 const KITCHEN_COORDS = [72.8296, 19.0544];
 const url = "http://localhost:4000";
