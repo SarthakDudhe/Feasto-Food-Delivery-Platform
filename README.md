@@ -1,4 +1,4 @@
-# 🍳 Feasto: Premium Food Delivery Platform, Real-Time Rider Logistics & AI Assistant
+# 🍳 Feasto: Enterprise Food Delivery Platform, Real-Time Rider Logistics & AI Assistant
 
 <div align="center">
 
@@ -8,30 +8,36 @@
 <br />
 
 <!-- Logo & Subtitle -->
-<img width="110" alt="Feasto Logo" src="https://github.com/user-attachments/assets/7d579b8e-5da1-48b6-ba26-1b493e018ee4" />
+<img width="120" alt="Feasto Logo" src="https://github.com/user-attachments/assets/7d579b8e-5da1-48b6-ba26-1b493e018ee4" />
 
-<h3>Enterprise Full-Stack Food Delivery Ecosystem, Real-Time Rider Logistics Stream, Gemini AI Recipe Assistant & Operations Workspace.</h3>
+<h3>Multi-Sided Full-Stack Delivery Ecosystem, Real-Time Rider GPS Streaming, Gemini AI Recipe Assistant & Operations Command Center.</h3>
 
 <p>
-  <strong>A Recruiter-Focused Senior Engineering Showcase</strong><br />
-  Built with React 19, Express 5, MongoDB, Socket.IO WebSockets, MapLibre GL, Stripe Checkout, HTML5 Canvas, and Google Gemini AI.
+  <strong>A Senior Software Engineering Showcase & Product Masterpiece</strong><br />
+  Built with React 19, Express 5 ESM, MongoDB Atlas, Socket.IO WebSockets, MapLibre GL, Stripe Checkout, HTML5 Canvas Pixel Math, and Google Gemini AI.
 </p>
 
 <!-- Badge Grid -->
 <p>
   <a href="https://github.com/SarthakDudhe/Feasto-Food-Delivery-Platform/actions"><img src="https://img.shields.io/badge/Build-Passing-10b981?style=for-the-badge&logo=github-actions&logoColor=white" alt="Build Status" /></a>
-  <a href="https://github.com/SarthakDudhe/Feasto-Food-Delivery-Platform/releases"><img src="https://img.shields.io/badge/Version-1.2.0-f97316?style=for-the-badge" alt="Version Badge" /></a>
+  <a href="https://github.com/SarthakDudhe/Feasto-Food-Delivery-Platform/releases"><img src="https://img.shields.io/badge/Version-2.4.0-f97316?style=for-the-badge" alt="Version Badge" /></a>
   <a href="https://github.com/SarthakDudhe/Feasto-Food-Delivery-Platform/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-3b82f6?style=for-the-badge" alt="License" /></a>
-  <img src="https://img.shields.io/badge/RealTime-Socket.IO-black?style=for-the-badge&logo=socket.io" alt="Socket.IO Badge" />
-  <img src="https://img.shields.io/badge/Maps-MapLibre_GL-0075ff?style=for-the-badge&logo=maplibre" alt="MapLibre Badge" />
+  <img src="https://img.shields.io/badge/RealTime-Socket.IO_v4.8-black?style=for-the-badge&logo=socket.io" alt="Socket.IO Badge" />
+  <img src="https://img.shields.io/badge/Maps-MapLibre_GL_v5.2-0075ff?style=for-the-badge&logo=maplibre" alt="MapLibre Badge" />
   <img src="https://img.shields.io/badge/AI-Google_Gemini-4285F4?style=for-the-badge&logo=google" alt="Gemini AI Badge" />
   <img src="https://img.shields.io/badge/Architecture-Monorepo-8b5cf6?style=for-the-badge" alt="Monorepo Badge" />
 </p>
 
 <p>
+  <a href="https://github.com/SarthakDudhe"><img src="https://img.shields.io/badge/GitHub-SarthakDudhe-181717?style=flat-square&logo=github" alt="GitHub" /></a>
+  <a href="https://www.linkedin.com/in/sarthak-dudhe-67155a327"><img src="https://img.shields.io/badge/LinkedIn-Sarthak_Dudhe-0A66C2?style=flat-square&logo=linkedin" alt="LinkedIn" /></a>
+  <a href="https://portfolio-sarthak-beta.vercel.app/"><img src="https://img.shields.io/badge/Portfolio-Live_Demo-ff5a3d?style=flat-square&logo=vercel" alt="Portfolio" /></a>
+</p>
+
+<p>
   <a href="#-visual-product-gallery">Visual Gallery</a> •
   <a href="#-why-this-project-matters">Product Market Fit</a> •
-  <a href="#-discovered-features--product-workflows">Feature Showcase</a> •
+  <a href="#-feature-showcase--product-workflows">Feature Showcase</a> •
   <a href="#-system-architecture--communication-flow">System Architecture</a> •
   <a href="#-technical-excellence--engineering-highlights">Technical Excellence</a> •
   <a href="#-database-schema">Database Design</a> •
@@ -45,23 +51,23 @@
 
 ## 📽️ Visual Product Gallery
 
-Here are the visual checkpoints demonstrating the warm diner aesthetic (`#fff9f5`, `#ff5a3d`, `#efdcd3`) across the customer storefront, real-time rider dashboard, and admin operations workspace.
+Explore the warm, luxury diner aesthetic (`#fffbf9`, `#ff5a3d`, `#efdcd3`) implemented across the Customer Storefront, Rider Operations Hub, and Admin Command Center.
 
-| Interface View | Recommended Mockup / Screenshot Specs | Engineering & UI Focus |
+| Interface View | Recommended Spec & Resolution | Engineering & UX Focus |
 | :--- | :--- | :--- |
-| **Storefront & Menu Explorer** | `[Hero Banner: 1400x600px]` Landing page with banner carousel, category filtering grid, and food cards. | Demonstrates responsive CSS grid fluidity and dynamic context hydration. |
-| **Real-Time MapLibre Tracking Map** | `[Map View: 1400x600px]` Live MapLibre GL map with custom animated rider markers, pickup pins, and route polyline overlay. | Highlights WebSockets (`Socket.IO`), geolocation streaming, and dynamic map bounds calculation. |
-| **Rider Operations Portal & Dashboard** | `[Rider Workspace: 1400x600px]` Driver portal for order acceptance, earnings metrics, navigation trigger, and active delivery toggles. | Showcases driver lifecycle management, online status polling, and real-time state broadcasts. |
-| **Gemini AI Recipe Assistant (Foodbot)** | `[Chat Bot View: 1400x600px]` Conversational AI chat rendering structured dish cards with instant add-to-cart buttons. | Demonstrates LLM system prompt engineering, schema JSON extraction, and client cart sync. |
-| **Gamified HTML5 Scratch Card** | `[Canvas Interaction: 1400x600px]` Metallic scratchcard overlay revealing golden discount codes based on pixel erase thresholds. | Highlights HTML5 `<canvas>` pixel manipulation (`Uint8ClampedArray`) and math thresholds. |
-| **Split-Screen Admin Workspace & KOT** | `[Admin Dashboard: 1400x600px]` Dual-pane admin workspace with packer item checklist, rider assignment, and KOT receipt printing. | Demonstrates split-pane layout, thermal receipt CSS print media formatting, and kitchen workflows. |
-| **Custom SVG Revenue Analytics** | `[Dashboard Analytics: 1400x600px]` Handcrafted SVG area chart displaying weekly sales trends with interactive vector tooltips. | Proves native SVG path plotting without third-party charting libraries. |
+| **Storefront & Menu Explorer** | `[Hero Banner: 1400x600px]` Storefront banner carousel, category filtering pill bar, and dynamic food card grid. | Fluid CSS grid layout, context-driven state hydration, and warm light theme design tokens. |
+| **Real-Time MapLibre Tracking Map** | `[Map View: 1400x600px]` Live MapLibre GL vector map with custom animated rider markers, store pins, and route polyline overlays. | WebSockets (`Socket.IO`), live driver coordinate streaming, and automatic map view bounds calculation. |
+| **Rider Operations Portal & KYC Roadmap** | `[Rider Workspace: 1400x600px]` Courier shift portal with live duty toggle, earnings metrics, and 3-step Admin KYC verification roadmap card. | Driver shift lifecycle, online availability broadcasts, and multi-state KYC audit authorization workflows. |
+| **Gemini AI Recipe Assistant (Foodbot)** | `[Chat Bot View: 1400x600px]` Conversational AI rendering structured dish cards with instant 1-click cart sync. | LLM prompt engineering, strict JSON schema parsing, and client context cart hydration. |
+| **Gamified HTML5 Scratch Card** | `[Canvas Interaction: 1400x600px]` Metallic scratchcard revealing golden coupon codes based on real-time pixel erase thresholds. | HTML5 `<canvas>` pixel manipulation (`Uint8ClampedArray`), alpha opacity calculations, and confetti triggers. |
+| **Split-Pane Admin Workspace & KOT** | `[Admin Dashboard: 1400x600px]` Dual-pane orders workspace with item packer checklists, rider dispatcher, and 80mm thermal KOT printer. | Split-pane layout, thermal receipt CSS print media directives (`@media print`), and kitchen packing state machines. |
+| **Custom SVG Data Analytics** | `[Dashboard Analytics: 1400x600px]` Handcrafted SVG area trend charts calculating weekly sales velocity and order breakdowns. | Native SVG vector path rendering without third-party charting dependencies. |
 
 ---
 
 ## 🎯 Why This Project Matters
 
-Most student or boilerplate food delivery clones are simple "read-only lists" attached to basic Stripe checkouts. They lack the real-world operational logistics, real-time sync, and intelligent agent features required by modern multi-sided delivery platforms (DoorDash, UberEats, Deliveroo):
+Most student or tutorial food delivery clones are simple "read-only lists" attached to standard Stripe checkouts. They lack the real-world operational logistics, real-time sync, and intelligent agent features required by modern multi-sided delivery platforms (DoorDash, UberEats, Deliveroo):
 
 * **The Logistics & Dispatch Gap:** Delivery couriers require a real-time dispatch mechanism, live GPS location broadcasts, and interactive MapLibre map interfaces to navigate to customers efficiently.
 * **The Operational & Kitchen Gap:** Restaurant staff cannot manage high-volume orders using basic grids; they require **split-pane inspector views**, **item-by-item packer checklists**, and printable **Kitchen Order Tickets (KOT)** for line cooks.
@@ -71,29 +77,33 @@ Most student or boilerplate food delivery clones are simple "read-only lists" at
 
 ---
 
-## ✨ Discovered Features & Product Workflows
+## ✨ Feature Showcase & Product Workflows
 
-### 1. Customer Storefront & Commerce
-* **Dynamic Menu & Cart Synchronization**:
-  - Context-driven item filtering with persistent state in `StoreContext.jsx`.
-  - Automatic synchronization of cart quantities to MongoDB for authenticated users.
-* **Stripe Secure Checkout Session**:
-  - Direct integration with Stripe API for secure payment processing.
-  - Server verification webhook/callback endpoint ([orderController.js](file:///c:/Users/saksh/Desktop/MY%20PROJECTS/Feasto-Food%20Delivery%20Platform/server/controllers/orderController.js)) updating payment status instantly.
+### 1. Customer Storefront & E-Commerce Core
+* **Dynamic Category & Cart Synchronization**:
+  - Context-driven menu filtering with persistent state in `StoreContext.jsx`.
+  - Automatic bidirectional synchronization of cart item quantities to MongoDB for authenticated users.
+* **Stripe Secure Checkout Engine**:
+  - Direct integration with Stripe Checkout API for secure card payments.
+  - Server verification webhook callback (`/api/order/verify`) validating payment status and updating database records instantly.
+* **Nutritional Health Goal Calculator & Swaps**:
+  - Interactive modal calculating recommended daily macro targets (calories, protein, carbs, fats) based on user metrics.
+  - Smart dish substitution algorithm suggesting healthy alternatives for high-calorie cart items.
 
-### 2. Real-Time Rider Logistics & MapLibre GL Integration
-* **Live GPS Tracking with MapLibre GL**:
+### 2. Real-Time Rider Logistics & MapLibre GL Engine
+* **Live GPS Navigation Map**:
   - Integrates `@vis.gl/react-maplibre` and `maplibre-gl` for real-time map rendering ([DeliveryMap.jsx](file:///c:/Users/saksh/Desktop/MY%20PROJECTS/Feasto-Food%20Delivery%20Platform/client/src/components/DeliveryMap/DeliveryMap.jsx)).
   - Renders animated scooter markers 🛵, store pickup location pins, customer delivery destinations, and custom polylines.
 * **Socket.IO Real-Time Dispatch System**:
   - Bi-directional WebSocket connection streaming live driver coordinates and status updates across client, rider, and admin applications.
   - Instant status transitions: `Food Processing` ➔ `Rider Assigned` ➔ `Out for Delivery` ➔ `Delivered`.
-* **Dedicated Rider Portal**:
+* **Split-Hero Rider Portal & Admin KYC Roadmap**:
   - Driver onboarding and profile management ([RiderSignup.jsx](file:///c:/Users/saksh/Desktop/MY%20PROJECTS/Feasto-Food%20Delivery%20Platform/client/src/pages/RiderSignup/RiderSignup.jsx), [RiderDashboard.jsx](file:///c:/Users/saksh/Desktop/MY%20PROJECTS/Feasto-Food%20Delivery%20Platform/client/src/pages/RiderDashboard/RiderDashboard.jsx)).
-  - Live availability toggle (`online`/`offline`), earnings tracker, accepted orders feed, and one-click Google Maps navigation triggers.
+  - Interactive **3-Step Admin KYC Verification Card** (*Registered*, *Admin Audit*, *Fleet Activation*) with live status polling.
+  - Live duty toggle (`online`/`offline`), earnings tracker, accepted orders feed, and one-click Google Maps navigation triggers.
 
 ### 3. Conversational AI Assistant (Foodbot)
-* **Google Gemini AI Integration**:
+* **Google Gemini AI Engine**:
   - Powered by `@google/genai` API SDK with structured system prompts ([aiController.js](file:///c:/Users/saksh/Desktop/MY%20PROJECTS/Feasto-Food%20Delivery%20Platform/server/controllers/aiController.js)).
   - Interprets natural language requests ("I want a healthy low-carb dinner under $20") and matches them against live database food catalog items.
   - Renders response text along with a **horizontal scrollable dish card carousel** enabling direct "Add to Cart" execution.
@@ -104,37 +114,50 @@ Most student or boilerplate food delivery clones are simple "read-only lists" at
   - Uses `globalCompositeOperation = 'destination-out'` to simulate realistic scratching.
   - Calculates erased pixel density via `getImageData()`. Once scratch threshold exceeds 45%, triggers confetti celebration and auto-applies discount code.
 
-### 5. Operations Admin Workspace & Kitchen Logistics
+### 5. Operations Command Center & Kitchen Logistics
 * **Dual-Pane Split Workspace**:
   - Orders workspace ([Order.jsx](file:///c:/Users/saksh/Desktop/MY%20PROJECTS/Feasto-Food%20Delivery%20Platform/admin/src/pages/Orders/Order.jsx)) featuring a left-side chronological orders sidebar and right-side detail inspector.
   - Packer checklists allowing staff to check off individual items before dispatch.
   - Driver assignment modal for manual dispatch to registered riders.
 * **Thermal KOT (Kitchen Order Ticket) Printing**:
   - Custom CSS `@media print` rules format the page into an 80mm thermal receipt ticket, stripping all UI controls and navigation bars.
-* **Rider Management Panel**:
-  - Admin controls ([ManageRiders.jsx](file:///c:/Users/saksh/Desktop/MY%20PROJECTS/Feasto-Food%20Delivery%20Platform/admin/src/pages/ManageRiders/ManageRiders.jsx)) for reviewing applicant riders, verifying credentials, and toggling active approval status.
+* **Rider Management & Audit Panel**:
+  - Admin controls ([ManageRiders.jsx](file:///c:/Users/saksh/Desktop/MY%20PROJECTS/Feasto-Food%20Delivery%20Platform/admin/src/pages/ManageRiders/ManageRiders.jsx)) for reviewing applicant riders, verifying credentials, and toggling active approval status (`Pending`, `Approved`, `Suspended`, `Blocked`).
 * **SVG Vector Analytics Dashboard**:
   - Native SVG area and line trend graphs ([Dashboard.jsx](file:///c:/Users/saksh/Desktop/MY%20PROJECTS/Feasto-Food%20Delivery%20Platform/admin/src/pages/Dashboard/Dashboard.jsx)) calculating sales velocity, average order values, and category breakdowns without external chart libraries.
+
 ---
 
 ## 🛠️ Technology Ecosystem
 
+```
++-------------------------------------------------------------------------------+
+|                           FRONTEND APPLICATIONS                               |
+|  React 19  |  Vite 7  |  MapLibre GL  |  Socket.IO Client  |  React Router 7  |
+|  Vanilla CSS3  |  HTML5 Canvas  |  Native SVG  |  Axios  |  React Context    |
++-------------------------------------------------------------------------------+
+|                            BACKEND API & SERVICES                             |
+|  Node.js ESM  |  Express 5  |  MongoDB Atlas  |  Mongoose 9  |  Socket.IO     |
+|  Google Gemini AI  |  Stripe SDK  |  JWT Auth  |  Bcrypt  |  Multer Storage   |
++-------------------------------------------------------------------------------+
+```
+
 ### Frontend Applications (`client/` & `admin/`)
-* **Framework**: React 19.2.0, Vite 7, React Router DOM 7
+* **Core Framework**: React 19.2.0, Vite 7, React Router DOM 7
 * **Real-Time WebSockets**: `socket.io-client` 4.8.3
 * **Map & Geolocation**: MapLibre GL 5.24.0, `@vis.gl/react-maplibre` 8.1.1
-* **Styling**: Vanilla CSS3 (Custom properties, HSL color tokens, Glassmorphism gradients, Flexbox/Grid)
-* **HTTP & State**: Axios 1.13.2, React Context API (`StoreContext`)
-* **Interactive Components**: HTML5 Canvas pixel manipulation, custom SVG vector graphs
+* **Styling**: Vanilla CSS3 (Custom properties, HSL color tokens, Glassmorphic gradients, Flexbox/Grid)
+* **State Management & Network**: Axios 1.13.2, React Context API (`StoreContext`)
+* **Interactive Controls**: HTML5 Canvas pixel manipulation, custom SVG vector graphs
 
 ### Backend API Server (`server/`)
 * **Runtime & Framework**: Node.js ESM, Express 5.2.1
-* **Database & ODM**: MongoDB, Mongoose 9.0.1
+* **Database & ODM**: MongoDB Atlas, Mongoose 9.0.1
 * **Real-Time Gateway**: Socket.IO 4.8.3 bi-directional event engine
 * **AI Engine Integration**: Google Gemini AI (`@google/genai` 1.39.0)
 * **Payment Gateway**: Stripe SDK 20.0.0 (Checkout session creation & verification)
 * **Authentication & Hashing**: JSON Web Token (JWT) 9.0.3, Bcrypt 6.0.0, Validator 13.15.23
-* **File Processing**: Multer 2.0.2 disk storage engine
+* **File Uploads**: Multer 2.0.2 disk storage engine
 
 ---
 
@@ -249,8 +272,8 @@ erDiagram
         string email "Unique driver email"
         string phone "Contact phone number"
         string vehicleType "Bike / Scooter / Car"
-        string status "Pending / Approved / Rejected"
-        boolean isAvailable "Online status toggle"
+        string accountStatus "Pending / Approved / Suspended / Blocked"
+        boolean isOnDuty "Online status toggle"
         object currentLocation "Lat, Lng coordinates"
     }
 
@@ -307,7 +330,7 @@ erDiagram
 | `POST` | `/api/rider/register` | Submit driver application | No |
 | `POST` | `/api/rider/login` | Authenticate rider profile | No |
 | `GET` | `/api/rider/list` | List all registered drivers | Admin |
-| `POST` | `/api/rider/approve` | Approve driver application status | Admin |
+| `POST` | `/api/rider/approve` | Update rider status (`Approved`/`Suspended`/`Blocked`) | Admin |
 | `POST` | `/api/rider/location` | Stream live GPS location coordinates | Rider |
 
 ### Conversational AI (`/api/ai`)
@@ -317,37 +340,24 @@ erDiagram
 
 ---
 
-## 🏆 Key Achievements & Resume Highlights
-
-```text
-• Engineered a multi-sided food delivery monorepo serving Customers, Drivers, and Admins using React 19, Express 5, and MongoDB.
-• Integrated Socket.IO WebSockets and MapLibre GL for real-time driver GPS coordinate streaming and live map tracking.
-• Implemented Google Gemini AI recipe assistant using structured JSON output prompts, parsing dish recommendations directly into cart actions.
-• Built interactive HTML5 Canvas scratchcard gamification calculating real-time pixel erasure density to unlock coupon codes.
-• Handcrafted responsive SVG area chart components for financial revenue tracking without external charting library bloat.
-• Configured automated thermal receipt (KOT) printing using CSS print media directives, stripping UI layout elements on demand.
-```
-
----
-
 ## 📁 Monorepo Directory Layout
 
 ```text
 Feasto-Food-Delivery-Platform/
-├── client/                     # Customer & Rider React Application
+├── client/                     # Customer Storefront & Rider React App
 │   ├── src/
-│   │   ├── components/         # Navbar, Footer, DeliveryMap, ScratchCard, FoodDisplay
+│   │   ├── components/         # Navbar, Footer, DeliveryMap, ScratchCard, FoodDisplay, LoginPopup
 │   │   ├── context/            # Global StoreContext state provider
-│   │   ├── pages/              # Home, Cart, PlaceOrder, TrackOrder, Foodbot, RiderDashboard
-│   │   └── utils/              # Map helpers and utility functions
+│   │   ├── pages/              # Home, Cart, PlaceOrder, TrackOrder, Foodbot, RiderDashboard, RiderSignup
+│   │   └── utils/              # Map helpers and routing utility functions
 │   └── index.html
-├── admin/                      # Operations Admin Panel
+├── admin/                      # Operations Command Center
 │   ├── src/
 │   │   ├── components/         # Navbar, Sidebar panel
 │   │   ├── pages/              # Add menu, List inventory, Orders split pane, ManageRiders, Dashboard
 │   │   └── assets/             # Operational static assets
 │   └── index.html
-├── server/                     # Node.js + Express API Backend
+├── server/                     # Node.js ESM Express API Backend
 │   ├── configs/                # MongoDB Mongoose configurations
 │   ├── controllers/            # Auth, Cart, Food catalog, Order workflows, Rider operations, AI
 │   ├── middleware/             # Header JWT authentication middleware
@@ -387,7 +397,7 @@ cd Feasto-Food-Delivery-Platform
 npm run install:all
 ```
 
-### Step 3: Run Micro-Services & Frontends
+### Step 3: Run Services & Frontends
 
 #### Run API & Socket.IO Backend Server (Port `4000`):
 ```bash
@@ -404,7 +414,6 @@ npm run client
 npm run admin
 ```
 
-
 ---
 
 ## 📄 License
@@ -414,8 +423,8 @@ This project is licensed under the **MIT License**. See the [LICENSE](file:///c:
 
 ## 📧 Contact & Developer Info
 
-* **GitHub:** [SarthakDudhe](https://github.com/SarthakDudhe)
+* **Developer:** Sarthak Dudhe
+* **GitHub:** [@SarthakDudhe](https://github.com/SarthakDudhe)
 * **LinkedIn:** [Sarthak Dudhe](https://www.linkedin.com/in/sarthak-dudhe-67155a327)
-* **Portfolio:** [Portfolio Website](https://portfolio-sarthak-beta.vercel.app/)
+* **Portfolio:** [Sarthak's Portfolio](https://portfolio-sarthak-beta.vercel.app/)
 * **Email:** `sarthakdudhe79@gmail.com`
-
