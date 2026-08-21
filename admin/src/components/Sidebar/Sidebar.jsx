@@ -18,13 +18,13 @@ const Sidebar = () => {
         <img src={assets.order_icon} alt="" />
         <p>Menu List</p>
     </NavLink>
-      <NavLink to="/orders" className="sidebar-option">
+        <NavLink to="/orders" className="sidebar-option">
         <img src={assets.parcel_icon} alt="" />
         <p>Orders</p>
     </NavLink>
         <NavLink to="/manage-riders" className="sidebar-option">
-          <img src={assets.order_icon} alt="" />
-          <p>Manage Riders</p>
+          <span style={{ fontSize: "20px", display: "flex", alignItems: "center", justifyContent: "center", width: "24px" }}>🛵</span>
+          <p>Fleet Operations</p>
         </NavLink>
 </div>
     </div>

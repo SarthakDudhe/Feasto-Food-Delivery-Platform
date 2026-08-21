@@ -21,7 +21,24 @@ const riderSchema = new mongoose.Schema({
     }
   ],
   averageRating: { type: Number, default: 5 },
-  totalRatings: { type: Number, default: 0 }
+  totalRatings: { type: Number, default: 0 },
+  isOnDuty: { type: Boolean, default: true },
+  currentLocation: {
+    lat: { type: Number, default: 28.6139 },
+    lng: { type: Number, default: 77.2090 },
+    lastUpdated: { type: Date, default: Date.now }
+  },
+  documents: {
+    idCardUrl: { type: String, default: "" },
+    licenseUrl: { type: String, default: "" },
+    vehicleRcUrl: { type: String, default: "" },
+    notes: { type: String, default: "" }
+  },
+  earnings: {
+    totalEarned: { type: Number, default: 0 },
+    cashCollected: { type: Number, default: 0 },
+    pendingPayout: { type: Number, default: 0 }
+  }
 }, { minimize: false });
 
 const riderModel = mongoose.models.rider || mongoose.model("rider", riderSchema);

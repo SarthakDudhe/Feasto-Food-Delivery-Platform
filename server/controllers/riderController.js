@@ -176,4 +176,56 @@ const addMisconductReport = async (req, res) => {
     }
 }
 
-export { loginRider, registerRider, listRiders, verifyRider, updateRiderAccountStatus, updateVerificationParameters, addMisconductReport }
+// update rider KYC documents
+const updateRiderDocuments = async (req, res) => {
+    try {
+        const { riderId, idCardUrl, licenseUrl, vehicleRcUrl, notes } = req.body;
+        const rider = await riderModel.findById(riderId);
+        if (!rider) {
+            return res.json({ success: false, message: "Rider not found" });
+        }
+        if (!rider.documents) rider.documents = {};
+        if (idCardUrl !== undefined) rider.documents.idCardUrl = idCardUrl;
+        if (licenseUrl !== undefined) rider.documents.licenseUrl = licenseUrl;
+        if (vehicleRcUrl !== undefined) rider.documents.vehicleRcUrl = vehicleRcUrl;
+        if (notes !== undefined) rider.documents.notes = notes;
+
+        await rider.save();
+        res.json({ success: true, message: "Document details updated successfully", rider });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Error updating document details" });
+    }
+}
+
+// settle rider payout
+const settleRiderPayout = async (req, res) => {
+    try {
+        const { riderId, amount } = req.body;
+        const rider = await riderModel.findById(riderId);
+        if (!rider) {
+            return res.json({ success: false, message: "Rider not found" });
+        }
+        if (!rider.earnings) rider.earnings = { totalEarned: 0, cashCollected: 0, pendingPayout: 0 };
+        const payoutAmount = Number(amount) || rider.earnings.pendingPayout;
+        rider.earnings.pendingPayout = Math.max(0, rider.earnings.pendingPayout - payoutAmount);
+        await rider.save();
+        res.json({ success: true, message: `Payout of $${payoutAmount} settled!`, rider });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Error settling payout" });
+    }
+}
+
+// get fleet map data for admin live dispatch map
+const getFleetMapData = async (req, res) => {
+    try {
+        const riders = await riderModel.find({ accountStatus: "Active" }).select("-password");
+        res.json({ success: true, data: riders });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Error fetching fleet map data" });
+    }
+}
+
+export { loginRider, registerRider, listRiders, verifyRider, updateRiderAccountStatus, updateVerificationParameters, addMisconductReport, updateRiderDocuments, settleRiderPayout, getFleetMapData }
