@@ -234,4 +234,15 @@ const toggleRiderDuty = async (req, res) => {
     }
 }
 
+// get fleet map data for admin live dispatch map
+const getFleetMapData = async (req, res) => {
+    try {
+        const riders = await riderModel.find({ accountStatus: "Active" }).select("-password");
+        res.json({ success: true, data: riders });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Error fetching fleet map data" });
+    }
+}
+
 export { loginRider, registerRider, listRiders, verifyRider, updateRiderAccountStatus, updateVerificationParameters, addMisconductReport, updateRiderDocuments, settleRiderPayout, getFleetMapData, toggleRiderDuty }
