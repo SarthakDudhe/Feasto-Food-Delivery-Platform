@@ -217,15 +217,21 @@ const settleRiderPayout = async (req, res) => {
     }
 }
 
-// get fleet map data for admin live dispatch map
-const getFleetMapData = async (req, res) => {
+// toggle rider online / offline duty status
+const toggleRiderDuty = async (req, res) => {
     try {
-        const riders = await riderModel.find({ accountStatus: "Active" }).select("-password");
-        res.json({ success: true, data: riders });
+        const { riderId, isOnDuty } = req.body;
+        const rider = await riderModel.findById(riderId);
+        if (!rider) {
+            return res.json({ success: false, message: "Rider not found" });
+        }
+        rider.isOnDuty = isOnDuty !== undefined ? isOnDuty : !rider.isOnDuty;
+        await rider.save();
+        res.json({ success: true, message: `Duty status set to ${rider.isOnDuty ? 'Online' : 'Offline'}`, isOnDuty: rider.isOnDuty, rider });
     } catch (error) {
         console.log(error);
-        res.json({ success: false, message: "Error fetching fleet map data" });
+        res.json({ success: false, message: "Error updating duty status" });
     }
 }
 
-export { loginRider, registerRider, listRiders, verifyRider, updateRiderAccountStatus, updateVerificationParameters, addMisconductReport, updateRiderDocuments, settleRiderPayout, getFleetMapData }
+export { loginRider, registerRider, listRiders, verifyRider, updateRiderAccountStatus, updateVerificationParameters, addMisconductReport, updateRiderDocuments, settleRiderPayout, getFleetMapData, toggleRiderDuty }

@@ -1,0 +1,139 @@
+.rm-container {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin: 16px 0;
+}
+
+.rm-map-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.rm-overlay-bar {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.rm-eta-badge {
+  background: rgba(17, 24, 39, 0.9);
+  backdrop-filter: blur(8px);
+  color: white;
+  padding: 8px 14px;
+  border-radius: 99px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  pointer-events: auto;
+}
+
+.rm-eta-badge .eta-icon {
+  font-size: 18px;
+}
+
+.rm-eta-badge div {
+  display: flex;
+  flex-direction: column;
+}
+
+.rm-eta-badge strong {
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.rm-eta-badge small {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.rm-google-nav-btn {
+  background: #ff5a3d;
+  color: white;
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 14px rgba(255, 90, 61, 0.4);
+  pointer-events: auto;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.rm-google-nav-btn:hover {
+  background: #e0482d;
+  transform: translateY(-2px);
+}
+
+/* Custom Marker Styling */
+.rm-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.rm-marker__bubble {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid #ff5a3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.rm-marker--kitchen .rm-marker__bubble {
+  border-color: #3b82f6;
+  background: #eff6ff;
+}
+
+.rm-marker--rider .rm-marker__bubble {
+  border-color: #10b981;
+  background: #ecfdf5;
+  animation: pulse-rider 2s infinite;
+}
+
+.rm-marker--customer .rm-marker__bubble {
+  border-color: #ff5a3d;
+  background: #fff1f2;
+}
+
+.rm-marker__emoji {
+  font-size: 18px;
+}
+
+.rm-marker__label {
+  background: rgba(17, 24, 39, 0.85);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin-top: 4px;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+@keyframes pulse-rider {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
+  70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}

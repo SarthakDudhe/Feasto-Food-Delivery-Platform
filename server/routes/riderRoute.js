@@ -1,5 +1,5 @@
 import express from "express"
-import { loginRider, registerRider, listRiders, verifyRider, updateRiderAccountStatus, updateVerificationParameters, addMisconductReport, updateRiderDocuments, settleRiderPayout, getFleetMapData } from "../controllers/riderController.js"
+import { loginRider, registerRider, listRiders, verifyRider, updateRiderAccountStatus, updateVerificationParameters, addMisconductReport, updateRiderDocuments, settleRiderPayout, getFleetMapData, toggleRiderDuty } from "../controllers/riderController.js"
 
 const riderRouter = express.Router()
 
@@ -13,5 +13,6 @@ riderRouter.post("/update-verification", updateVerificationParameters)
 riderRouter.post("/add-misconduct", addMisconductReport)
 riderRouter.post("/update-documents", updateRiderDocuments)
 riderRouter.post("/settle-payout", settleRiderPayout)
+riderRouter.post("/toggle-duty", toggleRiderDuty)
 
 export default riderRouter;
