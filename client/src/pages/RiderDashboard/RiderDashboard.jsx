@@ -31,35 +31,7 @@ export default function RiderDashboard() {
   const [chats, setChats] = useState({});
   const [chatInputs, setChatInputs] = useState({});
 
-  const handleAuthChange = (e) => {
-    setAuthData({ ...authData, [e.target.name]: e.target.value });
-  };
 
-  const submitAuth = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post(url + "/api/rider/login", authData);
-      if (res.data.success) {
-        setToken(res.data.token);
-        localStorage.setItem("riderToken", res.data.token);
-        setRiderData(res.data.rider);
-        localStorage.setItem("riderData", JSON.stringify(res.data.rider));
-        if (res.data.rider.isOnDuty !== undefined) setIsOnDuty(res.data.rider.isOnDuty);
-      } else {
-        alert(res.data.message);
-      }
-    } catch (error) {
-      console.error(error);
-      alert("Authentication failed");
-    }
-  };
-
-  const logout = () => {
-    setToken("");
-    setRiderData(null);
-    localStorage.removeItem("riderToken");
-    localStorage.removeItem("riderData");
-  };
 
   const toggleDuty = async () => {
     if (!riderData || !riderData._id) return;
