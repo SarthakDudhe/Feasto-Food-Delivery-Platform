@@ -59,6 +59,7 @@ function App() {
             <Route path='/track-order/:orderId' element={<TrackOrder />} />
             <Route path='/rider-signup' element={<RiderSignup />} />
             <Route path='/rider' element={<RiderDashboard />} />
+            <Route path='/rider-dashboard' element={<RiderDashboard />} />
           </Routes>
         </Suspense>
       </div>
