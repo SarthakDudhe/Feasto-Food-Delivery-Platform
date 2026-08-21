@@ -62,6 +62,24 @@
     box-shadow: 0 10px 20px rgba(76, 42, 31, 0.1);
 }
 
+.btn-admin-logout {
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    background: #fee2e2;
+    color: #dc2626;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-admin-logout:hover {
+    background: #dc2626;
+    color: white;
+    box-shadow: 0 6px 16px rgba(220, 38, 38, 0.25);
+}
+
 @media (max-width: 700px){
     .navbar{
         padding: 12px 14px;
