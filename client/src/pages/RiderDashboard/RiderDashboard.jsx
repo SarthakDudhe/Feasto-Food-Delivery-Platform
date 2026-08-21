@@ -313,122 +313,173 @@ export default function RiderDashboard() {
 
   if (!token || !riderData) {
     return (
-      <div className="rider-auth-page-wrapper">
-        <div className="rider-auth-card">
-          <div className="rider-auth-brand">
-            <span className="rider-fleet-tag">⚡ FEASTO FLEET OPERATIONS</span>
-            <h2>Rider Courier Portal 🛵</h2>
-            <p className="rider-auth-subtext">Log in to manage live deliveries, navigate orders, and collect shift payouts.</p>
+      <div className="split-signup-page-wrapper">
+        <div className="split-signup-container">
+          
+          {/* LEFT COLUMN: HERO FLEET SHOWCASE */}
+          <div className="signup-hero-column">
+            <div className="hero-brand-header">
+              <span className="hero-fleet-badge">⚡ FEASTO FLEET OPERATIONS</span>
+              <h1>Welcome Back, Courier Partner 🛵</h1>
+              <p className="hero-description">
+                Log in to your active delivery portal to manage live orders, view customer dropoff navigation maps, and track daily shift earnings.
+              </p>
+            </div>
+
+            <div className="hero-perk-chips">
+              <div className="perk-chip">
+                <span className="perk-icon">🗺️</span>
+                <div>
+                  <strong>Live Map &amp; Route Radar</strong>
+                  <span>Turn-by-turn turn directions &amp; customer pins</span>
+                </div>
+              </div>
+
+              <div className="perk-chip">
+                <span className="perk-icon">💰</span>
+                <div>
+                  <strong>Direct Payouts &amp; Shift Stats</strong>
+                  <span>Track base pay, tips, and shift performance</span>
+                </div>
+              </div>
+
+              <div className="perk-chip">
+                <span className="perk-icon">🟢</span>
+                <div>
+                  <strong>Live Duty Toggle Control</strong>
+                  <span>Switch online/offline anytime on duty</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Live Security Guard Indicator */}
+            <div className="admin-timeline-box">
+              <span className="timeline-title">🛡️ Fleet Security &amp; Admin Audit Guard</span>
+              <p style={{ margin: 0, fontSize: '12.5px', color: '#6b7280', lineHeight: 1.4 }}>
+                All courier accounts are audited by Feasto Admin Operations for valid driving credentials and safety compliance.
+              </p>
+            </div>
           </div>
 
-          {/* Admin KYC Verification Status Screen */}
-          {authErrorStatus === "Pending" ? (
-            <div className="kyc-verification-container">
-              <div className="kyc-status-header">
-                <span className="kyc-badge-pill pending">⏳ UNDER ADMIN REVIEW</span>
-                <h3>KYC Verification in Progress</h3>
-                <p>Your application and submitted documents are currently being audited by the Admin Operations Team.</p>
+          {/* RIGHT COLUMN: LUXURY LOGIN FORM */}
+          <div className="signup-form-column">
+            <div className="luxury-form-card">
+              <div className="form-card-header">
+                <h2>Rider Login Portal</h2>
+                <p>Enter your courier email and password to start your delivery shift.</p>
               </div>
 
-              <div className="kyc-roadmap-steps">
-                <div className="kyc-step completed">
-                  <div className="step-number">1</div>
-                  <div className="step-info">
-                    <strong>Account Registered</strong>
-                    <span>Credentials & Vehicle details saved</span>
+              {/* Admin KYC Verification Status Screen */}
+              {authErrorStatus === "Pending" ? (
+                <div className="kyc-verification-container">
+                  <div className="kyc-status-header">
+                    <span className="kyc-badge-pill pending">⏳ UNDER ADMIN REVIEW</span>
+                    <h3>KYC Verification in Progress</h3>
+                    <p>Your application and submitted documents are currently being audited by the Admin Operations Team.</p>
                   </div>
-                  <span className="step-icon">✅</span>
-                </div>
 
-                <div className="kyc-step active">
-                  <div className="step-number">2</div>
-                  <div className="step-info">
-                    <strong>Admin Document Audit</strong>
-                    <span>Driving License, RC & Govt ID review</span>
+                  <div className="kyc-roadmap-steps">
+                    <div className="kyc-step completed">
+                      <div className="step-number">1</div>
+                      <div className="step-info">
+                        <strong>Account Registered</strong>
+                        <span>Credentials &amp; Vehicle details saved</span>
+                      </div>
+                      <span className="step-icon">✅</span>
+                    </div>
+
+                    <div className="kyc-step active">
+                      <div className="step-number">2</div>
+                      <div className="step-info">
+                        <strong>Admin Document Audit</strong>
+                        <span>Driving License, RC &amp; Govt ID review</span>
+                      </div>
+                      <span className="step-icon">⏳</span>
+                    </div>
+
+                    <div className="kyc-step upcoming">
+                      <div className="step-number">3</div>
+                      <div className="step-info">
+                        <strong>Fleet Activation</strong>
+                        <span>Order dispatch radar enabled</span>
+                      </div>
+                      <span className="step-icon">🔒</span>
+                    </div>
                   </div>
-                  <span className="step-icon">⏳</span>
-                </div>
 
-                <div className="kyc-step upcoming">
-                  <div className="step-number">3</div>
-                  <div className="step-info">
-                    <strong>Fleet Activation</strong>
-                    <span>Order dispatch radar enabled</span>
+                  <div className="kyc-notice-box">
+                    <span>⏱️ Average Review Time: <strong>12 - 24 Hours</strong></span>
+                    <p>Once verified by Admin in Fleet Operations, your account will immediately unlock live order assignments.</p>
                   </div>
-                  <span className="step-icon">🔒</span>
+
+                  <div className="kyc-action-row">
+                    <button type="button" className="btn-kyc-refresh" onClick={() => setAuthErrorStatus(null)}>
+                      🔄 Try Logging In Again
+                    </button>
+                    <Link to="/rider-signup" className="btn-kyc-support">Re-submit Details</Link>
+                  </div>
                 </div>
-              </div>
-
-              <div className="kyc-notice-box">
-                <span>⏱️ Average Review Time: <strong>12 - 24 Hours</strong></span>
-                <p>Once verified by Admin in Fleet Operations, your account will immediately unlock live order assignments.</p>
-              </div>
-
-              <div className="kyc-action-row">
-                <button type="button" className="btn-kyc-refresh" onClick={() => setAuthErrorStatus(null)}>
-                  🔄 Try Logging In Again
-                </button>
-                <Link to="/rider-signup" className="btn-kyc-support">Re-submit Details</Link>
-              </div>
-            </div>
-          ) : authErrorStatus === "Suspended" || authErrorStatus === "Blocked" ? (
-            <div className="kyc-verification-container error">
-              <div className="kyc-status-header">
-                <span className="kyc-badge-pill blocked">⚠️ ACCOUNT {authErrorStatus.toUpperCase()}</span>
-                <h3>Action Required</h3>
-                <p>Your rider account has been {authErrorStatus.toLowerCase()} by Admin Operations due to account policy or document updates.</p>
-              </div>
-              <button type="button" className="btn-kyc-refresh" onClick={() => setAuthErrorStatus(null)}>
-                ← Back to Login
-              </button>
-            </div>
-          ) : (
-            <form onSubmit={submitAuth} className="rider-auth-form">
-              <div className="form-group">
-                <label>Email Address</label>
-                <div className="input-with-icon">
-                  <span className="input-prefix">✉️</span>
-                  <input 
-                    type="email" 
-                    name="email" 
-                    placeholder="rider@feasto.com" 
-                    onChange={handleAuthChange} 
-                    required 
-                  />
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label>Password</label>
-                <div className="input-with-icon">
-                  <span className="input-prefix">🔒</span>
-                  <input 
-                    type={showRiderPassword ? "text" : "password"} 
-                    name="password" 
-                    placeholder="Enter account password" 
-                    onChange={handleAuthChange} 
-                    required 
-                  />
-                  <button 
-                    type="button" 
-                    className="password-toggle-btn"
-                    onClick={() => setShowRiderPassword(!showRiderPassword)}
-                    title={showRiderPassword ? "Hide Password" : "Show Password"}
-                  >
-                    {showRiderPassword ? "🙈" : "👁️"}
+              ) : authErrorStatus === "Suspended" || authErrorStatus === "Blocked" ? (
+                <div className="kyc-verification-container error">
+                  <div className="kyc-status-header">
+                    <span className="kyc-badge-pill blocked">⚠️ ACCOUNT {authErrorStatus.toUpperCase()}</span>
+                    <h3>Action Required</h3>
+                    <p>Your rider account has been {authErrorStatus.toLowerCase()} by Admin Operations due to account policy or document updates.</p>
+                  </div>
+                  <button type="button" className="btn-kyc-refresh" onClick={() => setAuthErrorStatus(null)}>
+                    ← Back to Login
                   </button>
                 </div>
-              </div>
+              ) : (
+                <form onSubmit={submitAuth} className="luxury-signup-form">
+                  <div className="signup-field">
+                    <label>Email Address</label>
+                    <div className="field-icon-wrapper">
+                      <span className="field-icon">✉️</span>
+                      <input 
+                        type="email" 
+                        name="email" 
+                        placeholder="rider@feasto.com" 
+                        onChange={handleAuthChange} 
+                        required 
+                      />
+                    </div>
+                  </div>
 
-              <button type="submit" className="btn-rider-submit">
-                🚀 Login to Delivery Portal
-              </button>
-              
-              <div className="rider-auth-footer">
-                <p>Want to deliver with Feasto? <Link to="/rider-signup">Apply as Courier Partner →</Link></p>
-              </div>
-            </form>
-          )}
+                  <div className="signup-field">
+                    <label>Account Password</label>
+                    <div className="field-icon-wrapper">
+                      <span className="field-icon">🔒</span>
+                      <input 
+                        type={showRiderPassword ? "text" : "password"} 
+                        name="password" 
+                        placeholder="Enter account password" 
+                        onChange={handleAuthChange} 
+                        required 
+                      />
+                      <button 
+                        type="button" 
+                        className="eye-toggle-btn"
+                        onClick={() => setShowRiderPassword(!showRiderPassword)}
+                        title={showRiderPassword ? "Hide Password" : "Show Password"}
+                      >
+                        {showRiderPassword ? "🙈" : "👁️"}
+                      </button>
+                    </div>
+                  </div>
+
+                  <button type="submit" className="btn-luxury-submit">
+                    🚀 Login to Delivery Portal &amp; Start Shift
+                  </button>
+
+                  <div className="luxury-form-footer">
+                    <p>Not registered as a courier yet? <Link to="/rider-signup">Apply as Courier Partner →</Link></p>
+                  </div>
+                </form>
+              )}
+            </div>
+          </div>
+
         </div>
       </div>
     );

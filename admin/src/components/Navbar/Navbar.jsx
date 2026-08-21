@@ -1,12 +1,7 @@
 import React from 'react'
 import "./Navbar.css"
 import {assets} from "../../assets/assets"
-const Navbar = ({ setAdminToken }) => {
-  const handleLogout = () => {
-    localStorage.removeItem("adminToken");
-    if (setAdminToken) setAdminToken("");
-  };
-
+const Navbar = () => {
   return (
     <div className='navbar'>
         <div className="navbar-brand">
@@ -19,9 +14,6 @@ const Navbar = ({ setAdminToken }) => {
         <div className="navbar-right">
           <span className="navbar-status">🛡️ Live Security Sync</span>
           <img className='profile' src={assets.profile_image} alt="Admin Profile" />
-          <button type="button" onClick={handleLogout} className="btn-admin-logout">
-            🚪 Logout
-          </button>
         </div>
     </div>
   )
