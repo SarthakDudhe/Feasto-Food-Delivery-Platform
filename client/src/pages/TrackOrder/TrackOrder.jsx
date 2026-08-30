@@ -113,6 +113,8 @@ export default function TrackOrder() {
         }
         if (response.data.data.status === "Delivered" && !response.data.data.isRated) {
           setShowRatingModal(true);
+        } else {
+          setShowRatingModal(false);
         }
         if (socketRef.current) {
           socketRef.current.emit("join_order_room", orderId);
@@ -166,7 +168,7 @@ export default function TrackOrder() {
       }, { headers: { token } });
       if (response.data.success) {
         setShowRatingModal(false);
-        // Do not reload to avoid wiping chat, maybe just mark as reviewed locally
+        setOrder((prev) => (prev ? { ...prev, isRated: true } : prev));
       }
     } catch (err) {
       console.error(err);
@@ -492,8 +494,8 @@ export default function TrackOrder() {
           </div>
         </div>
       )}
-      {/* ⭐️ Post-Delivery Rating Modal */}
-      {showRatingModal && (
+      {/* ⭐️ Post-Delivery Rating Modal (Strictly ONLY for Delivered Orders) */}
+      {showRatingModal && order?.status === "Delivered" && !order?.isRated && (
         <div className="inapp-chat-overlay">
           <div className="rating-modal">
             <div className="rating-modal-header">
