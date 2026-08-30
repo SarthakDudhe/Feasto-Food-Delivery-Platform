@@ -1,64 +1,64 @@
 .bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 540px;
-  background: var(--bg-surface-glass);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-top: 1px solid var(--border-subtle);
-  display: flex;
-  justify-content: space-around;
-  padding: 10px 16px 14px;
-  z-index: 1000;
+  display: none; /* Hidden by default on desktop/tablet */
 }
 
-.nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  color: var(--text-muted);
-  text-decoration: none;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: var(--radius-sm);
-  transition: all 0.2s ease;
-  position: relative;
-}
+@media (max-width: 900px) {
+  .bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background: var(--surface);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -4px 20px rgba(76, 42, 31, 0.06);
+    justify-content: space-around;
+    padding: 8px 12px 14px;
+    z-index: 1000;
+  }
 
-.nav-item.active {
-  color: var(--brand-primary);
-}
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+    position: relative;
+  }
 
-.nav-item.active svg {
-  transform: translateY(-2px);
-}
+  .nav-item.active {
+    color: var(--accent-dark);
+  }
 
-.nav-icon-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .nav-item.active svg {
+    transform: translateY(-2px);
+  }
 
-.trip-badge-dot {
-  position: absolute;
-  top: -2px;
-  right: -3px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--brand-primary);
-  border: 2px solid var(--bg-surface);
-  animation: pulse-orange 1.5s infinite;
-}
+  .nav-icon-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-@keyframes pulse-orange {
-  0% { transform: scale(0.9); opacity: 0.8; }
-  50% { transform: scale(1.3); opacity: 1; }
-  100% { transform: scale(0.9); opacity: 0.8; }
+  .trip-badge-dot {
+    position: absolute;
+    top: -2px;
+    right: -3px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid #fff;
+    animation: pulse-orange 1.5s infinite;
+  }
 }
