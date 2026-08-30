@@ -7,7 +7,7 @@
   position: relative;
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
-  background: var(--surface-strong);
+  background: #f8fafc;
 }
 
 .maplibre-container {
@@ -15,65 +15,273 @@
   height: 100%;
 }
 
-.rider-marker {
+/* ── Top Navigation HUD Banner ─────────────────────────────────── */
+.map-hud-top {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
+  justify-content: space-between;
+  gap: 12px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.hud-maneuver-card {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(239, 220, 211, 0.9);
+  border-radius: var(--radius-full);
+  box-shadow: 0 8px 24px rgba(76, 42, 31, 0.12);
+  animation: slideDownHud 0.3s ease;
+}
+
+@keyframes slideDownHud {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.maneuver-icon-badge {
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: var(--brand-gradient);
-  color: #fff;
-  border: 2.5px solid #fff;
-  box-shadow: 0 4px 16px rgba(255, 90, 61, 0.5);
-  animation: rider-pulse 2s infinite;
-}
-
-@keyframes rider-pulse {
-  0% { transform: scale(0.95); }
-  50% { transform: scale(1.08); }
-  100% { transform: scale(0.95); }
-}
-
-.destination-marker {
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--success);
-  color: #fff;
-  border: 2.5px solid #fff;
-  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.4);
+  box-shadow: 0 4px 10px rgba(255, 90, 61, 0.35);
 }
 
-.map-recenter-btn {
+.maneuver-text-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.maneuver-action {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.maneuver-sub {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.hud-speedometer-badge {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-sm);
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.speed-dot-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 8px var(--success);
+  animation: pulse-green 1.5s infinite;
+}
+
+/* ── Bottom HUD Pill ───────────────────────────────────────────── */
+.map-hud-bottom {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 10;
+}
+
+.hud-eta-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  box-shadow: 0 8px 24px rgba(76, 42, 31, 0.12);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.eta-time-val {
+  color: var(--accent-dark);
+}
+
+/* ── Floating Controls Dock ───────────────────────────────────── */
+.map-controls-dock {
   position: absolute;
   bottom: 16px;
   right: 16px;
-  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10;
+}
+
+.map-control-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
   border: 1px solid var(--border);
   color: var(--text);
-  padding: 10px;
-  border-radius: 50%;
-  box-shadow: var(--shadow);
+  box-shadow: 0 4px 16px rgba(76, 42, 31, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.map-recenter-btn:hover {
+.map-control-btn:hover {
+  background: #ffffff;
+  border-color: var(--accent);
+  color: var(--accent-dark);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(76, 42, 31, 0.15);
+  box-shadow: 0 8px 22px rgba(255, 90, 61, 0.25);
+}
+
+.map-control-btn.active-sim {
+  background: var(--brand-gradient);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 0 16px rgba(255, 90, 61, 0.5);
+  animation: pulse-orange 1.5s infinite;
+}
+
+/* ── 3D Custom HTML Map Markers ────────────────────────────────── */
+.premium-rider-marker {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radar-halo-ring {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 90, 61, 0.35) 0%, rgba(255, 90, 61, 0) 70%);
+  animation: radar-wave 2s infinite ease-out;
+  pointer-events: none;
+}
+
+@keyframes radar-wave {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+.rider-avatar-puck {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--brand-gradient);
+  color: #ffffff;
+  border: 3px solid #ffffff;
+  box-shadow: 0 6px 20px rgba(255, 90, 61, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+.rider-tag-bubble {
+  position: absolute;
+  bottom: -24px;
+  white-space: nowrap;
+  background: rgba(44, 33, 29, 0.9);
+  color: #ffffff;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+
+/* Destination / Store Markers */
+.premium-destination-marker {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dest-avatar-puck {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #ffffff;
+  border: 3px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.dest-avatar-puck.pickup-kitchen {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  box-shadow: 0 6px 18px rgba(217, 119, 6, 0.4);
+}
+
+.dest-avatar-puck.dropoff-customer {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4);
+}
+
+.dest-tag-bubble {
+  position: absolute;
+  bottom: -24px;
+  white-space: nowrap;
+  background: #ffffff;
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 800;
+  box-shadow: var(--shadow-sm);
+  pointer-events: none;
 }
 
 @media (max-width: 900px) {
   .rider-map-wrapper {
-    min-height: 280px;
-    height: 300px;
+    min-height: 320px;
+    height: 340px;
+  }
+  .hud-speedometer-badge {
+    display: none;
   }
 }
