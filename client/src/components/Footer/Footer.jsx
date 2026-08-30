@@ -22,8 +22,8 @@ const Footer = () => {
             <li><Link to="/">Home</Link></li>
             <li>About Us</li>
             <li>Privacy Policy</li>
-            <li><a href="http://localhost:5175/register" target="_blank" rel="noopener noreferrer" style={{color:"white", textDecoration:"none"}}>Join us as a Rider</a></li>
-            <li><a href="http://localhost:5175/login" target="_blank" rel="noopener noreferrer" style={{color:"white", textDecoration:"none"}}>Rider Login</a></li>
+            <li><a href="https://rider-sigma-tawny.vercel.app/register" target="_blank" rel="noopener noreferrer" style={{color:"white", textDecoration:"none"}}>Join us as a Rider</a></li>
+            <li><a href="https://rider-sigma-tawny.vercel.app/" target="_blank" rel="noopener noreferrer" style={{color:"white", textDecoration:"none"}}>Rider Login</a></li>
           </ul>
         </div>
         <div className="footer-content-right">

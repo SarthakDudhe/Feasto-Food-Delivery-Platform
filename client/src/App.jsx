@@ -14,7 +14,7 @@ const HealthPlanner = lazy(() => import('./pages/HealthPlanner/HealthPlanner'))
 
 const RedirectToRider = ({ path = "" }) => {
   useEffect(() => {
-    window.location.href = `http://localhost:5175${path}`;
+    window.location.href = `https://rider-sigma-tawny.vercel.app${path}`;
   }, [path]);
   return null;
 };
