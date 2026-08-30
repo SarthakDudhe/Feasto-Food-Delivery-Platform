@@ -7,7 +7,8 @@
     "server": "npm --prefix server run server",
     "client": "npm --prefix client run dev",
     "admin": "npm --prefix admin run dev",
-    "install:all": "npm install --prefix server && npm install --prefix client && npm install --prefix admin"
+    "rider": "npm --prefix rider run dev",
+    "install:all": "npm install --prefix server && npm install --prefix client && npm install --prefix admin && npm install --prefix rider"
   },
   "keywords": [
     "food-delivery",

@@ -234,15 +234,96 @@ const toggleRiderDuty = async (req, res) => {
     }
 }
 
-// get fleet map data for admin live dispatch map
-const getFleetMapData = async (req, res) => {
+// get rider profile by token/id
+const getRiderProfile = async (req, res) => {
     try {
-        const riders = await riderModel.find({ accountStatus: "Active" }).select("-password");
-        res.json({ success: true, data: riders });
+        const { riderId } = req.body;
+        const rider = await riderModel.findById(riderId).select("-password");
+        if (!rider) {
+            return res.json({ success: false, message: "Rider not found" });
+        }
+        res.json({ success: true, data: rider });
     } catch (error) {
         console.log(error);
-        res.json({ success: false, message: "Error fetching fleet map data" });
+        res.json({ success: false, message: "Error fetching rider profile" });
     }
 }
 
-export { loginRider, registerRider, listRiders, verifyRider, updateRiderAccountStatus, updateVerificationParameters, addMisconductReport, updateRiderDocuments, settleRiderPayout, getFleetMapData, toggleRiderDuty }
+// get active and completed deliveries for a rider
+const getRiderOrders = async (req, res) => {
+    try {
+        const { riderId } = req.body;
+        import("../models/orderModel.js").then(async ({ default: orderModel }) => {
+            // Find active orders assigned to this rider or available for pickup
+            const assignedOrders = await orderModel.find({ riderId }).sort({ date: -1 });
+            const availableOrders = await orderModel.find({ 
+                riderId: null, 
+                status: { $in: ["Food Processing", "Out for Delivery"] } 
+            }).sort({ date: -1 }).limit(10);
+
+            res.json({ 
+                success: true, 
+                assigned: assignedOrders, 
+                available: availableOrders 
+            });
+        }).catch(err => {
+            console.error(err);
+            res.json({ success: false, message: "Error fetching rider orders" });
+        });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Error fetching rider orders" });
+    }
+}
+
+// update rider live GPS location and propagate to active orders
+const updateRiderLiveGps = async (req, res) => {
+    try {
+        const { riderId, lat, lng } = req.body;
+        if (!riderId || lat === undefined || lng === undefined) {
+            return res.json({ success: false, message: "riderId, lat, and lng are required" });
+        }
+
+        const rider = await riderModel.findByIdAndUpdate(riderId, {
+            currentLocation: {
+                lat: parseFloat(lat),
+                lng: parseFloat(lng),
+                lastUpdated: new Date()
+            }
+        }, { new: true });
+
+        if (!rider) {
+            return res.json({ success: false, message: "Rider not found" });
+        }
+
+        // Also update coordinates on all active orders assigned to this rider
+        import("../models/orderModel.js").then(async ({ default: orderModel }) => {
+            await orderModel.updateMany(
+                { riderId, status: "Out for Delivery" },
+                { riderLat: parseFloat(lat), riderLng: parseFloat(lng), riderUpdatedAt: new Date() }
+            );
+        }).catch(err => console.error("Error syncing active order GPS:", err));
+
+        res.json({ success: true, message: "Live location updated", location: rider.currentLocation });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Error updating live GPS" });
+    }
+}
+
+export { 
+    loginRider, 
+    registerRider, 
+    listRiders, 
+    verifyRider, 
+    updateRiderAccountStatus, 
+    updateVerificationParameters, 
+    addMisconductReport, 
+    updateRiderDocuments, 
+    settleRiderPayout, 
+    getFleetMapData, 
+    toggleRiderDuty,
+    getRiderProfile,
+    getRiderOrders,
+    updateRiderLiveGps
+}

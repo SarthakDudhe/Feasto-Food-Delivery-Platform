@@ -37,6 +37,20 @@ io.on("connection", (socket) => {
     socket.to(data.orderId).emit("receive_message", data);
   });
 
+  // Handle real-time rider GPS broadcast to order room and admin fleet map
+  socket.on("rider_location_broadcast", (data) => {
+    // data = { riderId, orderId, lat, lng }
+    if (data.orderId) {
+      socket.to(data.orderId).emit("rider_location_update", data);
+    }
+    socket.broadcast.emit("fleet_rider_location_update", data);
+  });
+
+  // Handle rider duty toggle notification
+  socket.on("rider_duty_change", (data) => {
+    socket.broadcast.emit("fleet_rider_duty_update", data);
+  });
+
   socket.on("disconnect", () => {
     console.log("User Disconnected", socket.id);
   });
