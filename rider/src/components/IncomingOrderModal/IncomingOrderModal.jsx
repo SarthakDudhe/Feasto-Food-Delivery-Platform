@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { playDispatchAlert } from "../../utils/sound";
 import "./IncomingOrderModal.css";
 
 const IncomingOrderModal = ({ order, onAccept, onDecline }) => {
@@ -7,6 +8,7 @@ const IncomingOrderModal = ({ order, onAccept, onDecline }) => {
   useEffect(() => {
     if (!order) return;
     setTimeLeft(30);
+    playDispatchAlert();
 
     const timer = setInterval(() => {
       setTimeLeft((prev) => {

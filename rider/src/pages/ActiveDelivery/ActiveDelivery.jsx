@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { useRider } from "../../context/RiderContext";
 import RiderMap from "../../components/DeliveryMap/RiderMap";
 import ChatModal from "../../components/ChatModal/ChatModal";
+import { playDeliverySuccess } from "../../utils/sound";
 import "./ActiveDelivery.css";
 
 const ActiveDelivery = () => {
@@ -98,6 +99,7 @@ const ActiveDelivery = () => {
       });
 
       if (res.data.success) {
+        playDeliverySuccess();
         toast.success("Delivery confirmed & verified! Payout credited! 🎉");
         setActiveDelivery(null);
         fetchOrders();
