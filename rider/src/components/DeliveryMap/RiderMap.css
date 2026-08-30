@@ -1,11 +1,13 @@
 .rider-map-wrapper {
   width: 100%;
-  height: 280px;
-  border-radius: var(--radius-md);
+  height: 100%;
+  min-height: 480px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   position: relative;
-  border: 1px solid var(--border-subtle);
-  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  background: var(--surface-strong);
 }
 
 .maplibre-container {
@@ -17,19 +19,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: var(--brand-gradient);
   color: #fff;
-  border: 2px solid #fff;
-  box-shadow: 0 0 16px rgba(255, 87, 34, 0.7);
+  border: 2.5px solid #fff;
+  box-shadow: 0 4px 16px rgba(255, 90, 61, 0.5);
   animation: rider-pulse 2s infinite;
 }
 
 @keyframes rider-pulse {
   0% { transform: scale(0.95); }
-  50% { transform: scale(1.1); }
+  50% { transform: scale(1.08); }
   100% { transform: scale(0.95); }
 }
 
@@ -37,28 +39,41 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background: #10b981;
+  background: var(--success);
   color: #fff;
-  border: 2px solid #fff;
-  box-shadow: 0 0 12px rgba(16, 185, 129, 0.6);
+  border: 2.5px solid #fff;
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.4);
 }
 
 .map-recenter-btn {
   position: absolute;
-  bottom: 12px;
-  right: 12px;
-  background: var(--bg-surface-glass);
-  backdrop-filter: blur(8px);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-main);
-  padding: 8px;
+  bottom: 16px;
+  right: 16px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px;
   border-radius: 50%;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 10;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.map-recenter-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(76, 42, 31, 0.15);
+}
+
+@media (max-width: 900px) {
+  .rider-map-wrapper {
+    min-height: 280px;
+    height: 300px;
+  }
 }
