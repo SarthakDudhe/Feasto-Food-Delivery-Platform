@@ -21,6 +21,7 @@ const io = new Server(server, {
   },
   transports: ["websocket", "polling"]
 });
+app.set("io", io);
 const port = 4000;
 
 // Socket.io connection logic

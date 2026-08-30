@@ -129,11 +129,21 @@ const listOrders = async (req,res) => {
 }
 
 //Api for updating the order status
-const updateStatus = async (req,res) => {
+const updateStatus = async(req,res)=>{
     try {
-     
-        const order = await orderModel.findByIdAndUpdate(req.body.orderId,{status:req.body.status})
-        res.json({success:true,message:"Status Updated Successfully"})
+        const { orderId, status } = req.body;
+        const order = await orderModel.findByIdAndUpdate(orderId, { status }, { new: true });
+        
+        // Broadcast real-time status update to customer & fleet
+        const io = req.app.get("io");
+        if (io && order) {
+          const room = String(orderId);
+          console.log(`[Socket Broadcast] Order ${room} status changed to: ${status}`);
+          io.to(room).emit("order_status_update", { orderId, status });
+          io.emit(`order_status_${room}`, { orderId, status });
+        }
+
+        res.json({success:true,message:"Status Updated Successfully", data: order});
     } catch (error) {
     console.log(error.message)
     res.json({success:false,message:"Error"})     
@@ -263,6 +273,27 @@ const assignRider = async (req, res) => {
       return res.json({ success: false, message: "Order not found" });
     }
 
+    // Broadcast rider assignment to customer
+    const io = req.app.get("io");
+    if (io) {
+      const room = String(orderId);
+      console.log(`[Socket Broadcast] Rider ${riderName} assigned to order: ${room}`);
+      io.to(room).emit("order_rider_assigned", {
+        orderId,
+        riderId,
+        riderName,
+        riderPhone: order.riderPhone,
+        status: order.status,
+      });
+      io.emit(`order_rider_${room}`, {
+        orderId,
+        riderId,
+        riderName,
+        riderPhone: order.riderPhone,
+        status: order.status,
+      });
+    }
+
     res.json({ success: true, message: "Rider assigned successfully", data: order });
   } catch (error) {
     console.error(error.message);
@@ -299,6 +330,13 @@ const updateRiderLocation = async (req, res) => {
       return res.json({ success: false, message: "Order not found" });
     }
 
+    const io = req.app.get("io");
+    if (io && status) {
+      const room = String(orderId);
+      io.to(room).emit("order_status_update", { orderId, status });
+      io.emit(`order_status_${room}`, { orderId, status });
+    }
+
     res.json({ success: true, message: "Rider location & status updated", data: order });
   } catch (error) {
     console.error(error.message);
@@ -324,6 +362,15 @@ const verifyDeliveryOtp = async (req, res) => {
     // Mark as delivered
     order.status = "Delivered";
     await order.save();
+
+    // Broadcast delivery completion to customer & fleet
+    const io = req.app.get("io");
+    if (io) {
+      const room = String(orderId);
+      console.log(`[Socket Broadcast] Order ${room} delivered by rider!`);
+      io.to(room).emit("order_status_update", { orderId, status: "Delivered" });
+      io.emit(`order_status_${room}`, { orderId, status: "Delivered" });
+    }
 
     // Credit Rider wallet & earnings
     if (order.riderId) {

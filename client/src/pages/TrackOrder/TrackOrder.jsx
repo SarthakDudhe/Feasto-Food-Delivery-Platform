@@ -66,9 +66,38 @@ export default function TrackOrder() {
     socket.on("receive_message", handleMessage);
     socket.on(`receive_message_${orderId}`, handleMessage);
 
+    // Live dynamic Order Status transitions (Processing -> Out for Delivery -> Delivered)
+    const handleStatusUpdate = (data) => {
+      if (data && String(data.orderId) === String(orderId)) {
+        console.log("[Customer TrackOrder] Live status transition:", data.status);
+        setOrder((prev) => (prev ? { ...prev, status: data.status } : prev));
+        if (data.status === "Delivered") {
+          setShowRatingModal(true);
+        }
+      }
+    };
+
+    socket.on("order_status_update", handleStatusUpdate);
+    socket.on(`order_status_${orderId}`, handleStatusUpdate);
+
+    // Live Rider Assignment update
+    const handleRiderAssigned = (data) => {
+      if (data && String(data.orderId) === String(orderId)) {
+        console.log("[Customer TrackOrder] Live rider assigned:", data.riderName);
+        setOrder((prev) => (prev ? { ...prev, ...data } : prev));
+      }
+    };
+
+    socket.on("order_rider_assigned", handleRiderAssigned);
+    socket.on(`order_rider_${orderId}`, handleRiderAssigned);
+
     return () => {
       socket.off("receive_message", handleMessage);
       socket.off(`receive_message_${orderId}`, handleMessage);
+      socket.off("order_status_update", handleStatusUpdate);
+      socket.off(`order_status_${orderId}`, handleStatusUpdate);
+      socket.off("order_rider_assigned", handleRiderAssigned);
+      socket.off(`order_rider_${orderId}`, handleRiderAssigned);
       socket.disconnect();
     };
   }, [url, orderId]);
