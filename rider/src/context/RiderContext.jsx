@@ -21,7 +21,7 @@ function getDistanceMeters(lat1, lon1, lat2, lon2) {
 }
 
 export const RiderProvider = ({ children }) => {
-  const backendUrl = "http://localhost:4000";
+  const backendUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
   const [token, setToken] = useState(localStorage.getItem("riderToken") || "");
   const [rider, setRider] = useState(
     JSON.parse(localStorage.getItem("riderUser") || "null")
