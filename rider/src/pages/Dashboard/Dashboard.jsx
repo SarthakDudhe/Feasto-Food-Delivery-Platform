@@ -20,8 +20,13 @@ const Dashboard = () => {
     loadingOrders,
   } = useRider();
 
-  const [simulatedDispatch, setSimulatedDispatch] = useState(null);
-  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState("available"); // "available" or "assigned"
+
+  const activeAssignedOrders = (assignedOrders || []).filter(
+    (o) => o.status !== "Delivered" && o.status !== "Cancelled"
+  );
+
+  const displayList = activeTab === "available" ? availableOrders : activeAssignedOrders;
 
   const handleAcceptOrder = async (order) => {
     try {
@@ -135,12 +140,29 @@ const Dashboard = () => {
         {/* Left Column: Dispatches Feed */}
         <section className="dispatches-section">
           <div className="section-title-bar">
-            <h2 className="section-heading">Available Dispatches Nearby</h2>
+            {/* Tabs Bar */}
+            <div className="dashboard-tabs-bar">
+              <button
+                className={`dashboard-tab-btn ${activeTab === "available" ? "active" : ""}`}
+                onClick={() => setActiveTab("available")}
+              >
+                <span>Available Dispatches</span>
+                <span className="tab-badge">{availableOrders.length}</span>
+              </button>
+              <button
+                className={`dashboard-tab-btn ${activeTab === "assigned" ? "active" : ""}`}
+                onClick={() => setActiveTab("assigned")}
+              >
+                <span>My Assigned Orders</span>
+                <span className="tab-badge">{activeAssignedOrders.length}</span>
+              </button>
+            </div>
+
             <button className="refresh-action-btn" onClick={fetchOrders}>
               <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
                 <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" />
               </svg>
-              <span>Refresh Feed</span>
+              <span>Refresh</span>
             </button>
           </div>
 
@@ -163,22 +185,28 @@ const Dashboard = () => {
             </div>
           ) : loadingOrders ? (
             <div className="empty-dispatches-box">
-              <p>Scanning area for new dispatches...</p>
+              <p>Scanning area for live orders...</p>
             </div>
-          ) : availableOrders.length === 0 ? (
+          ) : displayList.length === 0 ? (
             <div className="empty-dispatches-box">
               <svg viewBox="0 0 24 24" width="44" height="44" fill="#94a3b8">
                 <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" />
               </svg>
-              <h3 style={{ fontSize: "16px", color: "var(--text)" }}>No Dispatches In Queue</h3>
+              <h3 style={{ fontSize: "16px", color: "var(--text)" }}>
+                {activeTab === "available" ? "No Dispatches In Queue" : "No Assigned Tasks"}
+              </h3>
               <p style={{ maxWidth: "420px", fontSize: "14px" }}>
-                All current orders are assigned. Keep this window open—you will be alerted as soon as a customer orders!
+                {activeTab === "available"
+                  ? "All nearby orders are assigned. You will be notified automatically when an order is placed!"
+                  : "You do not have any pending assigned orders. Claim an available dispatch to begin."}
               </p>
             </div>
           ) : (
             <div className="dispatches-stack">
-              {availableOrders.map((order) => {
+              {displayList.map((order) => {
                 const tripPayout = Math.max(3.5, Math.round(order.amount * 0.15 * 10) / 10);
+                const isAssignedToMe = order.riderId === rider?._id;
+
                 return (
                   <div key={order._id} className="dispatch-item-card">
                     <div className="dispatch-card-top">
@@ -187,7 +215,7 @@ const Dashboard = () => {
                           {order.address?.firstName} {order.address?.lastName}
                         </h3>
                         <span className="order-items-badge">
-                          Order #{order._id?.slice(-6)} • {order.items?.length || 1} items to pick up
+                          Order #{order._id?.slice(-6)} • {order.items?.length || 1} items to pick up • Status: {order.status}
                         </span>
                       </div>
                       <span className="payout-pill">+${tripPayout.toFixed(2)} Earning</span>
@@ -200,15 +228,30 @@ const Dashboard = () => {
                       <span>{order.address?.street}, {order.address?.city}</span>
                     </div>
 
-                    <button
-                      className="claim-dispatch-btn"
-                      onClick={() => setSimulatedDispatch(order)}
-                    >
-                      <span>Review & Accept Dispatch</span>
-                      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                        <path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-7.85-1.42 1.42L16.86 11H5v2z" />
-                      </svg>
-                    </button>
+                    {isAssignedToMe ? (
+                      <button
+                        className="claim-dispatch-btn"
+                        onClick={() => {
+                          setActiveDelivery(order);
+                          navigate("/active-trip");
+                        }}
+                      >
+                        <span>Open Active Trip Map</span>
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                          <path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-7.85-1.42 1.42L16.86 11H5v2z" />
+                        </svg>
+                      </button>
+                    ) : (
+                      <button
+                        className="claim-dispatch-btn"
+                        onClick={() => setSimulatedDispatch(order)}
+                      >
+                        <span>Review & Accept Dispatch</span>
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                          <path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-7.85-1.42 1.42L16.86 11H5v2z" />
+                        </svg>
+                      </button>
+                    )}
                   </div>
                 );
               })}
