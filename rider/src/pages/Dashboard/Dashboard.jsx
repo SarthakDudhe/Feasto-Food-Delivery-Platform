@@ -20,7 +20,9 @@ const Dashboard = () => {
     loadingOrders,
   } = useRider();
 
+  const [simulatedDispatch, setSimulatedDispatch] = useState(null);
   const [activeTab, setActiveTab] = useState("available"); // "available" or "assigned"
+  const navigate = useNavigate();
 
   const activeAssignedOrders = (assignedOrders || []).filter(
     (o) => o.status !== "Delivered" && o.status !== "Cancelled"
