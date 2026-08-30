@@ -57,7 +57,7 @@ export const RiderProvider = ({ children }) => {
     }
   };
 
-  // Fetch rider orders (assigned + available)
+  // Fetch rider orders (assigned + available) and refresh balance
   const fetchOrders = async () => {
     if (!rider?._id) return;
     setLoadingOrders(true);
@@ -73,6 +73,8 @@ export const RiderProvider = ({ children }) => {
         );
         setActiveDelivery(currentActive || null);
       }
+      // Also refresh profile & earnings balance
+      fetchRiderProfile(rider._id);
     } catch (error) {
       console.error("Error fetching rider orders:", error);
     } finally {

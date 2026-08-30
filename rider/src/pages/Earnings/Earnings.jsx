@@ -5,13 +5,18 @@ import "./Earnings.css";
 const Earnings = () => {
   const { rider, assignedOrders } = useRider();
 
-  const totalEarned = rider?.earnings?.totalEarned || 0;
-  const cashCollected = rider?.earnings?.cashCollected || 0;
-  const pendingPayout = rider?.earnings?.pendingPayout || 0;
-
   const completedOrders = (assignedOrders || []).filter(
     (o) => o.status === "Delivered"
   );
+
+  // Compute calculated commission from delivered trips
+  const computedEarnings = completedOrders.reduce((sum, order) => {
+    return sum + Math.max(3.5, Math.round(order.amount * 0.15 * 10) / 10);
+  }, 0);
+
+  const totalEarned = Math.max(rider?.earnings?.totalEarned || 0, computedEarnings);
+  const cashCollected = rider?.earnings?.cashCollected || 0;
+  const pendingPayout = rider?.earnings?.pendingPayout || totalEarned;
 
   return (
     <div className="rider-app-shell">

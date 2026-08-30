@@ -324,8 +324,35 @@ const verifyDeliveryOtp = async (req, res) => {
     // Mark as delivered
     order.status = "Delivered";
     await order.save();
+
+    // Credit Rider wallet & earnings
+    if (order.riderId) {
+      try {
+        const { default: riderModel } = await import("../models/riderModel.js");
+        const rider = await riderModel.findById(order.riderId);
+        if (rider) {
+          if (!rider.earnings) {
+            rider.earnings = { totalEarned: 0, cashCollected: 0, pendingPayout: 0 };
+          }
+          const commission = Math.max(3.5, Math.round(order.amount * 0.15 * 100) / 100);
+          rider.earnings.totalEarned = (rider.earnings.totalEarned || 0) + commission;
+
+          if (order.payment) {
+            // Online paid order -> Digital payout credited to pending balance
+            rider.earnings.pendingPayout = (rider.earnings.pendingPayout || 0) + commission;
+          } else {
+            // Cash on Delivery -> Rider collected customer cash
+            rider.earnings.cashCollected = (rider.earnings.cashCollected || 0) + order.amount;
+          }
+
+          await rider.save();
+        }
+      } catch (err) {
+        console.error("Error crediting rider earnings:", err);
+      }
+    }
     
-    res.json({ success: true, message: "Order successfully delivered!" });
+    res.json({ success: true, message: "Order successfully delivered & earnings credited!" });
   } catch (error) {
     console.error(error.message);
     res.json({ success: false, message: "Error verifying OTP" });

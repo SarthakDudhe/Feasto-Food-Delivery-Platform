@@ -53,9 +53,13 @@ const Dashboard = () => {
 
   const completedTrips = (assignedOrders || []).filter(
     (o) => o.status === "Delivered"
-  ).length;
+  );
 
-  const totalEarned = rider?.earnings?.totalEarned || 0;
+  const computedEarnings = completedTrips.reduce((sum, order) => {
+    return sum + Math.max(3.5, Math.round(order.amount * 0.15 * 10) / 10);
+  }, 0);
+
+  const totalEarned = Math.max(rider?.earnings?.totalEarned || 0, computedEarnings);
   const rating = rider?.averageRating || 5.0;
 
   return (
@@ -93,7 +97,7 @@ const Dashboard = () => {
               </svg>
             </div>
           </div>
-          <span className="metric-value">{completedTrips}</span>
+          <span className="metric-value">{completedTrips.length}</span>
           <span className="metric-subtext">Verified dropoffs</span>
         </div>
 
