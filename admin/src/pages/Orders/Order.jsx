@@ -326,12 +326,28 @@ const Order = ({url}) => {
                   <h3>Operational Status Controls</h3>
                   <div className="control-selectors">
                     <div className="selector-group">
-                      <label>Preparation Status</label>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <label>Preparation Status</label>
+                        {selectedOrder.riderName ? (
+                          <span style={{ fontSize: '10px', color: '#047857', fontWeight: '800', background: '#ecfdf5', padding: '2px 6px', borderRadius: '4px', border: '1px solid #a7f3d0' }}>
+                            ⚡ Live Sync with Driver
+                          </span>
+                        ) : (
+                          <span style={{ fontSize: '10px', color: '#6b7280', fontWeight: '600' }}>
+                            Manual / Unassigned
+                          </span>
+                        )}
+                      </div>
                       <select onChange={(event) => statusHandler(event, selectedOrder._id)} value={selectedOrder.status}>
-                        <option value="Food Processing">Food Processing</option>
-                        <option value="Out for delivery">Out for delivery</option>
-                        <option value="Delivered">Delivered</option>
+                        <option value="Food Processing">Food Processing (Kitchen Prep)</option>
+                        <option value="Out for delivery">Out for delivery (In Transit)</option>
+                        <option value="Delivered">Delivered (Handover Completed)</option>
                       </select>
+                      <span style={{ fontSize: '11px', color: '#9ca3af', marginTop: '4px', lineHeight: '1.3' }}>
+                        {selectedOrder.riderName 
+                          ? `*Automatically advances when ${selectedOrder.riderName} confirms pickup & verifies customer OTP.`
+                          : "*Auto-advances when a rider claims this dispatch. Use dropdown for manual override only."}
+                      </span>
                     </div>
 
                     <div className="selector-group">
@@ -354,12 +370,13 @@ const Order = ({url}) => {
                         ))}
                       </select>
                       {selectedOrder.riderName ? (
-                        <div className="assigned-rider-badge" style={{ marginTop: '6px', fontSize: '12px', color: '#047857', background: '#ecfdf5', padding: '4px 8px', borderRadius: '6px', fontWeight: 'bold' }}>
-                          🛵 Assigned: {selectedOrder.riderName} {selectedOrder.riderPhone ? `(${selectedOrder.riderPhone})` : ''}
+                        <div className="assigned-rider-badge" style={{ marginTop: '6px', fontSize: '12px', color: '#047857', background: '#ecfdf5', padding: '6px 10px', borderRadius: '6px', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '6px', border: '1px solid #a7f3d0' }}>
+                          <span>🛵</span>
+                          <span>Assigned: <strong>{selectedOrder.riderName}</strong> {selectedOrder.riderPhone ? `(${selectedOrder.riderPhone})` : ''}</span>
                         </div>
                       ) : (
-                        <div className="unassigned-rider-badge" style={{ marginTop: '6px', fontSize: '12px', color: '#b45309', background: '#fffbeb', padding: '4px 8px', borderRadius: '6px', fontWeight: 'bold' }}>
-                          ⚠️ Rider Unassigned (Pending Dispatch)
+                        <div className="unassigned-rider-badge" style={{ marginTop: '6px', fontSize: '12px', color: '#b45309', background: '#fffbeb', padding: '6px 10px', borderRadius: '6px', fontWeight: 'bold', border: '1px solid #fde68a' }}>
+                          ⚠️ Pending Dispatch (Awaiting Driver Self-Claim)
                         </div>
                       )}
                     </div>
