@@ -49,10 +49,6 @@ const logout = () =>{
                 <li onClick={logout}><img src={assets.logout_icon} alt="" /><p>Logout</p></li>
               </ul>
             </div>
-          ) : riderToken ? (
-            <button onClick={()=>navigate("/rider-dashboard")} className="rider-portal-nav-btn">
-              🛵 Rider Dashboard
-            </button>
           ) : (
             <button onClick={()=>setShowLogin(true)}>sign in</button>
           )}

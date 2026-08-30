@@ -10,10 +10,14 @@ const PlaceOrder = lazy(() => import('./pages/PlaceOrder/PlaceOrder'))
 const Verify = lazy(() => import('./pages/Verify/Verify'))
 const MyOrder = lazy(() => import('./pages/MyOrder/MyOrder'))
 const TrackOrder = lazy(() => import('./pages/TrackOrder/TrackOrder'))
-const RiderSignup = lazy(() => import('./pages/RiderSignup/RiderSignup'))
-const RiderDashboard = lazy(() => import('./pages/RiderDashboard/RiderDashboard'))
-
 const HealthPlanner = lazy(() => import('./pages/HealthPlanner/HealthPlanner'))
+
+const RedirectToRider = ({ path = "" }) => {
+  useEffect(() => {
+    window.location.href = `http://localhost:5175${path}`;
+  }, [path]);
+  return null;
+};
 
 function App() {
   const [showLogin, setShowLogin] = useState(false)
@@ -57,9 +61,9 @@ function App() {
             <Route path='/verify' element={<Verify />} />
             <Route path='/myorders' element={<MyOrder />} />
             <Route path='/track-order/:orderId' element={<TrackOrder />} />
-            <Route path='/rider-signup' element={<RiderSignup />} />
-            <Route path='/rider' element={<RiderDashboard />} />
-            <Route path='/rider-dashboard' element={<RiderDashboard />} />
+            <Route path='/rider-signup' element={<RedirectToRider path="/register" />} />
+            <Route path='/rider' element={<RedirectToRider path="/login" />} />
+            <Route path='/rider-dashboard' element={<RedirectToRider path="/" />} />
           </Routes>
         </Suspense>
       </div>
