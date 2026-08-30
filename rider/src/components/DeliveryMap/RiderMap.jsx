@@ -90,47 +90,31 @@ const RiderMap = ({ riderCoords, customerCoords, isPickedUp }) => {
             type: "line",
             source: "route",
             layout: { "line-join": "round", "line-cap": "round" },
-            paint: { "line-color": "#ff5a3d", "line-width": 14, "line-opacity": 0.28, "line-blur": 6 },
+            paint: { 
+              "line-color": "#ff5a3d", 
+              "line-width": 12, 
+              "line-opacity": 0.22, 
+              "line-blur": 4 
+            },
           });
 
-          // Crisp Highway Line
+          // Crisp Highway Route Line
           map.addLayer({
             id: "route-base",
             type: "line",
             source: "route",
             layout: { "line-join": "round", "line-cap": "round" },
-            paint: { "line-color": "#ff5a3d", "line-width": 6, "line-opacity": 0.95 },
+            paint: { 
+              "line-color": "#ff5a3d", 
+              "line-width": 5, 
+              "line-opacity": 0.95 
+            },
           });
-
-          // Animated Dash Layer
-          map.addLayer({
-            id: "route-dash",
-            type: "line",
-            source: "route",
-            layout: { "line-join": "round", "line-cap": "round" },
-            paint: { "line-color": "#ffffff", "line-width": 3, "line-dasharray": [0, 3, 3] },
-          });
-
-          // Animate Dashed Line
-          let step = 0;
-          const animateDash = () => {
-            step = (step + 1) % 100;
-            if (map.getLayer("route-dash")) {
-              map.setPaintProperty("route-dash", "line-dasharray", [
-                0,
-                (step % 6),
-                3,
-              ]);
-            }
-            animFrameRef.current = requestAnimationFrame(animateDash);
-          };
-          animateDash();
         }
       }
     });
 
     return () => {
-      if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
       map.remove();
     };
   }, [isPickedUp]);
