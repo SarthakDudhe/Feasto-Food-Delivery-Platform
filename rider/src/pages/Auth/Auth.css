@@ -81,6 +81,38 @@
   padding: 12px 16px;
   font-size: 14px;
   color: var(--text);
+  width: 100%;
+}
+
+.password-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.password-input-wrap input {
+  padding-right: 44px;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 12px;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: var(--radius-full);
+  transition: all 0.2s ease;
+}
+
+.password-toggle-btn:hover {
+  color: var(--accent-dark);
+  background: var(--surface-soft);
 }
 
 .submit-btn {
