@@ -34,16 +34,42 @@ export default function TrackOrder() {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    if (url) {
-      socketRef.current = io(url, { transports: ["websocket"] });
-      socketRef.current.on("receive_message", (data) => {
-        if (data.orderId === orderId) {
-          setChatMessages((prev) => [...prev, data]);
-        }
-      });
-    }
+    if (!url || !orderId) return;
+
+    const socket = io(url, {
+      transports: ["websocket", "polling"],
+      reconnectionAttempts: 10,
+    });
+    socketRef.current = socket;
+
+    socket.on("connect", () => {
+      console.log("[Customer Chat] Connected to socket, joining room:", orderId);
+      socket.emit("join_order_room", String(orderId));
+    });
+
+    const handleMessage = (data) => {
+      if (data && String(data.orderId) === String(orderId)) {
+        setChatMessages((prev) => {
+          // Prevent duplicates if received via both room and broadcast fallback
+          const isDuplicate = prev.some(
+            (m) =>
+              m.text === data.text &&
+              m.sender === data.sender &&
+              Math.abs(new Date(m.timestamp) - new Date(data.timestamp)) < 1500
+          );
+          if (isDuplicate) return prev;
+          return [...prev, data];
+        });
+      }
+    };
+
+    socket.on("receive_message", handleMessage);
+    socket.on(`receive_message_${orderId}`, handleMessage);
+
     return () => {
-      if (socketRef.current) socketRef.current.disconnect();
+      socket.off("receive_message", handleMessage);
+      socket.off(`receive_message_${orderId}`, handleMessage);
+      socket.disconnect();
     };
   }, [url, orderId]);
 

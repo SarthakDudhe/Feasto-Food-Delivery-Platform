@@ -9,21 +9,49 @@ const ChatModal = ({ order, onClose }) => {
   const [inputText, setInputText] = useState("");
   const messagesEndRef = useRef(null);
 
+  // Load chat history from server on mount
+  useEffect(() => {
+    if (!order?._id) return;
+    const fetchLatestChat = async () => {
+      try {
+        const res = await axios.post(`${backendUrl}/api/order/detail`, { orderId: order._id });
+        if (res.data.success && res.data.data?.chat) {
+          setMessages(res.data.data.chat);
+        }
+      } catch (e) {
+        // fallback to order.chat
+      }
+    };
+    fetchLatestChat();
+  }, [backendUrl, order?._id]);
+
   useEffect(() => {
     if (!socket || !order?._id) return;
 
-    socket.emit("join_order_room", order._id);
+    const room = String(order._id);
+    socket.emit("join_order_room", room);
 
     const handleReceiveMessage = (data) => {
-      if (data.orderId === order._id) {
-        setMessages((prev) => [...prev, data]);
+      if (data && String(data.orderId) === room) {
+        setMessages((prev) => {
+          const isDuplicate = prev.some(
+            (m) =>
+              m.text === data.text &&
+              m.sender === data.sender &&
+              Math.abs(new Date(m.timestamp) - new Date(data.timestamp)) < 1500
+          );
+          if (isDuplicate) return prev;
+          return [...prev, data];
+        });
       }
     };
 
     socket.on("receive_message", handleReceiveMessage);
+    socket.on(`receive_message_${room}`, handleReceiveMessage);
 
     return () => {
       socket.off("receive_message", handleReceiveMessage);
+      socket.off(`receive_message_${room}`, handleReceiveMessage);
     };
   }, [socket, order?._id]);
 
@@ -57,8 +85,8 @@ const ChatModal = ({ order, onClose }) => {
   };
 
   return (
-    <div className="chat-modal-overlay">
-      <div className="chat-modal-container">
+    <div className="chat-modal-overlay" onClick={onClose}>
+      <div className="chat-modal-container" onClick={(e) => e.stopPropagation()}>
         <div className="chat-header">
           <div className="chat-user-info">
             <div className="chat-avatar">
@@ -99,11 +127,11 @@ const ChatModal = ({ order, onClose }) => {
         <form onSubmit={handleSendMessage} className="chat-input-bar">
           <input
             type="text"
-            placeholder="Type a message..."
+            placeholder="Type a message to customer..."
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
           />
-          <button type="submit" className="chat-send-btn">
+          <button type="submit" className="chat-send-btn" disabled={!inputText.trim()}>
             Send
           </button>
         </form>
