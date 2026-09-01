@@ -3,6 +3,7 @@ import "./LoginPopup.css";
 import { assets } from '../../assets/assets';
 import { StoreContext } from '../../context/StoreContext';
 import axios from "axios";
+import { toast } from 'react-toastify';
 
 const LoginPopup = ({ setShowLogin }) => {
   const { url, setToken } = useContext(StoreContext);
@@ -27,7 +28,8 @@ const LoginPopup = ({ setShowLogin }) => {
     setLoading(true);
 
     let newURL = url;
-    if (currentState === "Login") {
+    const isLogin = currentState === "Login";
+    if (isLogin) {
       newURL += "/api/user/login";
     } else {
       newURL += "/api/user/register";
@@ -39,12 +41,17 @@ const LoginPopup = ({ setShowLogin }) => {
         setToken(response.data.token);
         localStorage.setItem("token", response.data.token);
         setShowLogin(false);
+        if (isLogin) {
+          toast.success("Welcome back! Signed in successfully 🚀");
+        } else {
+          toast.success("Account created successfully! Welcome to Feasto 🎉");
+        }
       } else {
-        alert(response.data.message);
+        toast.error(response.data.message || "Authentication failed. Please try again.");
       }
     } catch (err) {
       console.error(err);
-      alert("Authentication failed. Please check your credentials.");
+      toast.error("Authentication failed. Please check your credentials.");
     } finally {
       setLoading(false);
     }

@@ -3,6 +3,7 @@ import "./PlaceOrder.css"
 import { StoreContext } from '../../context/StoreContext'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const PlaceOrder = () => {
   const {
@@ -61,11 +62,11 @@ const PlaceOrder = () => {
         const { session_url } = response.data;
         window.location.replace(session_url)
       } else {
-        alert(response.data.message || "Error placing order")
+        toast.error(response.data.message || "Error placing order");
       }
     } catch (err) {
       console.error("Order placement error:", err)
-      alert("Error processing your order. Please try again.")
+      toast.error("Error processing your order. Please try again.");
     }
   }
 

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 // import {food_list} from "../assets/assets.js"
 export const StoreContext = createContext(null)
 
@@ -87,29 +88,35 @@ const applyCoupon = (code) => {
     if (!normalizedCode) {
         setAppliedCoupon(null);
         setCouponMessage("Please enter a promo code.");
+        toast.warn("Please enter a promo code.");
         return false;
     }
 
     if (!coupon) {
         setAppliedCoupon(null);
         setCouponMessage("Invalid promo code.");
+        toast.error("Invalid promo code.");
         return false;
     }
 
     if (subtotal < coupon.minAmount) {
         setAppliedCoupon(null);
-        setCouponMessage(`Add $${coupon.minAmount - subtotal} more to use ${coupon.code}.`);
+        const msg = `Add $${(coupon.minAmount - subtotal).toFixed(2)} more to use ${coupon.code}.`;
+        setCouponMessage(msg);
+        toast.warn(msg);
         return false;
     }
 
     setAppliedCoupon(coupon);
     setCouponMessage(`${coupon.code} applied successfully.`);
+    toast.success(`Promo code ${coupon.code} applied! 🎉`);
     return true;
 }
 
 const removeCoupon = () => {
     setAppliedCoupon(null);
     setCouponMessage("");
+    toast.info("Promo code removed");
 }
 
 const fetchFoodList = async () => {
