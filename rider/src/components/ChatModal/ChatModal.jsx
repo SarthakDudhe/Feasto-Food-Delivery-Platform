@@ -4,10 +4,28 @@ import { useRider } from "../../context/RiderContext";
 import "./ChatModal.css";
 
 const ChatModal = ({ order, onClose }) => {
-  const { backendUrl, socket, rider } = useRider();
+  const { backendUrl, socket } = useRider();
   const [messages, setMessages] = useState(order?.chat || []);
   const [inputText, setInputText] = useState("");
+  const [isConnected, setIsConnected] = useState(Boolean(socket?.connected));
   const messagesEndRef = useRef(null);
+
+  // Sync connection state
+  useEffect(() => {
+    if (!socket) return;
+    setIsConnected(socket.connected);
+
+    const onConnect = () => setIsConnected(true);
+    const onDisconnect = () => setIsConnected(false);
+
+    socket.on("connect", onConnect);
+    socket.on("disconnect", onDisconnect);
+
+    return () => {
+      socket.off("connect", onConnect);
+      socket.off("disconnect", onDisconnect);
+    };
+  }, [socket]);
 
   // Load chat history from server on mount
   useEffect(() => {
@@ -15,20 +33,22 @@ const ChatModal = ({ order, onClose }) => {
     const fetchLatestChat = async () => {
       try {
         const res = await axios.post(`${backendUrl}/api/order/detail`, { orderId: order._id });
-        if (res.data.success && res.data.data?.chat) {
+        if (res.data?.success && res.data.data?.chat) {
           setMessages(res.data.data.chat);
         }
       } catch (e) {
-        // fallback to order.chat
+        // fallback to order.chat passed via props
+        if (order.chat) setMessages(order.chat);
       }
     };
     fetchLatestChat();
-  }, [backendUrl, order?._id]);
+  }, [backendUrl, order?._id, order?.chat]);
 
   useEffect(() => {
     if (!socket || !order?._id) return;
 
     const room = String(order._id);
+    console.log(`[Rider Chat] Joining room ${room}`);
     socket.emit("join_order_room", room);
 
     const handleReceiveMessage = (data) => {
@@ -67,13 +87,15 @@ const ChatModal = ({ order, onClose }) => {
       orderId: order._id,
       sender: "Rider",
       text: inputText.trim(),
-      timestamp: new Date(),
+      timestamp: new Date().toISOString(),
     };
 
     setMessages((prev) => [...prev, newMsg]);
     setInputText("");
 
-    if (socket) {
+    if (socket && socket.connected) {
+      socket.emit("send_message", newMsg);
+    } else if (socket) {
       socket.emit("send_message", newMsg);
     }
 
@@ -93,8 +115,20 @@ const ChatModal = ({ order, onClose }) => {
               {order.address?.firstName?.charAt(0) || "C"}
             </div>
             <div>
-              <div style={{ fontWeight: "700", fontSize: "15px" }}>
+              <div style={{ fontWeight: "700", fontSize: "15px", display: "flex", alignItems: "center", gap: "6px" }}>
                 {order.address?.firstName} {order.address?.lastName}
+                <span
+                  style={{
+                    fontSize: "10px",
+                    fontWeight: "600",
+                    padding: "2px 6px",
+                    borderRadius: "10px",
+                    background: isConnected ? "#dcfce7" : "#fee2e2",
+                    color: isConnected ? "#15803d" : "#b91c1c",
+                  }}
+                >
+                  {isConnected ? "● Live" : "○ Offline"}
+                </span>
               </div>
               <div style={{ fontSize: "12px", color: "var(--text-muted)" }}>
                 Customer • Order #{order._id?.slice(-5)}

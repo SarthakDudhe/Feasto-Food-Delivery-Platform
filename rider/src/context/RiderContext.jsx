@@ -34,6 +34,7 @@ export const RiderProvider = ({ children }) => {
   const [loadingOrders, setLoadingOrders] = useState(false);
   const [isOnlineNetwork, setIsOnlineNetwork] = useState(navigator.onLine);
 
+  const [socket, setSocket] = useState(null);
   const socketRef = useRef(null);
   const watchIdRef = useRef(null);
   const lastBroadcastRef = useRef({ lat: 0, lng: 0, time: 0 });
@@ -62,19 +63,26 @@ export const RiderProvider = ({ children }) => {
 
   // Initialize Socket.io
   useEffect(() => {
-    socketRef.current = io(backendUrl, {
+    const newSocket = io(backendUrl, {
+      transports: ["websocket", "polling"],
       reconnectionAttempts: 10,
       reconnectionDelay: 2000,
     });
+    socketRef.current = newSocket;
+    setSocket(newSocket);
 
-    socketRef.current.on("connect", () => {
-      console.log("Rider Connected to Socket:", socketRef.current.id);
+    newSocket.on("connect", () => {
+      console.log("Rider Connected to Socket:", newSocket.id);
+    });
+
+    newSocket.on("disconnect", (reason) => {
+      console.log("Rider Disconnected from Socket:", reason);
     });
 
     return () => {
-      if (socketRef.current) socketRef.current.disconnect();
+      if (newSocket) newSocket.disconnect();
     };
-  }, []);
+  }, [backendUrl]);
 
   // Fetch full rider profile on mount or token change
   const fetchRiderProfile = async (riderId) => {
@@ -255,7 +263,7 @@ export const RiderProvider = ({ children }) => {
         login,
         logout,
         isOnlineNetwork,
-        socket: socketRef.current,
+        socket,
       }}
     >
       {children}
