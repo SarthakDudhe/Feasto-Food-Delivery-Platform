@@ -33,17 +33,22 @@ io.on("connection", (socket) => {
     if (!orderId) return;
     const room = String(orderId);
     socket.join(room);
-    console.log(`[Socket] Socket ${socket.id} joined room: ${room}`);
+    const roomSockets = io.sockets.adapter.rooms.get(room);
+    const memberCount = roomSockets ? roomSockets.size : 1;
+    console.log(`[Socket] Socket ${socket.id} joined room: ${room} (Total in room: ${memberCount})`);
   });
 
   // Handle sending a message between customer and rider
   socket.on("send_message", (data) => {
     if (!data || !data.orderId) return;
     const room = String(data.orderId);
-    console.log(`[Socket] Message in order ${room} from ${data.sender}: "${data.text}"`);
-    // Broadcast to room
+    const roomSockets = io.sockets.adapter.rooms.get(room);
+    const memberCount = roomSockets ? roomSockets.size : 0;
+    console.log(`[Socket] Message in order ${room} (room members: ${memberCount}) from ${data.sender}: "${data.text}"`);
+
+    // Broadcast to everyone else in the room
     socket.to(room).emit("receive_message", data);
-    // Broadcast event fallback
+    // Broadcast fallback for components listening directly to order event channel
     socket.broadcast.emit(`receive_message_${room}`, data);
   });
 
@@ -61,8 +66,8 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("fleet_rider_duty_update", data);
   });
 
-  socket.on("disconnect", () => {
-    console.log("[Socket] User Disconnected:", socket.id);
+  socket.on("disconnect", (reason) => {
+    console.log(`[Socket] User Disconnected: ${socket.id} (${reason})`);
   });
 });
 

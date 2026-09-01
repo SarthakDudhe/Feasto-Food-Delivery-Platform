@@ -150,25 +150,23 @@ const updateStatus = async(req,res)=>{
     }
 }
 
-// Retrieve a single order detail
+// Retrieve a single order detail (for customer tracking & rider coordination)
 const getOrderDetail = async (req, res) => {
   try {
     const { orderId } = req.body;
+    if (!orderId) {
+      return res.json({ success: false, message: "Order ID is required" });
+    }
     const order = await orderModel.findById(orderId);
     
     if (!order) {
       return res.json({ success: false, message: "Order not found" });
     }
 
-    // Security check: ensure order belongs to requesting user
-    if (order.userId !== req.body.userId) {
-      return res.json({ success: false, message: "Unauthorized access to order" });
-    }
-
     res.json({ success: true, data: order });
   } catch (error) {
-    console.log(error.message);
-    res.json({ success: false, message: "Error" });
+    console.log("Error in getOrderDetail:", error.message);
+    res.json({ success: false, message: "Error fetching order detail" });
   }
 }
 
@@ -419,13 +417,30 @@ const addChatMessage = async (req, res) => {
       return res.json({ success: false, message: "Order not found" });
     }
 
-    const message = { sender, text, timestamp: new Date() };
+    const message = {
+      orderId: String(orderId),
+      sender,
+      text,
+      timestamp: new Date(),
+    };
+
+    if (!Array.isArray(order.chat)) {
+      order.chat = [];
+    }
     order.chat.push(message);
     await order.save();
+
+    // Broadcast via backend Socket.io instance for guaranteed delivery
+    const io = req.app.get("io");
+    if (io) {
+      const room = String(orderId);
+      io.to(room).emit("receive_message", message);
+      io.emit(`receive_message_${room}`, message);
+    }
     
     res.json({ success: true, message: "Chat added", chat: order.chat });
   } catch (error) {
-    console.error(error.message);
+    console.error("Error adding chat:", error.message);
     res.json({ success: false, message: "Error adding chat" });
   }
 }
