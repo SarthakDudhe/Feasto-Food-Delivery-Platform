@@ -32,6 +32,7 @@ export default function TrackOrder() {
   
   // Socket ref to avoid re-creation
   const socketRef = useRef(null);
+  const [isSocketConnected, setIsSocketConnected] = useState(false);
 
   useEffect(() => {
     if (!url || !orderId) return;
@@ -44,7 +45,12 @@ export default function TrackOrder() {
 
     socket.on("connect", () => {
       console.log("[Customer Chat] Connected to socket, joining room:", orderId);
+      setIsSocketConnected(true);
       socket.emit("join_order_room", String(orderId));
+    });
+
+    socket.on("disconnect", () => {
+      setIsSocketConnected(false);
     });
 
     const handleMessage = (data) => {
@@ -505,7 +511,21 @@ export default function TrackOrder() {
               <div className="rider-chat-header-info">
                 <div className="rider-avatar-small">🛵</div>
                 <div>
-                  <h4>{order.riderName || "Delivery Partner"}</h4>
+                  <h4 style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                    {order.riderName || "Delivery Partner"}
+                    <span
+                      style={{
+                        fontSize: "10px",
+                        fontWeight: "600",
+                        padding: "1px 6px",
+                        borderRadius: "8px",
+                        background: isSocketConnected ? "#dcfce7" : "#fee2e2",
+                        color: isSocketConnected ? "#15803d" : "#b91c1c",
+                      }}
+                    >
+                      {isSocketConnected ? "● Live" : "○ Offline"}
+                    </span>
+                  </h4>
                   <span className="rider-status-online">🟢 Active in transit</span>
                 </div>
               </div>
